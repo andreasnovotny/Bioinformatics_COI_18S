@@ -105,12 +105,13 @@ accession_counts = {}
 otus_merged = {}
 for key in sorted(otu_map): #for each accession
         otus = otu_map[key] #.split('\t') #retrieve OTU string from hash, split on tab to make list
-        print(otus, " is the current otus variable")
+        #print(otus, " is the current otus variable")
         merged = [0] * arraylen #declare empty list of length N (where N is the number of sample columns in the MATRIX-COUNT file) to store merged read counts
         merged = map(int, merged) #cast as integers rather than characters
         merged = np.array(merged) #convert to NumPY array
+        otus_merged[key]=1 #keeping track of which OTUs are absorbing other OTUs, so that they won't be printed twice in the final OTU map
         for ID in otus: #for each OTU ID belonging to an accession
-                print(ID, " is the current OTU ID")
+                #print(ID, " is the current OTU ID")
                 otus_merged[ID]=1 #save OTU ID in dictionary. test this hash later to decide which OTUs to include in final OTU map
                 counts=np.array(matrix[ID]) #convert to NumPY array
                 tmp = counts + merged #merge the two numpy arrays
