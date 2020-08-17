@@ -35,7 +35,7 @@ parser = argparse.ArgumentParser(
 requiredargs = parser.add_argument_group("required arguments")
 requiredargs.add_argument( #matrix file. user defined.
 	"-i",
-	"--seq_table",
+	"--matrix_count",
 	help = "Path to modified MED output file MATRIX-COUNT.transposed.txt. As name suggests, must be transposed, and also have leading zeroes removed from OTU IDs.",
 	required = True)
 requiredargs.add_argument( #path to otu map. user defined.
