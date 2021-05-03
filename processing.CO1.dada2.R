@@ -253,8 +253,8 @@ write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.n
 
 
 #doing CO1 taxonomy assignment with RDP
-taxa <- assignTaxonomy(seqtab.nosingletons.nochim, "~/projects/taxonomyDBs/CO1_database/taxreturn/genbank/COI_reference_dada2gen.fa", multithread=TRUE)
-taxa <- addSpecies(taxa, "~/projects/taxonomyDBs/CO1_database/taxreturn/genbank/COI_reference_dada2spp.fa.gz")
+taxa <- assignTaxonomy(seqtab.nosingletons.nochim, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2gen.fa", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7", "Rank8"),)
+taxa <- addSpecies(taxa, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2spp.fa.gz")
 
 
 #### save sequences for both ASV tables separately, and do taxonomy assignment with blast ####
