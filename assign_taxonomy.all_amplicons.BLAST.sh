@@ -7,13 +7,17 @@
 #	Code is divided into sections based on the amplicon in question, as well as the reference database
 
 ####12S amplicon####
-
 #assign taxonomy for dada2-processed 12S amplicon data with blast using the NCBI NT database
 #RDP assignments for 12S should be preferred, but this supplementary method has the added benefit of identifying bacterial and human contaminant sequences
+mkdir blast_96_sim
 blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2020_08_28/blastdb/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query 12S_ASV_sequences.length_var.fasta  -out blast_96_sim/12S_ASV_sequences.length_var.blast.out
-python2 ~/programs/Simple-LCA/add_taxonomy.w_superkingdom.py -i blast_96_sim/12S_ASV_sequences.length_var.blast.out -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o blast_96_sim/12S_ASV_sequences.length_var.taxonomy_added.out
-python2 ~/programs/Simple-LCA/lca.w_superkingdom.py -i blast_96_sim/12S_ASV_sequences.length_var.taxonomy_added.out -o taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t yes -tid 98 -tcov 50 -fh environmental,unidentified,phylum -flh unclassified
+python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim/12S_ASV_sequences.length_var.blast.out -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o blast_96_sim/taxonomy
+cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_12S_ASV_sequences.length_var.blast.out > tmp
+python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified -flh unclassified
 
+#cleanup
+rm tmp
+rm taxonomy_12S_ASV_sequences.length_var.blast.out
 
 ####CO1 amplicon####
 
