@@ -1,6 +1,6 @@
 #code for producing taxonomic assignments using blast, for CO1 and 12S amplicon data
 #author: Evan Morien
-#last modified: April 21st, 2021
+#last modified: May 26th, 2021
 
 #Introduction
 #	The following code/pipeline was developed over the course of 2020/2021 to use blast to generate taxonomic assignments for both CO1 and 12S amplicon sequencing experiments
@@ -9,6 +9,10 @@
 ####12S amplicon####
 #assign taxonomy for dada2-processed 12S amplicon data with blast using the NCBI NT database
 #RDP assignments for 12S should be preferred, but this supplementary method has the added benefit of identifying bacterial and human contaminant sequences
+#run 12S classifier from terrimporter on github (sequences for 12S isolated from mitofish mitochondiral genome repo, classifier trained on these sequences)
+java -Xmx248g -jar ~/programs/rdp_classifier_2.13/dist/classifier.jar classify -c 0.8 -t ~/projects/taxonomyDBs/12S_database/terrimporter_12S_fish_classifier/mydata_trained/rRNAClassifier.properties -o taxonomy_table.12S.merged.RDP.txt 12S_ASV_sequences.length_var.fasta
+
+#assign taxonomy with blast NT database at 96% similarity threshold
 mkdir blast_96_sim
 blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2020_08_28/blastdb/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query 12S_ASV_sequences.length_var.fasta  -out blast_96_sim/12S_ASV_sequences.length_var.blast.out
 python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim/12S_ASV_sequences.length_var.blast.out -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o blast_96_sim/taxonomy
@@ -16,8 +20,9 @@ cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_12S
 python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified -flh unclassified
 
 #cleanup
-rm tmp
-rm taxonomy_12S_ASV_sequences.length_var.blast.out
+rm 12S_ASV_sequences.length_var.blast.out #remove blast output without taxonomy
+mv tmp 12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
+rm taxonomy_12S_ASV_sequences.length_var.blast.out #remove redundant file
 
 ####CO1 amplicon####
 
@@ -65,8 +70,9 @@ write.table(blastout_combined, "CO1_ASV_sequences.combined.blast.out", row.names
 grep -v -w "NA" CO1_ASV_sequences.combined.blast.out > tmp
 
 #execute first step for the LCA program (adding taxonomy strings based on taxonIDs in blast output)
-python2 ~/programs/Simple-LCA/add_taxonomy.w_superkingdom.py -i tmp -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o CO1_ASV_sequences.taxonomy_added.out
-rm tmp #remove intermediate file we created earlier
+
+python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim/CO1_ASV_sequences.length_var.blast.out -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o blast_96_sim/taxonomy
+cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_12S_ASV_sequences.length_var.blast.out > tmp
 
 #in this section, a series of taxonomy string modifications are made. This makes the final output more readable/easier to understand, but is optional.
 #IMPORTANT: please note that the filtering criteria in the final step depend on some of this filtering (e.g. blast hits with the word "phylum" will be removed. see -fh parameter in final step) 
@@ -75,32 +81,34 @@ rm tmp #remove intermediate file we created earlier
 #	also note, "unknown phylum" is present in any taxonomy where the clade's phylum is uncertain in the NCBI taxonomy system, it doesn't indicate any other kind of uncertainty about the provenance of the sequence.
 
 #label fix for clades missing "kingdom" label
-sed -i 's/unknown kingdom \/ Bacillariophyta/Bacillariophyta \/ Bacillariophyta/g' CO1_ASV_sequences.taxonomy_added.out #Bacillariophyta
-sed -i 's/unknown kingdom \/ Ciliophora/Ciliophora \/ Ciliophora/g' CO1_ASV_sequences.taxonomy_added.out #Ciliophora
-sed -i 's/unknown kingdom \/ Discosea/Discosea \/ Discosea/g' CO1_ASV_sequences.taxonomy_added.out #Discosea
-sed -i 's/unknown kingdom \/ Evosea/Evosea \/ Evosea/g' CO1_ASV_sequences.taxonomy_added.out #Evosea
-sed -i 's/unknown kingdom \/ Haptista/Haptista \/ Haptista/g' CO1_ASV_sequences.taxonomy_added.out #Haptista
-sed -i 's/unknown kingdom \/ Rhodophyta/Rhodophyta \/ Rhodophyta/g' CO1_ASV_sequences.taxonomy_added.out #Rhodophyta
+sed -i 's/unknown kingdom \/ Bacillariophyta/Bacillariophyta \/ Bacillariophyta/g' tmp #Bacillariophyta
+sed -i 's/unknown kingdom \/ Ciliophora/Ciliophora \/ Ciliophora/g' tmp #Ciliophora
+sed -i 's/unknown kingdom \/ Discosea/Discosea \/ Discosea/g' tmp #Discosea
+sed -i 's/unknown kingdom \/ Evosea/Evosea \/ Evosea/g' tmp #Evosea
+sed -i 's/unknown kingdom \/ Haptista/Haptista \/ Haptista/g' tmp #Haptista
+sed -i 's/unknown kingdom \/ Rhodophyta/Rhodophyta \/ Rhodophyta/g' tmp #Rhodophyta
 
 #and for those missing kingdom + phylum labels
-sed -i 's/unknown kingdom \/ unknown phylum \/ Chrysophyceae/Chrysophyceae \/ Chrysophyceae \/ Chrysophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Chrysophyceae
-sed -i 's/unknown kingdom \/ unknown phylum \/ Cryptophyceae/Cryptophyceae \/ Cryptophyceae \/ Cryptophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Cryptophyceae
-sed -i 's/unknown kingdom \/ unknown phylum \/ Oomycota/Oomycota \/ Oomycota \/ Oomycota/g' CO1_ASV_sequences.taxonomy_added.out #Oomycota
-sed -i 's/unknown kingdom \/ unknown phylum \/ Phaeophyceae/Phaeophyceae \/ Phaeophyceae \/ Phaeophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Phaeophyceae
-sed -i 's/unknown kingdom \/ unknown phylum \/ Phaeophyceae/Phaeophyceae \/ Phaeophyceae \/ Phaeophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Phaeophyceae
-sed -i 's/unknown kingdom \/ unknown phylum \/ Bigyra/Bigyra \/ Bigyra \/ Bigyra/g' CO1_ASV_sequences.taxonomy_added.out #Bigyra
-sed -i 's/unknown kingdom \/ unknown phylum \/ Dictyochophyceae/Dictyochophyceae \/ Dictyochophyceae \/ Dictyochophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Dictyochophyceae
-sed -i 's/unknown kingdom \/ unknown phylum \/ Dinophyceae/Dinophyceae \/ Dinophyceae \/ Dinophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Dinophyceae
-sed -i 's/unknown kingdom \/ unknown phylum \/ Pelagophyceae/Pelagophyceae \/ Pelagophyceae \/ Pelagophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Pelagophyceae
-sed -i 's/unknown kingdom \/ unknown phylum \/ Raphidophyceae/Raphidophyceae \/ Raphidophyceae \/ Raphidophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Raphidophyceae
-sed -i 's/unknown kingdom \/ unknown phylum \/ Synurophyceae/Synurophyceae \/ Synurophyceae \/ Synurophyceae/g' CO1_ASV_sequences.taxonomy_added.out #Synurophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Chrysophyceae/Chrysophyceae \/ Chrysophyceae \/ Chrysophyceae/g' tmp #Chrysophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Cryptophyceae/Cryptophyceae \/ Cryptophyceae \/ Cryptophyceae/g' tmp #Cryptophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Oomycota/Oomycota \/ Oomycota \/ Oomycota/g' tmp #Oomycota
+sed -i 's/unknown kingdom \/ unknown phylum \/ Phaeophyceae/Phaeophyceae \/ Phaeophyceae \/ Phaeophyceae/g' tmp #Phaeophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Phaeophyceae/Phaeophyceae \/ Phaeophyceae \/ Phaeophyceae/g' tmp #Phaeophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Bigyra/Bigyra \/ Bigyra \/ Bigyra/g' tmp #Bigyra
+sed -i 's/unknown kingdom \/ unknown phylum \/ Dictyochophyceae/Dictyochophyceae \/ Dictyochophyceae \/ Dictyochophyceae/g' tmp #Dictyochophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Dinophyceae/Dinophyceae \/ Dinophyceae \/ Dinophyceae/g' tmp #Dinophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Pelagophyceae/Pelagophyceae \/ Pelagophyceae \/ Pelagophyceae/g' tmp #Pelagophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Raphidophyceae/Raphidophyceae \/ Raphidophyceae \/ Raphidophyceae/g' tmp #Raphidophyceae
+sed -i 's/unknown kingdom \/ unknown phylum \/ Synurophyceae/Synurophyceae \/ Synurophyceae \/ Synurophyceae/g' tmp #Synurophyceae
 
 #label for those missing kindom + phylum + class labels
-sed -i 's/unknown kingdom \/ unknown phylum \/ unknown class \/ Telonemida/Telonemida \/ Telonemida \/ Telonemida \/ Telonemida/g' CO1_ASV_sequences.taxonomy_added.out #Telonemida
-sed -i 's/unknown kingdom \/ unknown phylum \/ unknown class \/ Jakobida/Jakobida \/ Jakobida \/ Jakobida \/ Jakobida/g' CO1_ASV_sequences.taxonomy_added.out #Jakobida
-
-#label fix for bacterial assignments
-sed -i 's/Bacteria \/ unknown kingdom/Bacteria \/ Bacteria/g' CO1_ASV_sequences.taxonomy_added.out #Bacteria have no "kingdom" label in NCBI, only superkingdom and then phylum. adding "bacteria" as a kingdom label in our taxonomy assignments makes them more informative
+sed -i 's/unknown kingdom \/ unknown phylum \/ unknown class \/ Telonemida/Telonemida \/ Telonemida \/ Telonemida \/ Telonemida/g' tmp #Telonemida
+sed -i 's/unknown kingdom \/ unknown phylum \/ unknown class \/ Jakobida/Jakobida \/ Jakobida \/ Jakobida \/ Jakobida/g' tmp #Jakobida
 
 #execute final step for the LCA program (forming consensus taxonomies for each ASV)
-python2 ~/programs/Simple-LCA/lca.w_superkingdom.py -i CO1_ASV_sequences.taxonomy_added.out -o taxonomy_table.CO1.merged.combined_DB.96sim_blast_LCA.txt -b 100 -id 96 -cov 50 -t yes -tid 98 -tcov 50 -fh environmental,unidentified,phylum -flh unclassified
+python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.CO1.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified -flh unclassified
+
+#cleanup
+rm 12S_ASV_sequences.length_var.blast.out #remove blast output without taxonomy
+mv tmp 12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
+rm taxonomy_12S_ASV_sequences.length_var.blast.out #remove redundant file

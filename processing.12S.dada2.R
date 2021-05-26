@@ -1,4 +1,4 @@
-#pipeline for processing CO1 amplicon sequencing data
+#pipeline for processing 12S amplicon sequencing data
 #author: Evan Morien
 #last modified: May 26th, 2021
 
@@ -38,17 +38,24 @@ sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1) #change the delimi
 
 ####fastq Quality Plots####
 num_samples <- 10 #can be any integer, or defined as length(fnFs) if you want to put every sample in the plot. lots of samples may take a few minutes to plot. plotting time scales with number of reads being assessed.
-pdf("quality_plots.dada2.CO1.R1s.pdf", width = 32, height = 18) # define plot width and height. completely up to user.
+pdf("quality_plots.dada2.12S.R1s.pdf", width = 32, height = 18) # define plot width and height. completely up to user.
   plotQualityProfile(fnFs[1:num_samples]) #this plots the quality profiles for each sample
 dev.off()
-pdf("quality_plots.dada2.CO1.R2s.pdf", width = 32, height = 18) # define plot width and height. completely up to user.
+pdf("quality_plots.dada2.12S.R2s.pdf", width = 32, height = 18) # define plot width and height. completely up to user.
   plotQualityProfile(fnRs[1:num_samples])
 dev.off()
 #quality plots look okay, but first 40bp of R2s needs to be trimmed. lane-wide chemistry failures at several points
 
-####running primer removal test on subset of data####
-FWD <- "GGWACWGGWTGAACWGTWTAYCCYCC"  ## CHANGE ME to your forward primer sequence #current primers here are the CO1 primer set used by Hakai
-REV <- "TANACYTCNGGRTGNCCRAARAAYCA"  ## CHANGE ME to your reverse primer sequence
+####IMPORTANT####
+#select the 12S primer set that used to generate the libraries you're processing. we usually use MiFish-U but have also produced MiFish-E datasets
+#these are the MiFish-U primers
+FWD <- "GTCGGTAAAACTCGTGCCAGC"
+REV <- "CATAGTGGGGTATCTAATCCCAGTTTG"
+
+#these are the MiFish-E primers
+FWD <- "GTTGGTAAATCTCGTGCCAGC"
+REV <- "CATAGTGGGGTATCTAATCCTAGTTTG"
+
 allOrients <- function(primer) {
   # Create all orientations of the input sequence
   require(Biostrings)
@@ -63,14 +70,14 @@ FWD.orients
 
 fnFs.filtN <- file.path(path, "filtN", basename(fnFs)) # Put N-filterd files in filtN/ subdirectory
 fnRs.filtN <- file.path(path, "filtN", basename(fnRs))
-filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, trimLeft = c(0,0), maxN = 0, multithread = TRUE, compress = TRUE, matchIDs=TRUE)
+filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, trimLeft = c(22,28), trimRight = c(70,70), maxN = 0, multithread = TRUE, compress = TRUE, matchIDs=TRUE) #for 12S data I have found that employing an aggressive trimming protocol here results in better read retention, merge rates, and also decreases the number of sequences identified as chimeric later on in the pipeline. #22 and 28 are the lengths of the forward and reverse primers, respectively. 70bp is the number of bases we can trim off the ends of the 250bp 12S reads and still retain the entire amplicon (but not the primer region in the read-through)
 
 primerHits <- function(primer, fn) {
   # Counts number of reads in which the primer is found
   nhits <- vcountPattern(primer, sread(readFastq(fn)), fixed = FALSE)
   return(sum(nhits > 0))
 }
-index <- 5 #this is the index of the file we want to check for primers, within the lists "fn*s.filtN", it can be any number from 1 to N, where N is the number of samples you are processing
+index <- 6 #this is the index of the file we want to check for primers, within the lists "fn*s.filtN", it can be any number from 1 to N, where N is the number of samples you are processing
 rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[index]]), #the index of the sample you'd like to use for this test is used here (your first sample may be a blank/control and not have many sequences in it, be mindful of this)
       FWD.ReverseReads = sapply(FWD.orients, primerHits, fn = fnRs.filtN[[index]]), 
       REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.filtN[[index]]), 
@@ -78,7 +85,7 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[index]
 
 #this dataset doesn't need primer adjustment (RC of rev primer, for example). things are in the "correct" orientation already
 ####OPTIONAL!!!!####
-#REV <- REV.orients[["RevComp"]] #IMPORTANT!!! change orientation ONLY IF NECESSARY. see the online dada2 ITS workflow, section "Identify Primers" for details.
+#REV <- REV.orients[["Reverse"]] #IMPORTANT!!! change orientation ONLY IF NECESSARY. see the dada2 ITS_workflow guide section "Identify Primers" for details
 
 #### primer removal ####
 cutadapt <- "/usr/local/bin/cutadapt" # CHANGE ME to the cutadapt path on your machine
@@ -103,7 +110,7 @@ for(i in seq_along(fnFs)) {
                              fnFs.filtN[i], fnRs.filtN[i])) # input files
 }
 #sanity check, should report zero for all orientations and read sets
-index <- 5 #this is the index of the file we want to check for primers, within the lists "fn*s.cut", it can be any number from 1 to N, where N is the number of samples you are processing
+index <- 6 #this is the index of the file we want to check for primers, within the lists "fn*s.cut", it can be any number from 1 to N, where N is the number of samples you are processing
 rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.cut[[index]]), 
       FWD.ReverseReads = sapply(FWD.orients, primerHits, fn = fnRs.cut[[index]]), 
       REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.cut[[index]]), 
@@ -125,28 +132,28 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 #it is best, after primer removal, to not truncate with 18s data, or with data from any region in which the length is broadly variable. you may exclude organisms that have a shorter insert than the truncation length (definitely possible, good example is giardia). defining a minimum sequence length is best.
 #150 should be well below the lower bound for V4 data
 #if you are working with V9 data, I have found that a minLen of 80bp is appropriate. Giardia sequences are ~95bp in V9
-out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, truncLen=c(0,0), trimLeft = c(0, 0), trimRight = c(0,0), minLen = c(150,150),
-                     maxN=c(0,0), maxEE=c(4,6), truncQ=c(2,2), rm.phix=TRUE, matchIDs=TRUE,
+out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, truncLen=c(0,0), trimLeft = c(0,0), trimRight = c(0,0), minLen = c(110,110),
+                     maxN=c(0,0), maxEE=c(6,8), truncQ=c(10,10), rm.phix=TRUE, matchIDs=TRUE,
                      compress=TRUE, multithread=TRUE)
 retained <- as.data.frame(out)
 retained$percentage_retained <- retained$reads.out/retained$reads.in*100
-write.table(retained, "retained_reads.CO1.filterAndTrim_step.txt", sep="\t", row.names=TRUE, col.names=TRUE, quote=FALSE)
+write.table(retained, "retained_reads.filterAndTrim_step.length_var.txt", sep="\t", row.names=TRUE, col.names=TRUE, quote=FALSE)
 
 ####learn error rates####
 #the next three sections (learn error rates, dereplication, sample inference) are the core of dada2's sequence processing pipeline. read the dada2 paper and their online documentation (linked at top of this guide) for more information on how these steps work
-errF <- learnErrors(filtFs, multithread=TRUE)
-errR <- learnErrors(filtRs, multithread=TRUE)
+errF <- learnErrors(fnFs.filtN, multithread=TRUE)
+errR <- learnErrors(fnRs.filtN, multithread=TRUE)
 
-pdf("error_rates.dada2.CO1.R1s.pdf", width = 10, height = 10) # define plot width and height. completely up to user.
+pdf("error_rates.dada2.R1s.length_var.pdf", width = 10, height = 10) # define plot width and height. completely up to user.
   plotErrors(errF, nominalQ=TRUE) #assess this graph. it shows the error rates observed in your dataset. strange or unexpected shapes in the plot should be considered before moving on.
 dev.off()
-pdf("error_rates.dada2.CO1.R2s.pdf", width = 10, height = 10) # define plot width and height. completely up to user.
+pdf("error_rates.dada2.R2s.length_var.pdf", width = 10, height = 10) # define plot width and height. completely up to user.
   plotErrors(errR, nominalQ=TRUE) #assess this graph. it shows the error rates observed in your dataset. strange or unexpected shapes in the plot should be considered before moving on.
 dev.off()
 
 ####dereplication####
-derepFs <- derepFastq(filtFs, verbose=TRUE)
-derepRs <- derepFastq(filtRs, verbose=TRUE)
+derepFs <- derepFastq(fnFs.filtN, verbose=TRUE)
+derepRs <- derepFastq(fnRs.filtN, verbose=TRUE)
 
 # Name the derep-class objects by the sample names #this is just to ensure that all your R objects have the same sample names in them
 names(derepFs) <- sample.names
@@ -166,29 +173,26 @@ dadaRs[[1]]
 getN <- function(x) sum(getUniques(x)) #keeping track of read retention, number of unique sequences after ASV inference
 track <- cbind(sapply(derepFs, getN), sapply(derepRs, getN), sapply(dadaFs, getN), sapply(dadaRs, getN))
 samples_to_keep <- track[,4] > 50 #your threshold. try different ones to get the lowest one that will work. #this method accounts for dereplication/ASVs left after inference
-samples_to_remove <- names(samples_to_keep)[which(samples_to_keep == FALSE)] #record names of samples you have the option of removing #be sure to note down what you removed for future reference
-
+samples_to_remove <- names(samples_to_keep)[which(samples_to_keep == FALSE)] #record names of samples you have the option of removing
+#no samples removed, all pass basic quality threshold
 
 ####merge paired reads####
-#OPTION 1: version of command with no samples left out
-mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE) #a "subscript out of bounds" error here may indicate that you aren't merging any reads in one or more samples. you can remove samples with low counts from the workflow before the filterAndTrim step (a few steps back), or you can filter samples using the information from the dereplication and sample-inference steps (section just above)
-#OPTION 2: modify command when removing low-sequence samples
+#mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE) #a "subscript out of bounds" error here may indicate that you aren't merging any reads in one or more samples. you can remove samples with low counts from the workflow before the filterAndTrim step (a few steps back), or you can filter samples using the information from the dereplication and sample-inference steps (section just above)
+#OPTIONAL: modify command if removing low-sequence samples
 mergers <- mergePairs(dadaFs[samples_to_keep], derepFs[samples_to_keep], dadaRs[samples_to_keep], derepRs[samples_to_keep], verbose=TRUE)
 # Inspect the merger data.frame from the first sample
 head(mergers[[1]])
 
 ####construct sequence table####
 seqtab <- makeSequenceTable(mergers)
-dim(seqtab) #what are the dimensions of our merged sequence table?
-
+dim(seqtab)
 
 ####View Sequence Length Distribution Post-Merging####
 #most useful with merged data. this plot will not show you much for forward reads only, which should have a uniform length distribution.
 length.histogram <- as.data.frame(table(nchar(getSequences(seqtab)))) #tabulate sequence length distribution
-pdf("length_histogram.CO1.merged_reads.pdf", width = 10, height = 8) # define plot width and height. completely up to user.
+pdf("length_histogram.merged_reads.length_var.pdf", width = 10, height = 8) # define plot width and height. completely up to user.
 plot(x=length.histogram[,1], y=length.histogram[,2]) #view length distribution plot
 dev.off()
-
 
 ####remove low-count singleton ASVs####
 #create phyloseq otu_table
@@ -199,19 +203,16 @@ otu_pres_abs <- otus
 otu_pres_abs[otu_pres_abs >= 1] <- 1 #creating a presence/absence table
 otu_pres_abs_rowsums <- rowSums(otu_pres_abs) #counts of sample per ASV
 length(otu_pres_abs_rowsums) #how many ASVs
-
 length(which(otu_pres_abs_rowsums == 1)) #how many ASVs only present in one sample
-
 
 #what are the counts of each ASV
 otu_rowsums <- rowSums(otus) #raw counts per ASV
 otu_singleton_rowsums <- as.data.frame(otu_rowsums[which(otu_pres_abs_rowsums == 1)]) #raw read counts in ASVs only presesnt in one sample
-#hist(otu_singleton_rowsums[,1], breaks=500, xlim = c(0,200), xlab="# Reads in ASV") #histogram plot of above
-length(which(otu_singleton_rowsums <= 1)) #how many are there with N reads or fewer? (N=1 in example)
 
 #IF you want to filter out rare variants (low-read-count singleton ASVs) you can use phyloseq's "transform_sample_counts" to create a relative abundance table, and then filter your ASVs by choosing a threshold of relative abundance: otus_rel_ab = transform_sample_counts(otus, function(x) x/sum(x))
 dim(seqtab) # sanity check
 dim(otus) # (this should be the same as last command, but the dimensions reversed)
+
 otus_rel_ab <- transform_sample_counts(otus, function(x) x/sum(x)) #create relative abundance table
 df <- as.data.frame(unclass(otus_rel_ab)) #convert to plain data frame
 df[is.na(df)] <- 0 #if there are samples with no merged reads in them, and they passed the merge step (a possiblity, converting to a relative abundance table produes all NaNs for that sample. these need to be set to zero so we can do the calculations in the next steps.)
@@ -219,11 +220,9 @@ otus_rel_ab.rowsums <- rowSums(df) #compute row sums (sum of relative abundances
 a <- which(as.data.frame(otu_pres_abs_rowsums) == 1) #which ASVs are only present in one sample
 b <- which(otus_rel_ab.rowsums <= 0.001) #here is where you set your relative abundance threshold #which ASVs pass our filter for relative abundance
 length(intersect(a,b)) #how many of our singleton ASVs fail on this filter
-
 rows_to_remove <- intersect(a,b) #A also in B (we remove singleton ASVs that have a lower relative abundance value than our threshold)
 otus_filt <- otus[-rows_to_remove,] #filter OTU table we created earlier
 dim(otus_filt) #how many ASVs did you retain?
-
 seqtab.nosingletons <- t(as.matrix(unclass(otus_filt))) #convert filtered OTU table back to a sequence table matrix to continue with dada2 pipeline
 
 ####remove chimeras####
@@ -240,41 +239,32 @@ track <- cbind(track, 100-track[,6]/track[,5]*100, 100-track[,7]/track[,6]*100, 
 colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nosingletons", "nochimeras", "percent_singletons", "percent_chimeras", "percent_retained_of_total")
 
 ####save output from sequnce table construction steps####
-write.table(data.frame("row_names"=rownames(track),track),"read_retention.CO1_merged.txt", row.names=FALSE, quote=F, sep="\t")
-write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.nosingletons.nochim),"sequence_table.CO1.merged.txt", row.names=FALSE, quote=F, sep="\t")
+write.table(data.frame("row_names"=rownames(track),track),"read_retention.12S_merged.length_var.txt", row.names=FALSE, quote=F, sep="\t")
+write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.nosingletons.nochim),"sequence_table.12S.merged.length_var.txt", row.names=FALSE, quote=F, sep="\t")
 
-#OPTIONAL, if needed: read in original sequence table with sequences as ASV labels.
-#this is appropriate/necessary if you are loading in a sequence table produced on a remote machine, or in a separate instance of R
-# seqtab.nosingletons.nochim <- fread("sequence_table.CO1.merged.txt", sep="\t", header=T, colClasses = c("row_names"="character"), data.table=FALSE)
+
+#OPTIONAL: read in sequence table on cluster, for taxonomy assignment
+#code to read in before taxonomy assignment, if done on a separate machine
+# seqtab.nosingletons.nochim <- fread("sequence_table.12S.merged.length_var.txt", sep="\t", header=T, colClasses = c("row_names"="character"), data.table=FALSE)
 # row.names(seqtab.nosingletons.nochim) <- seqtab.nosingletons.nochim[,1] #set row names
 # seqtab.nosingletons.nochim <- seqtab.nosingletons.nochim[,-1] #remove column with row names in it
 # seqtab.nosingletons.nochim <- as.matrix(seqtab.nosingletons.nochim) #cast the object as a matrix
 # mode(seqtab.nosingletons.nochim) <- "numeric"
 
 
-#doing CO1 taxonomy assignment with RDP
-taxa <- assignTaxonomy(seqtab.nosingletons.nochim, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2gen.fa", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7", "Rank8"), outputBootstraps = FALSE)
-taxa <- addSpecies(taxa, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2spp.fa.gz")
-
-
-#### save sequences for both ASV tables separately, and do taxonomy assignment with blast ####
-#### replace the long ASV names (the actual sequences) with human-readable names ####
+#### save sequences and do taxonomy assignment with blast ####
+##### replace the long ASV names (the actual sequences) with human-readable names####
 #save the new names and sequences as a .fasta file in your project working directory, and save a table that shows the mapping of sequences to new ASV names
 my_otu_table <- t(as.data.frame(seqtab.nosingletons.nochim)) #transposed (OTUs are rows) data frame. unclassing the otu_table() output avoids type/class errors later on
 ASV.seq <- as.character(unclass(row.names(my_otu_table))) #store sequences in character vector
 ASV.num <- paste0("ASV", seq(ASV.seq), sep='') #create new names
-write.table(cbind(ASV.num, ASV.seq), "sequence_ASVname_mapping.CO1.txt", sep="\t", quote=F, row.names=F, col.names=F)
-write.fasta(sequences=as.list(ASV.seq), names=ASV.num, "CO1_ASV_sequences.fasta") #save sequences with new names in fasta format
+write.table(cbind(ASV.num, ASV.seq), "sequence_ASVname_mapping.length_var.txt", sep="\t", quote=F, row.names=F, col.names=F)
+write.fasta(sequences=as.list(ASV.seq), names=ASV.num, "12S_ASV_sequences.length_var.fasta") #save sequences with new names in fasta format
 #IMPORTANT: sanity checks
 colnames(seqtab.nosingletons.nochim) == ASV.seq #only proceed if this tests as true for all elements
-row.names(taxa) == ASV.seq #only proceed if this tests as true for all elements
 
-#assign new ASV names
+#rename your ASVs in the taxonomy table and sequence table objects
 colnames(seqtab.nosingletons.nochim) <- ASV.num
-row.names(taxa) <- ASV.num
 
 #re-save sequence and taxonomy tables with updated names
-write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.nosingletons.nochim),"sequence_table.CO1.merged.w_ASV_names.txt", row.names=FALSE, quote=F, sep="\t")
-write.table(data.frame("row_names"=rownames(taxa),taxa),"taxonomy_table.CO1.RDP_customDB.txt", row.names=FALSE, quote=F, sep="\t")
-
-#at this point, you are ready to do BLAST-based taxonomy assignment. please see "assign_taxonomy.all_amplicons.BLAST.sh" for the code for that process
+write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.nosingletons.nochim),"sequence_table.12S.merged.w_ASV_names.length_var.txt", row.names=FALSE, quote=F, sep="\t")
