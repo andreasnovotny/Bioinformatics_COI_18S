@@ -71,6 +71,7 @@ FWD.orients
 fnFs.filtN <- file.path(path, "filtN", basename(fnFs)) # Put N-filterd files in filtN/ subdirectory
 fnRs.filtN <- file.path(path, "filtN", basename(fnRs))
 filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, trimLeft = c(22,28), trimRight = c(70,70), maxN = 0, multithread = TRUE, compress = TRUE, matchIDs=TRUE) #for 12S data I have found that employing an aggressive trimming protocol here results in better read retention, merge rates, and also decreases the number of sequences identified as chimeric later on in the pipeline. #22 and 28 are the lengths of the forward and reverse primers, respectively. 70bp is the number of bases we can trim off the ends of the 250bp 12S reads and still retain the entire amplicon (but not the primer region in the read-through)
+####IMPORTANT: for 250bp (V2) MiSeq runs, the trimRight parameter should read c(70,70), and for 300bp (V3) MiSeq runs, it should read c(120,120) (V3 reads are 50bp longer than V2)
 
 primerHits <- function(primer, fn) {
   # Counts number of reads in which the primer is found
