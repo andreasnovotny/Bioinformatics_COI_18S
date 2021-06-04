@@ -1,6 +1,6 @@
 #pipeline for processing CO1 amplicon sequencing data
 #author: Evan Morien
-#last modified: May 26th, 2021
+#last modified: May 27th, 2021
 
 
 ####Intro####
@@ -44,7 +44,6 @@ dev.off()
 pdf("quality_plots.dada2.CO1.R2s.pdf", width = 32, height = 18) # define plot width and height. completely up to user.
   plotQualityProfile(fnRs[1:num_samples])
 dev.off()
-#quality plots look okay, but first 40bp of R2s needs to be trimmed. lane-wide chemistry failures at several points
 
 ####running primer removal test on subset of data####
 FWD <- "GGWACWGGWTGAACWGTWTAYCCYCC"  ## CHANGE ME to your forward primer sequence #current primers here are the CO1 primer set used by Hakai
@@ -117,14 +116,10 @@ cutRs <- sort(list.files(path.cut, pattern = "R2", full.names = TRUE)) #remember
 filtFs <- file.path(path.cut, "filtered", basename(cutFs))
 filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 
-#primer removal works great, no issues with default parameters. moving back to top to define entire set of samples, and re-running filtering and primer trimming on the full set.
-
 
 ####trim & filter####
 #filter and trim command. dada2 can canonically handle lots of errors, I am typically permissive in the maxEE parameter set here, in order to retain the maximum number of reads possible. error correction steps built into the dada2 pipeline have no trouble handling data with this many expected errors.
 #it is best, after primer removal, to not truncate with 18s data, or with data from any region in which the length is broadly variable. you may exclude organisms that have a shorter insert than the truncation length (definitely possible, good example is giardia). defining a minimum sequence length is best.
-#150 should be well below the lower bound for V4 data
-#if you are working with V9 data, I have found that a minLen of 80bp is appropriate. Giardia sequences are ~95bp in V9
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, truncLen=c(0,0), trimLeft = c(0, 0), trimRight = c(0,0), minLen = c(150,150),
                      maxN=c(0,0), maxEE=c(4,6), truncQ=c(2,2), rm.phix=TRUE, matchIDs=TRUE,
                      compress=TRUE, multithread=TRUE)
@@ -194,24 +189,15 @@ dev.off()
 #create phyloseq otu_table
 otus <- otu_table(t(seqtab), taxa_are_rows = TRUE)
 
-#some metrics from the sequence table
+#generate counts of sample per ASV
 otu_pres_abs <- otus
 otu_pres_abs[otu_pres_abs >= 1] <- 1 #creating a presence/absence table
 otu_pres_abs_rowsums <- rowSums(otu_pres_abs) #counts of sample per ASV
-length(otu_pres_abs_rowsums) #how many ASVs
-
-length(which(otu_pres_abs_rowsums == 1)) #how many ASVs only present in one sample
-
-
-#what are the counts of each ASV
-otu_rowsums <- rowSums(otus) #raw counts per ASV
-otu_singleton_rowsums <- as.data.frame(otu_rowsums[which(otu_pres_abs_rowsums == 1)]) #raw read counts in ASVs only presesnt in one sample
-#hist(otu_singleton_rowsums[,1], breaks=500, xlim = c(0,200), xlab="# Reads in ASV") #histogram plot of above
-length(which(otu_singleton_rowsums <= 1)) #how many are there with N reads or fewer? (N=1 in example)
 
 #IF you want to filter out rare variants (low-read-count singleton ASVs) you can use phyloseq's "transform_sample_counts" to create a relative abundance table, and then filter your ASVs by choosing a threshold of relative abundance: otus_rel_ab = transform_sample_counts(otus, function(x) x/sum(x))
 dim(seqtab) # sanity check
 dim(otus) # (this should be the same as last command, but the dimensions reversed)
+
 otus_rel_ab <- transform_sample_counts(otus, function(x) x/sum(x)) #create relative abundance table
 df <- as.data.frame(unclass(otus_rel_ab)) #convert to plain data frame
 df[is.na(df)] <- 0 #if there are samples with no merged reads in them, and they passed the merge step (a possiblity, converting to a relative abundance table produes all NaNs for that sample. these need to be set to zero so we can do the calculations in the next steps.)
@@ -219,7 +205,6 @@ otus_rel_ab.rowsums <- rowSums(df) #compute row sums (sum of relative abundances
 a <- which(as.data.frame(otu_pres_abs_rowsums) == 1) #which ASVs are only present in one sample
 b <- which(otus_rel_ab.rowsums <= 0.001) #here is where you set your relative abundance threshold #which ASVs pass our filter for relative abundance
 length(intersect(a,b)) #how many of our singleton ASVs fail on this filter
-
 rows_to_remove <- intersect(a,b) #A also in B (we remove singleton ASVs that have a lower relative abundance value than our threshold)
 otus_filt <- otus[-rows_to_remove,] #filter OTU table we created earlier
 dim(otus_filt) #how many ASVs did you retain?
@@ -253,7 +238,7 @@ write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.n
 
 
 #doing CO1 taxonomy assignment with RDP
-taxa <- assignTaxonomy(seqtab.nosingletons.nochim, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2gen.fa", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7", "Rank8"), outputBootstraps = FALSE)
+taxa <- assignTaxonomy(seqtab.nosingletons.nochim, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2gen.fa", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7", "Rank8"), outputBootstraps = TRUE)
 taxa <- addSpecies(taxa, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2spp.fa.gz")
 
 

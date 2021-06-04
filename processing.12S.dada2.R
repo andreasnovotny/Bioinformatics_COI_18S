@@ -1,6 +1,6 @@
 #pipeline for processing 12S amplicon sequencing data
 #author: Evan Morien
-#last modified: May 26th, 2021
+#last modified: May 27th, 2021
 
 
 ####Intro####
@@ -70,8 +70,7 @@ FWD.orients
 
 fnFs.filtN <- file.path(path, "filtN", basename(fnFs)) # Put N-filterd files in filtN/ subdirectory
 fnRs.filtN <- file.path(path, "filtN", basename(fnRs))
-filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, trimLeft = c(22,28), trimRight = c(70,70), maxN = 0, multithread = TRUE, compress = TRUE, matchIDs=TRUE) #for 12S data I have found that employing an aggressive trimming protocol here results in better read retention, merge rates, and also decreases the number of sequences identified as chimeric later on in the pipeline. #22 and 28 are the lengths of the forward and reverse primers, respectively. 70bp is the number of bases we can trim off the ends of the 250bp 12S reads and still retain the entire amplicon (but not the primer region in the read-through)
-####IMPORTANT: for 250bp (V2) MiSeq runs, the trimRight parameter should read c(70,70), and for 300bp (V3) MiSeq runs, it should read c(120,120) (V3 reads are 50bp longer than V2)
+filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, trimLeft = c(0,0), trimRight = c(0,0), truncLen=c(180,150), maxN = 0, multithread = TRUE, compress = TRUE, matchIDs=TRUE)
 
 primerHits <- function(primer, fn) {
   # Counts number of reads in which the primer is found
@@ -125,16 +124,12 @@ cutRs <- sort(list.files(path.cut, pattern = "R2", full.names = TRUE)) #remember
 filtFs <- file.path(path.cut, "filtered", basename(cutFs))
 filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 
-#primer removal works great, no issues with default parameters. moving back to top to define entire set of samples, and re-running filtering and primer trimming on the full set.
-
 
 ####trim & filter####
 #filter and trim command. dada2 can canonically handle lots of errors, I am typically permissive in the maxEE parameter set here, in order to retain the maximum number of reads possible. error correction steps built into the dada2 pipeline have no trouble handling data with this many expected errors.
 #it is best, after primer removal, to not truncate with 18s data, or with data from any region in which the length is broadly variable. you may exclude organisms that have a shorter insert than the truncation length (definitely possible, good example is giardia). defining a minimum sequence length is best.
-#150 should be well below the lower bound for V4 data
-#if you are working with V9 data, I have found that a minLen of 80bp is appropriate. Giardia sequences are ~95bp in V9
-out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, truncLen=c(0,0), trimLeft = c(0,0), trimRight = c(0,0), minLen = c(110,110),
-                     maxN=c(0,0), maxEE=c(6,8), truncQ=c(10,10), rm.phix=TRUE, matchIDs=TRUE,
+out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, trimLeft = c(0,0), trimRight = c(0,0), minLen = c(110,110),
+                     maxN=c(0,0), maxEE=c(4,6), truncQ=c(2,2), rm.phix=TRUE, matchIDs=TRUE,
                      compress=TRUE, multithread=TRUE)
 retained <- as.data.frame(out)
 retained$percentage_retained <- retained$reads.out/retained$reads.in*100
@@ -142,8 +137,8 @@ write.table(retained, "retained_reads.filterAndTrim_step.length_var.txt", sep="\
 
 ####learn error rates####
 #the next three sections (learn error rates, dereplication, sample inference) are the core of dada2's sequence processing pipeline. read the dada2 paper and their online documentation (linked at top of this guide) for more information on how these steps work
-errF <- learnErrors(fnFs.filtN, multithread=TRUE)
-errR <- learnErrors(fnRs.filtN, multithread=TRUE)
+errF <- learnErrors(filtFs, multithread=TRUE)
+errR <- learnErrors(filtRs, multithread=TRUE)
 
 pdf("error_rates.dada2.R1s.length_var.pdf", width = 10, height = 10) # define plot width and height. completely up to user.
   plotErrors(errF, nominalQ=TRUE) #assess this graph. it shows the error rates observed in your dataset. strange or unexpected shapes in the plot should be considered before moving on.
@@ -153,8 +148,8 @@ pdf("error_rates.dada2.R2s.length_var.pdf", width = 10, height = 10) # define pl
 dev.off()
 
 ####dereplication####
-derepFs <- derepFastq(fnFs.filtN, verbose=TRUE)
-derepRs <- derepFastq(fnRs.filtN, verbose=TRUE)
+derepFs <- derepFastq(filtFs, verbose=TRUE)
+derepRs <- derepFastq(filtRs, verbose=TRUE)
 
 # Name the derep-class objects by the sample names #this is just to ensure that all your R objects have the same sample names in them
 names(derepFs) <- sample.names
@@ -178,11 +173,13 @@ samples_to_remove <- names(samples_to_keep)[which(samples_to_keep == FALSE)] #re
 #no samples removed, all pass basic quality threshold
 
 ####merge paired reads####
-#mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE) #a "subscript out of bounds" error here may indicate that you aren't merging any reads in one or more samples. you can remove samples with low counts from the workflow before the filterAndTrim step (a few steps back), or you can filter samples using the information from the dereplication and sample-inference steps (section just above)
-#OPTIONAL: modify command if removing low-sequence samples
+#OPTION 1: version of command with no samples left out
+mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE) #a "subscript out of bounds" error here may indicate that you aren't merging any reads in one or more samples. you can remove samples with low counts from the workflow before the filterAndTrim step (a few steps back), or you can filter samples using the information from the dereplication and sample-inference steps (section just above)
+#OPTION 2: modify command when removing low-sequence samples
 mergers <- mergePairs(dadaFs[samples_to_keep], derepFs[samples_to_keep], dadaRs[samples_to_keep], derepRs[samples_to_keep], verbose=TRUE)
 # Inspect the merger data.frame from the first sample
 head(mergers[[1]])
+
 
 ####construct sequence table####
 seqtab <- makeSequenceTable(mergers)
@@ -199,16 +196,10 @@ dev.off()
 #create phyloseq otu_table
 otus <- otu_table(t(seqtab), taxa_are_rows = TRUE)
 
-#some metrics from the sequence table
+#generate counts of sample per ASV
 otu_pres_abs <- otus
 otu_pres_abs[otu_pres_abs >= 1] <- 1 #creating a presence/absence table
 otu_pres_abs_rowsums <- rowSums(otu_pres_abs) #counts of sample per ASV
-length(otu_pres_abs_rowsums) #how many ASVs
-length(which(otu_pres_abs_rowsums == 1)) #how many ASVs only present in one sample
-
-#what are the counts of each ASV
-otu_rowsums <- rowSums(otus) #raw counts per ASV
-otu_singleton_rowsums <- as.data.frame(otu_rowsums[which(otu_pres_abs_rowsums == 1)]) #raw read counts in ASVs only presesnt in one sample
 
 #IF you want to filter out rare variants (low-read-count singleton ASVs) you can use phyloseq's "transform_sample_counts" to create a relative abundance table, and then filter your ASVs by choosing a threshold of relative abundance: otus_rel_ab = transform_sample_counts(otus, function(x) x/sum(x))
 dim(seqtab) # sanity check

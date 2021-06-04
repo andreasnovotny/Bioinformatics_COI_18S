@@ -32,10 +32,11 @@ blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 1 -perc_ide
 
 
 #assign taxonomy for dada2-processed CO1 amplicon data with blast using NCBI NT and custom CO1 databases together
+mkdir blast_96_sim
 # blast against custom blast DB
-blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/CO1_database/blast_DB/CO1.BOLD_genbank_combined.rep_set.blast_DB -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.fasta  -out CO1_ASV_sequences.customDB.blast.out
+blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/CO1_database/blast_DB/CO1.BOLD_genbank_combined.rep_set.blast_DB -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.fasta  -out blast_96_sim/CO1_ASV_sequences.customDB.blast.out
 # blast against genbank NT blast DB
-blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2020_08_28/blastdb/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.fasta  -out CO1_ASV_sequences.blast.out
+blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2020_08_28/blastdb/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.fasta  -out blast_96_sim/CO1_ASV_sequences.blast.out
 
 #IMPORTANT: next steps are done in R, for simplicity's sake. a custom script here would also work. this is simpler.
 #we need to add taxonIDs for the customDB (adding them directly to the blast DB has not worked in the past, they don't get returned in the blast output). Using the blast output and a map of accessions to taxonIDs, we add the taxonIDs for each blast result.
@@ -45,40 +46,39 @@ library(ShortRead)
 library(Biostrings)
 library(seqinr)
 taxonidmap <- read.delim("~/projects/taxonomyDBs/CO1_database/taxonID_map/CO1.BOLD_genbank_combined.taxonID_map.w_hakai_barcodes.txt", sep="\t", header=F)
-blastfile <- read.delim("CO1_ASV_sequences.customDB.blast.out", sep="\t", header=F)
+blastfile <- read.delim("blast_96_sim/CO1_ASV_sequences.customDB.blast.out", sep="\t", header=F)
 colnames(taxonidmap) <- c("accession", "taxonID")
 colnames(blastfile) <- c("asv", "col2", "accession", "blasttaxid", "col5", "col6", "col7", "col8")
 taxonidmap$accession <- trimws(taxonidmap$accession, which = c("both"))
 blastfile_wtaxids <- merge(blastfile,taxonidmap, by="accession", all.x=TRUE)
 blastfile_output <- subset(blastfile_wtaxids, select=c("asv", "col2", "accession", "taxonID", "col5", "col6", "col7", "col8")) #it's okay here that "col2" is just all NA values, we need it to conform to the blast output from the NT database, but it doesn't get used by the taxonomy assignment scripts
 blastfile_output <- blastfile_output[order(blastfile_output$asv),]
-write.table(blastfile_output, "CO1_ASV_sequences.customDB.blast.out", row.names=F, col.names=F, quote=F, sep="\t") #overwriting input
+write.table(blastfile_output, "blast_96_sim/CO1_ASV_sequences.customDB.blast.out", row.names=F, col.names=F, quote=F, sep="\t") #overwriting input
 
 #combine blast results in a way that the add taxonomy and LCA scripts can handle
-blastout_customDB <- read.delim("CO1_ASV_sequences.customDB.blast.out", sep="\t", header=F)
-blastout_NCBINT <- read.delim("CO1_ASV_sequences.blast.out", sep="\t", header=F)
+blastout_customDB <- read.delim("blast_96_sim/CO1_ASV_sequences.customDB.blast.out", sep="\t", header=F)
+blastout_NCBINT <- read.delim("blast_96_sim/CO1_ASV_sequences.blast.out", sep="\t", header=F)
 blastout_combined <- rbind(blastout_customDB, blastout_NCBINT) #combine tables
 tmp <- blastout_combined[order(-blastout_combined$V5),] #order descending order for percent identity
 tmp <- tmp[order(tmp$V1),] #order by ASV name
 blastout_combined <- tmp 
 #write to file
-write.table(blastout_combined, "CO1_ASV_sequences.combined.blast.out", row.names=F, col.names=F, quote=F, sep="\t")
+write.table(blastout_combined, "blast_96_sim/CO1_ASV_sequences.combined.blast.out", row.names=F, col.names=F, quote=F, sep="\t")
 #now quit R and continue with the remaining code in your bash shell
 
 #avoid " keyerror: 'NA' " with python script by filtering on "NA" as a wholeword string
 #explanation: occasionally, an output line from blast has an NA, which causes an error with the Simple-LCA script below. quick fix is to remove these lines (they're quite rare anyway)
-grep -v -w "NA" CO1_ASV_sequences.combined.blast.out > tmp
+grep -v -w "NA" blast_96_sim/CO1_ASV_sequences.combined.blast.out > blast_96_sim/tmp
 
 #execute first step for the LCA program (adding taxonomy strings based on taxonIDs in blast output)
-
-python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim/CO1_ASV_sequences.length_var.blast.out -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o blast_96_sim/taxonomy
-cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_12S_ASV_sequences.length_var.blast.out > tmp
+python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim/tmp -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o taxonomy
+cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_tmp > tmp
 
 #in this section, a series of taxonomy string modifications are made. This makes the final output more readable/easier to understand, but is optional.
 #IMPORTANT: please note that the filtering criteria in the final step depend on some of this filtering (e.g. blast hits with the word "phylum" will be removed. see -fh parameter in final step) 
-#	because i'm replacing "unknown phylum" in these sed commands, these sequences are retained.
-#	if you choose not to do the replacement, the blast hits with "unknown plylum" will not be used in LCA determination unless you also change the filtering criteria set in the -fh parameter during the final step.
-#	also note, "unknown phylum" is present in any taxonomy where the clade's phylum is uncertain in the NCBI taxonomy system, it doesn't indicate any other kind of uncertainty about the provenance of the sequence.
+# because i'm replacing "unknown phylum" in these sed commands, these sequences are retained.
+# if you choose not to do the replacement, the blast hits with "unknown plylum" will not be used in LCA determination unless you also change the filtering criteria set in the -fh parameter during the final step.
+# also note, "unknown phylum" is present in any taxonomy where the clade's phylum is uncertain in the NCBI taxonomy system, it doesn't indicate any other kind of uncertainty about the provenance of the sequence.
 
 #label fix for clades missing "kingdom" label
 sed -i 's/unknown kingdom \/ Bacillariophyta/Bacillariophyta \/ Bacillariophyta/g' tmp #Bacillariophyta
@@ -109,6 +109,5 @@ sed -i 's/unknown kingdom \/ unknown phylum \/ unknown class \/ Jakobida/Jakobid
 python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.CO1.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified -flh unclassified
 
 #cleanup
-rm 12S_ASV_sequences.length_var.blast.out #remove blast output without taxonomy
-mv tmp 12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
-rm taxonomy_12S_ASV_sequences.length_var.blast.out #remove redundant file
+mv tmp blast_96_sim/taxonomy_CO1_ASV_sequences.combined.blast.out #replace with taxonomy added blast output
+rm taxonomy_tmp blast_96_sim/CO1_ASV_sequences.combined.blast.out blast_96_sim/tmp #remove redundant files
