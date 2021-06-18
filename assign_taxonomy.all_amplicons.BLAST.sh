@@ -20,9 +20,9 @@ cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_12S
 python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified -flh unclassified
 
 #cleanup
-rm 12S_ASV_sequences.length_var.blast.out #remove blast output without taxonomy
-mv tmp 12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
+rm blast_96_sim/12S_ASV_sequences.length_var.blast.out #remove blast output without taxonomy
 rm taxonomy_12S_ASV_sequences.length_var.blast.out #remove redundant file
+mv tmp blast_96_sim/12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
 
 ####CO1 amplicon####
 
