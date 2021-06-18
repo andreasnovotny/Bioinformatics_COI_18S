@@ -44,7 +44,6 @@ dev.off()
 pdf("quality_plots.dada2.12S.R2s.pdf", width = 32, height = 18) # define plot width and height. completely up to user.
   plotQualityProfile(fnRs[1:num_samples])
 dev.off()
-#quality plots look okay, but first 40bp of R2s needs to be trimmed. lane-wide chemistry failures at several points
 
 ####IMPORTANT####
 #select the 12S primer set that used to generate the libraries you're processing. we usually use MiFish-U but have also produced MiFish-E datasets
@@ -83,7 +82,6 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[index]
       REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.filtN[[index]]), 
       REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.filtN[[index]]))
 
-#this dataset doesn't need primer adjustment (RC of rev primer, for example). things are in the "correct" orientation already
 ####OPTIONAL!!!!####
 #REV <- REV.orients[["Reverse"]] #IMPORTANT!!! change orientation ONLY IF NECESSARY. see the dada2 ITS_workflow guide section "Identify Primers" for details
 
@@ -170,7 +168,6 @@ getN <- function(x) sum(getUniques(x)) #keeping track of read retention, number 
 track <- cbind(sapply(derepFs, getN), sapply(derepRs, getN), sapply(dadaFs, getN), sapply(dadaRs, getN))
 samples_to_keep <- track[,4] > 50 #your threshold. try different ones to get the lowest one that will work. #this method accounts for dereplication/ASVs left after inference
 samples_to_remove <- names(samples_to_keep)[which(samples_to_keep == FALSE)] #record names of samples you have the option of removing
-#no samples removed, all pass basic quality threshold
 
 ####merge paired reads####
 #OPTION 1: version of command with no samples left out
@@ -180,13 +177,12 @@ mergers <- mergePairs(dadaFs[samples_to_keep], derepFs[samples_to_keep], dadaRs[
 # Inspect the merger data.frame from the first sample
 head(mergers[[1]])
 
-
 ####construct sequence table####
 seqtab <- makeSequenceTable(mergers)
 dim(seqtab)
 
 ####View Sequence Length Distribution Post-Merging####
-#most useful with merged data. this plot will not show you much for forward reads only, which should have a uniform length distribution.
+#most useful with merged data. this plot will not show you much for forward reads only, which should have a nearly uniform length distribution.
 length.histogram <- as.data.frame(table(nchar(getSequences(seqtab)))) #tabulate sequence length distribution
 pdf("length_histogram.merged_reads.length_var.pdf", width = 10, height = 8) # define plot width and height. completely up to user.
 plot(x=length.histogram[,1], y=length.histogram[,2]) #view length distribution plot
