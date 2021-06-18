@@ -37,12 +37,17 @@ fnRs <- sort(list.files(path, pattern="_R2_001.fastq.gz", full.names = TRUE))
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1) #change the delimiter in quotes and the number at the end of this command to decide how to split up the file name, and which element to extract for a unique sample name
 
 ####fastq Quality Plots####
-num_samples <- 10 #can be any integer, or defined as length(fnFs) if you want to put every sample in the plot. lots of samples may take a few minutes to plot. plotting time scales with number of reads being assessed.
-pdf("quality_plots.dada2.CO1.R1s.pdf", width = 32, height = 18) # define plot width and height. completely up to user.
-  plotQualityProfile(fnFs[1:num_samples]) #this plots the quality profiles for each sample
+#if you have hundreds of samples in your dataset, it's easiest to just look at a few (10-50) fastq files
+numplot <- 49 #CHANGE ME to the number of samples you want to include in the quality plot ( can be anywhere from 2 to length(fnFs) )
+a <- sample(fnFs, numplot) #randomly select a set of N samples
+b <- which(fnFs %in% a) #identify the indices of those samples
+plotfnFs <- fnFs[b] #use the indices to create two lists of corresponding forward and reverse files to plot
+plotfnRs <- fnRs[b]
+pdf("quality_plots.dada2.R1s.pdf", width = 16, height = 9) # define plot width and height. completely up to user.
+  plotQualityProfile(plotfnFs) #this plots the quality profiles for each sample
 dev.off()
-pdf("quality_plots.dada2.CO1.R2s.pdf", width = 32, height = 18) # define plot width and height. completely up to user.
-  plotQualityProfile(fnRs[1:num_samples])
+pdf("quality_plots.dada2.R2s.pdf", width = 16, height = 9) # define plot width and height. completely up to user.
+  plotQualityProfile(plotfnRs)
 dev.off()
 
 ####running primer removal test on subset of data####
