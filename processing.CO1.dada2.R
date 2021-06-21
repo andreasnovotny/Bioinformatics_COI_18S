@@ -1,6 +1,6 @@
 #pipeline for processing CO1 amplicon sequencing data
 #author: Evan Morien
-#last modified: May 27th, 2021
+#last modified: June 21st, 2021
 
 
 ####Intro####
@@ -241,11 +241,8 @@ write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.n
 # seqtab.nosingletons.nochim <- as.matrix(seqtab.nosingletons.nochim) #cast the object as a matrix
 # mode(seqtab.nosingletons.nochim) <- "numeric"
 
-
-#doing CO1 taxonomy assignment with RDP
-taxa <- assignTaxonomy(seqtab.nosingletons.nochim, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2gen.fa", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7", "Rank8"), outputBootstraps = TRUE)
-taxa <- addSpecies(taxa, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2spp.fa.gz")
-
+taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim, "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2gen.fa.gz", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7", "Rank8"), outputBootstraps = TRUE)
+taxa <- addSpecies(taxa_boot[1], "~/projects/taxonomyDBs/CO1_database/dada2_ready/COI_reference_dada2spp.fa.gz") #here we operate on the first element of the list taxa_boot, the character matrix. the second element is a numeric matrix of confidence values up to genus equivalent taxonomic rank
 
 #### save sequences for both ASV tables separately, and do taxonomy assignment with blast ####
 #### replace the long ASV names (the actual sequences) with human-readable names ####
@@ -255,16 +252,20 @@ ASV.seq <- as.character(unclass(row.names(my_otu_table))) #store sequences in ch
 ASV.num <- paste0("ASV", seq(ASV.seq), sep='') #create new names
 write.table(cbind(ASV.num, ASV.seq), "sequence_ASVname_mapping.CO1.txt", sep="\t", quote=F, row.names=F, col.names=F)
 write.fasta(sequences=as.list(ASV.seq), names=ASV.num, "CO1_ASV_sequences.fasta") #save sequences with new names in fasta format
+
 #IMPORTANT: sanity checks
 colnames(seqtab.nosingletons.nochim) == ASV.seq #only proceed if this tests as true for all elements
 row.names(taxa) == ASV.seq #only proceed if this tests as true for all elements
+row.names(taxa_boot$tax) == ASV.seq #only proceed if this tests as true for all elements
+row.names(taxa_boot$boot) == ASV.seq #only proceed if this tests as true for all elements
 
 #assign new ASV names
 colnames(seqtab.nosingletons.nochim) <- ASV.num
 row.names(taxa) <- ASV.num
+row.names(taxa_boot$boot) <- ASV.num
 
 #re-save sequence and taxonomy tables with updated names
 write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.nosingletons.nochim),"sequence_table.CO1.merged.w_ASV_names.txt", row.names=FALSE, quote=F, sep="\t")
 write.table(data.frame("row_names"=rownames(taxa),taxa),"taxonomy_table.CO1.RDP_customDB.txt", row.names=FALSE, quote=F, sep="\t")
-
+write.table(data.frame("row_names"=rownames(taxa_boot$boot),taxa_boot$boot),"taxonomy_table.CO1.RDP_customDB.bootstraps.txt", row.names=FALSE, quote=F, sep="\t")                                       
 #at this point, you are ready to do BLAST-based taxonomy assignment. please see "assign_taxonomy.all_amplicons.BLAST.sh" for the code for that process
