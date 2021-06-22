@@ -50,7 +50,7 @@ pdf("quality_plots.dada2.R2s.pdf", width = 16, height = 9) # define plot width a
   plotQualityProfile(plotfnRs)
 dev.off()
 
-####running primer removal test on subset of data####
+####primer removal####
 FWD <- "GGWACWGGWTGAACWGTWTAYCCYCC"  ## CHANGE ME to your forward primer sequence #current primers here are the CO1 primer set used by Hakai
 REV <- "TANACYTCNGGRTGNCCRAARAAYCA"  ## CHANGE ME to your reverse primer sequence
 allOrients <- function(primer) {
@@ -80,7 +80,6 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[index]
       REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.filtN[[index]]), 
       REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.filtN[[index]]))
 
-#this dataset doesn't need primer adjustment (RC of rev primer, for example). things are in the "correct" orientation already
 ####OPTIONAL!!!!####
 #REV <- REV.orients[["RevComp"]] #IMPORTANT!!! change orientation ONLY IF NECESSARY. see the online dada2 ITS workflow, section "Identify Primers" for details.
 
