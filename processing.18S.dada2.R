@@ -50,15 +50,16 @@ pdf("quality_plots.dada2.R2s.pdf", width = 16, height = 9) # define plot width a
   plotQualityProfile(plotfnRs)
 dev.off()
 
-####running primer removal test on subset of data####
-FWD <- "CCAGCASCYGCGGTAATTCC" ## CHANGE ME to your forward primer sequence V4F 565F
-REV <- "ACTTTCGTTCTTGATYRR"   ## CHANGE ME to your reverse primer sequence V4RB 981R
+####primer removal####
+#IMPORTANT: CHANGE "FWD" and "REV" to the primer set used to generate your data. here are examples of three commonly used 18S V4 region primer sets.
+FWD <- "CCAGCASCYGCGGTAATTCC" ## V4F 565F
+REV <- "ACTTTCGTTCTTGATYRR"   ## V4RB 981R
 
-FWD <- "CCAGCASCYGCGGTAATTCC" ## CHANGE ME to your forward primer sequence TAReuk454F
-REV <- "ACTTTCGTTCTTGATYRA"   ## CHANGE ME to your reverse primer sequence TAReukRev3
+FWD <- "CCAGCASCYGCGGTAATTCC" ## TAReuk454F
+REV <- "ACTTTCGTTCTTGATYRA"   ## TAReukRev3
 
-FWD <- "CYGCGGTAATTCCAGCTC"   ## CHANGE ME to your forward primer sequence E572F
-REV <- "CRAAGAYGATYAGATACCRT" ## CHANGE ME to your reverse primer sequence E1009R
+FWD <- "CYGCGGTAATTCCAGCTC"   ## E572F
+REV <- "CRAAGAYGATYAGATACCRT" ## E1009R
 
 allOrients <- function(primer) {
   # Create all orientations of the input sequence
@@ -107,11 +108,13 @@ R1.flags <- paste("-g", FWD, "-a", REV.RC)
 R2.flags <- paste("-G", REV, "-A", FWD.RC) 
 
 #Run Cutadapt
+#-j denotes the number of cores that cutadapt can use when processing reads, adjust accordingly
 for(i in seq_along(fnFs)) {
   system2(cutadapt, args = c(R1.flags, R2.flags, "-n", 2, "-j", 36,# -n 2 required to remove FWD and REV from reads
                              "-o", fnFs.cut[i], "-p", fnRs.cut[i], # output files
                              fnFs.filtN[i], fnRs.filtN[i])) # input files
 }
+
 #sanity check, should report zero for all orientations and read sets
 index <- 5 #this is the index of the file we want to check for primers, within the lists "fn*s.cut", it can be any number from 1 to N, where N is the number of samples you are processing
 rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.cut[[index]]), 
@@ -249,10 +252,9 @@ write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.n
 #### taxonomy assignment with SILVA v132 ####
 taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim, "/PATH/TO/taxonomy_databases/silva_for_dada2/v132_for_parfreylab/18s/silva_132.18s.99_rep_set.dada2.fa.gz", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7"), outputBootstraps = TRUE)
 
-#### save sequences for both ASV tables separately, and do taxonomy assignment with blast ####
 #### replace the long ASV names (the actual sequences) with human-readable names ####
 #save the new names and sequences as a .fasta file in your project working directory, and save a table that shows the mapping of sequences to new ASV names
-my_otu_table <- t(as.data.frame(seqtab.nosingletons.nochim)) #transposed (OTUs are rows) data frame. unclassing the otu_table() output avoids type/class errors later on
+my_otu_table <- t(as.data.frame(seqtab.nosingletons.nochim)) #transposed (OTUs are rows) data frame
 ASV.seq <- as.character(unclass(row.names(my_otu_table))) #store sequences in character vector
 ASV.num <- paste0("ASV", seq(ASV.seq), sep='') #create new names
 write.table(cbind(ASV.num, ASV.seq), "sequence_ASVname_mapping.18S.txt", sep="\t", quote=F, row.names=F, col.names=F)
