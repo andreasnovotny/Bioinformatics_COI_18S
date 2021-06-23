@@ -1,17 +1,20 @@
 #code for producing taxonomic assignments using blast, for CO1 and 12S amplicon data
 #author: Evan Morien
-#last modified: May 26th, 2021
+#last modified: June 23rd, 2021
 
 #Introduction
 #	The following code/pipeline was developed over the course of 2020/2021 to use blast to generate taxonomic assignments for both CO1 and 12S amplicon sequencing experiments
 #	Code is divided into sections based on the amplicon in question, as well as the reference database
 
-####12S amplicon####
+#### 12S amplicon RDP with custom MitoFish classifier ####
 #assign taxonomy for dada2-processed 12S amplicon data with blast using the NCBI NT database
 #RDP assignments for 12S should be preferred, but this supplementary method has the added benefit of identifying bacterial and human contaminant sequences
 #run 12S classifier from terrimporter on github (sequences for 12S isolated from mitofish mitochondiral genome repo, classifier trained on these sequences)
 java -Xmx248g -jar ~/programs/rdp_classifier_2.13/dist/classifier.jar classify -c 0.8 -t ~/projects/taxonomyDBs/12S_database/terrimporter_12S_fish_classifier/mydata_trained/rRNAClassifier.properties -o taxonomy_table.12S.merged.RDP.txt 12S_ASV_sequences.length_var.fasta
 
+
+#### 12S, 16S, or 18S blasting against NCBI NT ####
+#remember to change the input and output file names so they match the amplicon you're working with
 #assign taxonomy with blast NT database at 96% similarity threshold
 mkdir blast_96_sim
 blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2020_08_28/blastdb/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query 12S_ASV_sequences.length_var.fasta  -out blast_96_sim/12S_ASV_sequences.length_var.blast.out
@@ -24,12 +27,11 @@ rm blast_96_sim/12S_ASV_sequences.length_var.blast.out #remove blast output with
 rm taxonomy_12S_ASV_sequences.length_var.blast.out #remove redundant file
 mv tmp blast_96_sim/12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
 
-####CO1 amplicon####
 
+#### CO1 amplicon blast with NT and custom CO1 sequence database ####
 #assign taxonomy for dada2-processed CO1 amplicon data with blast using our Hakai CO1 barcode sequences
 ####taxonomy assignment with blast alone, using hakai barcode blast DB####
 blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 1 -perc_identity 97 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/CO1_database/hakai_barcode_blast_DB/hakai_barcode_blast_DB -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.fasta  -out taxonomy_table.CO1.merged.hakai_barcodeDB.97sim_cutoff.txt
-
 
 #assign taxonomy for dada2-processed CO1 amplicon data with blast using NCBI NT and custom CO1 databases together
 mkdir blast_96_sim
