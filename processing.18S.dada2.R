@@ -250,7 +250,7 @@ write.table(data.frame("row_names"=rownames(seqtab.nosingletons.nochim),seqtab.n
 # mode(seqtab.nosingletons.nochim) <- "numeric"
 
 #### taxonomy assignment with SILVA v132 ####
-taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim, "/PATH/TO/taxonomy_databases/silva_for_dada2/v132_for_parfreylab/18s/silva_132.18s.99_rep_set.dada2.fa.gz", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7"), outputBootstraps = TRUE)
+taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim, "/PATH/TO/taxonomy_databases/silva_for_dada2/v132_for_parfreylab/18s/silva_132.18s.99_rep_set.dada2.fa.gz", multithread=TRUE, taxLevels = c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7", "Accession"), outputBootstraps = TRUE)
 
 #### replace the long ASV names (the actual sequences) with human-readable names ####
 #save the new names and sequences as a .fasta file in your project working directory, and save a table that shows the mapping of sequences to new ASV names
