@@ -1,6 +1,6 @@
 #code for producing taxonomic assignments using blast, for CO1 and 12S amplicon data
 #author: Evan Morien
-#last modified: June 28th, 2021
+#last modified: June 29th, 2021
 
 #Introduction
 #	The following code/pipeline was developed over the course of 2020/2021 to use blast to generate taxonomic assignments for both CO1 and 12S amplicon sequencing experiments
@@ -21,6 +21,9 @@ blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_id
 python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim/12S_ASV_sequences.length_var.blast.out -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o blast_96_sim/taxonomy
 cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_12S_ASV_sequences.length_var.blast.out > tmp
 python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom,phylum,class,order,family,genus -flh unclassified,unknown
+#for 12S, i have found that the filtering parameters below are best for identifying bacterial (non 12S sequence)
+python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom -flh unclassified
+
 
 #cleanup
 rm blast_96_sim/12S_ASV_sequences.length_var.blast.out #remove blast output without taxonomy
