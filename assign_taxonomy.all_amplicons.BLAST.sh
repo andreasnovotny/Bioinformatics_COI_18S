@@ -111,7 +111,7 @@ sed -i 's/unknown kingdom \/ unknown phylum \/ unknown class \/ Telonemida/Telon
 sed -i 's/unknown kingdom \/ unknown phylum \/ unknown class \/ Jakobida/Jakobida \/ Jakobida \/ Jakobida \/ Jakobida/g' tmp #Jakobida
 
 #execute final step for the LCA program (forming consensus taxonomies for each ASV)
-python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o -o blast_96_sim/taxonomy_table.CO1.NCBI_NT+customDB.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom,phylum,class,order,family,genus -flh unclassified,unknown
+python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.CO1.NCBI_NT+customDB.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom,phylum,class,order,family,genus -flh unclassified,unknown
 
 #cleanup
 mv tmp blast_96_sim/taxonomy_CO1_ASV_sequences.combined.blast.out #replace with taxonomy added blast output
