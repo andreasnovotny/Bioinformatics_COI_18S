@@ -213,7 +213,7 @@ sed -i 's/Eukaryota \/ unknown phylum \/ unknown class \/ Jakobida/Eukaryota \/ 
 
 #execute final step for the LCA program (forming consensus taxonomies for each ASV)
 mv -f tmp blast_96_sim/CO1_ASV_sequences.combined_all.blast.out #put tmp file where it belongs, add label (this is an overwrite, careful!!)
-python2 ~/programs/galaxy-tool-lca/lca.py -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out -o taxonomy_table.CO1.NCBI_NT+customDB.iterative_blast.txt -b 100 -id 80 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom -flh unclassified
+python2 ~/programs/galaxy-tool-lca/lca.py -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out -o taxonomy_table.CO1.NCBI_NT+customDB.iterative_blast.txt -b 100 -id 90 -cov 50 -t best_hit -tid 98 -tcov 50 -fh environmental,unidentified,kingdom -flh unclassified
 
 #cleanup
 rm taxonomy_tmp blast_96_sim/tmp #remove redundant files
