@@ -122,17 +122,17 @@ rm taxonomy_tmp blast_96_sim/CO1_ASV_sequences.combined.blast.out blast_96_sim/t
 #assign taxonomy for dada2-processed CO1 amplicon data with blast using NCBI NT and custom CO1 databases together
 mkdir blast_96_sim
 # blast against custom blast DB
-blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/CO1_database/blast_DB/CO1.BOLD_genbank_combined.rep_set.blast_DB -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.oriented.fasta  -out blast_96_sim/CO1_ASV_sequences.customDB.blast.out
+blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/CO1_database/blast_DB/CO1.BOLD_genbank_combined.rep_set.blast_DB -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.fasta  -out blast_96_sim/CO1_ASV_sequences.customDB.blast.out
 # blast against genbank NT blast DB
-blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2021-11-05/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.oriented.fasta  -out blast_96_sim/CO1_ASV_sequences.blast.out
+blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2021-11-05/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query CO1_ASV_sequences.fasta  -out blast_96_sim/CO1_ASV_sequences.blast.out
 
 
 #filter input fasta to only contain sequences with no hits in the above two blast runs
 cat blast_96_sim/CO1_ASV_sequences*blast.out | cut -f1,1 | sort | uniq > blast_96_sim/blast_hit_ASVs.txt
 grep -wv -f blast_96_sim/blast_hit_ASVs.txt sequence_ASVname_mapping.txt | cut -f1,1 | sort > blast_96_sim/no_blast_hit_ASVs.txt
-awk -F'>' 'NR==FNR{ids[$0]; next} NF>1{f=($2 in ids)} f' blast_96_sim/no_blast_hit_ASVs.txt CO1_ASV_sequences.oriented.fasta > blast_96_sim/CO1_ASV_sequences.no_blast_hit.fasta
+awk -F'>' 'NR==FNR{ids[$0]; next} NF>1{f=($2 in ids)} f' blast_96_sim/no_blast_hit_ASVs.txt CO1_ASV_sequences.fasta > blast_96_sim/CO1_ASV_sequences.no_blast_hit.fasta
 
-#try blasting this output with lower thresholds for similarity, see what you get
+#blast this output with lower thresholds for similarity
 mkdir blast_90_sim
 # blast against custom blast DB
 blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 90 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/CO1_database/blast_DB/CO1.BOLD_genbank_combined.rep_set.blast_DB -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query blast_96_sim/CO1_ASV_sequences.no_blast_hit.fasta  -out blast_90_sim/CO1_ASV_sequences.customDB.blast.out
