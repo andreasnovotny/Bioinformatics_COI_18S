@@ -211,7 +211,7 @@ write.table(blastfile_output, "blast_96_sim/CO1_ASV_sequences.customDB_96_90.bla
 #combine blast results in a way that the add taxonomy and LCA scripts can handle
 blastout_customDB <- read.delim("blast_96_sim/CO1_ASV_sequences.customDB_96_90.blast.out", sep="\t", header=F)
 blastout_NCBINT <- read.delim("blast_96_sim/CO1_ASV_sequences.blast.out", sep="\t", header=F)
-blastout_NCBINT_2 <- read.delim("blast_96_sim/CO1_ASV_sequences.blast.out", sep="\t", header=F)
+blastout_NCBINT_2 <- read.delim("blast_90_sim/CO1_ASV_sequences.blast.out", sep="\t", header=F)
 blastout_NCBINT <- rbind(blastout_NCBINT, blastout_NCBINT_2) #join iterations for NT blast
 blastout_combined <- rbind(blastout_customDB, blastout_NCBINT) #combine tables
 tmp <- blastout_combined[order(-blastout_combined$V5),] #order descending order for percent identity
