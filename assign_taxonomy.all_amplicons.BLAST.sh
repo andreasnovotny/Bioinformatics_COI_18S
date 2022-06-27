@@ -197,8 +197,8 @@ library(ShortRead)
 library(Biostrings)
 library(seqinr)
 taxonidmap <- read.delim("~/projects/taxonomyDBs/CO1_database/taxonID_map/CO1.BOLD_genbank_combined.taxonID_map.w_hakai_barcodes.txt", sep="\t", header=F)
-blastfile <- read.delim("blast_96_sim/CO1_ASV_sequences.customDB.blast.out", sep="\t", header=F)
-blastfile2 <- read.delim("blast_90_sim/CO1_ASV_sequences.customDB.blast.out", sep="\t", header=F)
+blastfile <- read.delim("blast_96_sim/CO1_ASV_sequences.customDB.blast.out", sep="\t", header=F) #read in blast results for 96% similarity iteration
+blastfile2 <- read.delim("blast_90_sim/CO1_ASV_sequences.customDB.blast.out", sep="\t", header=F) #read in blast results for 90% similarity iteration
 blastfile <- rbind(blastfile, blastfile2) #join iterations for customDB blast
 colnames(taxonidmap) <- c("accession", "taxonID")
 colnames(blastfile) <- c("asv", "col2", "accession", "blasttaxid", "col5", "col6", "col7", "col8")
