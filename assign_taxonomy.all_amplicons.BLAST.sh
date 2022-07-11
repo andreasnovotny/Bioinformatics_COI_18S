@@ -178,7 +178,7 @@ blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_id
 
 #filter input fasta to only contain sequences with no hits in the above two blast runs
 cat blast_96_sim/CO1_ASV_sequences*blast.out | cut -f1,1 | sort | uniq > blast_96_sim/blast_hit_ASVs.txt
-grep -wv -f blast_96_sim/blast_hit_ASVs.txt sequence_ASVname_mapping.txt | cut -f1,1 | sort > blast_96_sim/no_blast_hit_ASVs.txt
+grep -wv -f blast_96_sim/blast_hit_ASVs.txt sequence_ASVname_mapping.CO1.txt | cut -f1,1 | sort > blast_96_sim/no_blast_hit_ASVs.txt
 awk -F'>' 'NR==FNR{ids[$0]; next} NF>1{f=($2 in ids)} f' blast_96_sim/no_blast_hit_ASVs.txt CO1_ASV_sequences.fasta > blast_96_sim/CO1_ASV_sequences.no_blast_hit.fasta
 
 #blast this output with lower thresholds for similarity
