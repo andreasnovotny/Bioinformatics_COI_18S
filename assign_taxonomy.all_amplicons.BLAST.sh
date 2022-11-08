@@ -17,19 +17,31 @@ java -Xmx248g -jar ~/programs/rdp_classifier_2.13/dist/classifier.jar classify -
 #remember to change the input and output file names so they match the amplicon you're working with
 #assign taxonomy with blast NT database at 96% similarity threshold
 mkdir blast_96_sim
-blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2020_08_28/blastdb/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query 12S_ASV_sequences.length_var.fasta  -out blast_96_sim/12S_ASV_sequences.length_var.blast.out
+blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2021-11-05/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query 12S_ASV_sequences.length_var.fasta  -out blast_96_sim/12S_ASV_sequences.length_var.blast.out
 python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim/12S_ASV_sequences.length_var.blast.out -t ~/programs/Simple-LCA/rankedlineage.dmp -m ~/programs/Simple-LCA/merged.dmp -o blast_96_sim/taxonomy
 cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_12S_ASV_sequences.length_var.blast.out > tmp
-python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom,phylum,class,order,family,genus -flh unclassified,unknown
+python2 ~/programs/galaxy-tool-lca/lca.species.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom,phylum,class,order,family,genus -flh unclassified,unknown
 #for 12S, i have found that the filtering parameters below are best for identifying bacterial (non 12S sequence)
-python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom -flh unclassified
-
+python2 ~/programs/galaxy-tool-lca/lca.species.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom -flh unclassified
 
 #cleanup
 rm blast_96_sim/12S_ASV_sequences.length_var.blast.out #remove blast output without taxonomy
 rm taxonomy_12S_ASV_sequences.length_var.blast.out #remove redundant file
 mv tmp blast_96_sim/12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
 
+#assign taxonomy with blast NT database at 96% similarity threshold #NO BEST HITS, LCA ONLY
+mkdir blast_96_sim_NO_BESTHIT
+blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_NT/2021-11-05/nt -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query 12S_ASV_sequences.length_var.fasta  -out blast_96_sim_NO_BESTHIT/12S_ASV_sequences.length_var.blast.out
+python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim_NO_BESTHIT/12S_ASV_sequences.length_var.blast.out -t ~/projects/taxonomyDBs/NCBI_taxonomy/2021-11-05/rankedlineage.dmp -m ~/projects/taxonomyDBs/NCBI_taxonomy/2021-11-05/merged.dmp  -o blast_96_sim_NO_BESTHIT/taxonomy
+cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_12S_ASV_sequences.length_var.blast.out > tmp #need header or lca.py breaks
+python2 ~/programs/galaxy-tool-lca/lca.species.py -i tmp -o blast_96_sim/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom,phylum,class,order,family,genus -flh unclassified,unknown
+#for 12S, i have found that the filtering parameters below are best for identifying bacterial (non 12S sequence)
+python2 ~/programs/galaxy-tool-lca/lca.species.py -i tmp -o blast_96_sim_NO_BESTHIT/taxonomy_table.12S.NCBI_NT.96sim.txt -b 100 -id 96 -cov 50 -t only_lca -fh environmental,unidentified -flh unclassified
+
+#cleanup
+rm blast_96_sim_NO_BESTHIT/12S_ASV_sequences.length_var.blast.out #remove blast output without taxonomy
+rm taxonomy_12S_ASV_sequences.length_var.blast.out #remove redundant file
+mv tmp blast_96_sim_NO_BESTHIT/12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
 
 
 #### 18S amplicon blast with NCBI SSU database ####
@@ -69,7 +81,7 @@ sed -i 's/Eukaryota \/ unknown phylum \/ unknown class \/ Jakobida/Eukaryota \/ 
 sed -i 's/Eukaryota \/ unknown phylum \/ unknown class \/ Pirsoniales/Eukaryota \/ Pirsoniales \/ Pirsoniales \/ Pirsoniales/g' tmp #Pirsoniales
 
 #for 18S, i have found that the filtering parameters below are best for identifying bacterial (non 18S sequence)
-python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o taxonomy_table.18S.NCBI_SSU.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom -flh unclassified
+python2 ~/programs/galaxy-tool-lca/lca.species.py -i tmp -o taxonomy_table.18S.NCBI_SSU.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom -flh unclassified
 
 #cleanup
 rm taxonomy_18S_ASV_sequences.NCBI_SSU.blast.out tmp
@@ -160,7 +172,7 @@ sed -i 's/Eukaryota \/ unknown phylum \/ unknown class \/ Jakobida/Eukaryota \/ 
 sed -i 's/Eukaryota \/ unknown phylum \/ unknown class \/ Pirsoniales/Eukaryota \/ Pirsoniales \/ Pirsoniales \/ Pirsoniales/g' tmp #Pirsoniales
 
 #execute final step for the LCA program (forming consensus taxonomies for each ASV)
-python2 ~/programs/galaxy-tool-lca/lca.py -i tmp -o blast_96_sim/taxonomy_table.CO1.NCBI_NT+customDB.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom,phylum,class,order,family,genus -flh unclassified,unknown
+python2 ~/programs/galaxy-tool-lca/lca.species.py -i tmp -o blast_96_sim/taxonomy_table.CO1.NCBI_NT+customDB.96sim.txt -b 100 -id 96 -cov 50 -t best_hit -tid 98 -tcov 80 -fh environmental,unidentified,kingdom,phylum,class,order,family,genus -flh unclassified,unknown
 
 #cleanup
 mv tmp blast_96_sim/taxonomy_CO1_ASV_sequences.combined.blast.out #replace with taxonomy added blast output
@@ -267,7 +279,7 @@ sed -i 's/Eukaryota \/ unknown phylum \/ unknown class \/ Pirsoniales/Eukaryota 
 
 #execute final step for the LCA program (forming consensus taxonomies for each ASV)
 mv -f tmp blast_96_sim/CO1_ASV_sequences.combined_all.blast.out #put tmp file where it belongs, add label (this is an overwrite, careful!!)
-python2 ~/programs/galaxy-tool-lca/lca.py -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out -o taxonomy_table.CO1.NCBI_NT+customDB.iterative_blast.txt -b 100 -id 90 -cov 50 -t best_hit -tid 98 -tcov 50 -fh environmental,unidentified,kingdom -flh unclassified
+python2 ~/programs/galaxy-tool-lca/lca.species.py -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out -o taxonomy_table.CO1.NCBI_NT+customDB.iterative_blast.txt -b 100 -id 90 -cov 50 -t best_hit -tid 98 -tcov 50 -fh environmental,unidentified,kingdom -flh unclassified
 
 #cleanup
 rm taxonomy_tmp blast_96_sim/tmp #remove redundant files
