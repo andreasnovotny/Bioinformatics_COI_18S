@@ -12,6 +12,7 @@
 #run 12S classifier from terrimporter on github (sequences for 12S isolated from mitofish mitochondiral genome repo, classifier trained on these sequences)
 java -Xmx248g -jar ~/programs/rdp_classifier_2.13/dist/classifier.jar classify -c 0.8 -t ~/projects/taxonomyDBs/12S_database/terrimporter_12S_fish_classifier/mydata_trained/rRNAClassifier.properties -o taxonomy_table.12S.merged.RDP.txt 12S_ASV_sequences.length_var.fasta
 
+####important note: we use a modified version of the galaxy-tool-lca repository, forked here: https://github.com/hakaigenomics/galaxy-tool-lca
 
 #### 12S or 16S blasting against NCBI NT ####
 #remember to change the input and output file names so they match the amplicon you're working with
