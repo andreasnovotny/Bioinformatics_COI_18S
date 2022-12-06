@@ -74,7 +74,7 @@ FWD.orients
 
 fnFs.filtN <- file.path(path, "filtN", basename(fnFs)) # Put N-filterd files in filtN/ subdirectory
 fnRs.filtN <- file.path(path, "filtN", basename(fnRs))
-filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, trimLeft = c(0,0), trimRight = c(0,0), truncLen=c(180,150), maxN = 0, multithread = TRUE, compress = TRUE, matchIDs=TRUE)
+filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, trimLeft = c(0,0), trimRight = c(0,0), truncLen=c(180,150), maxN = 0, multithread = 32, compress = TRUE, matchIDs=TRUE)
 
 primerHits <- function(primer, fn) {
   # Counts number of reads in which the primer is found
@@ -108,7 +108,7 @@ R2.flags <- paste("-G", REV, "-A", FWD.RC)
 
 #Run Cutadapt
 for(i in seq_along(fnFs)) {
-  system2(cutadapt, args = c(R1.flags, R2.flags, "-n", 2, "-j", 36,# -n 2 required to remove FWD and REV from reads
+  system2(cutadapt, args = c(R1.flags, R2.flags, "-n", 2, "-j", 32,# -n 2 required to remove FWD and REV from reads #-j sets no. threads
                              "-o", fnFs.cut[i], "-p", fnRs.cut[i], # output files
                              fnFs.filtN[i], fnRs.filtN[i])) # input files
 }
@@ -133,15 +133,15 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 #it is best, after primer removal, to not truncate with 18s data, or with data from any region in which the length is broadly variable. you may exclude organisms that have a shorter insert than the truncation length (definitely possible, good example is giardia). defining a minimum sequence length is best.
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, trimLeft = c(0,0), trimRight = c(0,0), minLen = c(110,110),
                      maxN=c(0,0), maxEE=c(4,6), truncQ=c(2,2), rm.phix=TRUE, matchIDs=TRUE,
-                     compress=TRUE, multithread=TRUE)
+                     compress=TRUE, multithread=32)
 retained <- as.data.frame(out)
 retained$percentage_retained <- retained$reads.out/retained$reads.in*100
 write.table(retained, "retained_reads.filterAndTrim_step.length_var.txt", sep="\t", row.names=TRUE, col.names=TRUE, quote=FALSE)
 
 ####learn error rates####
 #the next three sections (learn error rates, dereplication, sample inference) are the core of dada2's sequence processing pipeline. read the dada2 paper and their online documentation (linked at top of this guide) for more information on how these steps work
-errF <- learnErrors(filtFs, multithread=TRUE)
-errR <- learnErrors(filtRs, multithread=TRUE)
+errF <- learnErrors(filtFs, multithread=32)
+errR <- learnErrors(filtRs, multithread=32)
 
 pdf("error_rates.dada2.R1s.length_var.pdf", width = 10, height = 10) # define plot width and height. completely up to user.
   plotErrors(errF, nominalQ=TRUE) #assess this graph. it shows the error rates observed in your dataset. strange or unexpected shapes in the plot should be considered before moving on.
@@ -159,8 +159,8 @@ names(derepFs) <- sample.names
 names(derepRs) <- sample.names
 
 ####sample inference####
-dadaFs <- dada(derepFs, err=errF, multithread=TRUE)
-dadaRs <- dada(derepRs, err=errR, multithread=TRUE)
+dadaFs <- dada(derepFs, err=errF, multithread=32)
+dadaRs <- dada(derepRs, err=errR, multithread=32)
 
 dadaFs[[1]]
 dadaRs[[1]]
@@ -218,11 +218,21 @@ otus_filt <- otus[-rows_to_remove,] #filter OTU table we created earlier
 dim(otus_filt) #how many ASVs did you retain?
 seqtab.nosingletons <- t(as.matrix(unclass(otus_filt))) #convert filtered OTU table back to a sequence table matrix to continue with dada2 pipeline
 
+#Start ASV report
+cat("dimensions of unfiltered ASV table:", dim(otus),file="ASV_report.txt",sep="\t",append=TRUE)
+cat("", file="ASV_report.txt", sep="\n", append=TRUE)
+cat("# ASVs Removed:", length(intersect(a,b)),file="ASV_report.txt",sep="\t",append=TRUE)
+cat("", file="ASV_report.txt", sep="\n", append=TRUE)
+cat("dimensions of filtered ASV table:", dim(otus_filt),file="ASV_report.txt",sep="\t",append=TRUE)
+cat("", file="ASV_report.txt", sep="\n", append=TRUE)
+
 ####remove chimeras####
 #here we remove "bimeras" or chimeras with two sources. look at "method" to decide which type of pooling you'd like to use when judging each sequence as chimeric or non-chimeric
-seqtab.nosingletons.nochim <- removeBimeraDenovo(seqtab.nosingletons, method="pooled", multithread=TRUE, verbose=TRUE) #this step can take a few minutes to a few hours, depending on the size of your dataset
-dim(seqtab.nosingletons.nochim)
+seqtab.nosingletons.nochim <- removeBimeraDenovo(seqtab.nosingletons, method="pooled", multithread=36, verbose=TRUE) #this step can take a few minutes to a few hours, depending on the size of your dataset
+cat("dimensions of ASV table after chimera removal", dim(seqtab.nosingletons.nochim),file="ASV_report.txt",sep="\t",append=TRUE)
+cat("", file="ASV_report.txt", sep="\n", append=TRUE)
 sum(seqtab.nosingletons.nochim)/sum(seqtab.nosingletons) #proportion of nonchimeras #it should be relatively high after filtering out your singletons/low-count ASVs, even if you lose a lot of ASVs, the number of reads lost should be quite low
+cat("proprtion of chimeric to non chimeric reads:", sum(seqtab.nosingletons.nochim)/sum(seqtab.nosingletons),file="ASV_report.txt",sep="\t",append=TRUE)
 
 ####track read retention through steps####
 getN <- function(x) sum(getUniques(x))
