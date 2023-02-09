@@ -26,12 +26,14 @@ library(seqinr)
 
 ####Environment Setup####
 theme_set(theme_bw())
-setwd("/path/to/working_directory/")
+wd <- "/home/andreas.novotny/AmpliconSeqAnalysis/Data/COI_QU39-2018"
+setwd(wd)
 
 ####File Path Setup####
 #this is so dada2 can quickly iterate through all the R1 and R2 files in your read set
-path <- "/path/to/working_directory/raw_data/" # CHANGE ME to the directory containing the fastq files
+path <- file.path(wd, "Fastq/") # CHANGE ME to the directory containing the fastq files
 list.files(path)
+path
 fnFs <- sort(list.files(path, pattern="_R1_001.fastq.gz", full.names = TRUE)) #change the pattern to match all your R1 files
 fnRs <- sort(list.files(path, pattern="_R2_001.fastq.gz", full.names = TRUE))
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1) #change the delimiter in quotes and the number at the end of this command to decide how to split up the file name, and which element to extract for a unique sample name
@@ -78,7 +80,9 @@ index <- 5 #this is the index of the file we want to check for primers, within t
 rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[index]]), #the index of the sample you'd like to use for this test is used here (your first sample may be a blank/control and not have many sequences in it, be mindful of this)
       FWD.ReverseReads = sapply(FWD.orients, primerHits, fn = fnRs.filtN[[index]]), 
       REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.filtN[[index]]), 
-      REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.filtN[[index]]))
+      REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.filtN[[index]])) %>%
+      write.table("detected_primers.csv", sep="\t", row.names=TRUE, col.names=TRUE, quote=FALSE)
+
 
 ####OPTIONAL!!!!####
 #REV <- REV.orients[["RevComp"]] #IMPORTANT!!! change orientation ONLY IF NECESSARY. see the online dada2 ITS workflow, section "Identify Primers" for details.
@@ -110,7 +114,8 @@ index <- 5 #this is the index of the file we want to check for primers, within t
 rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.cut[[index]]), 
       FWD.ReverseReads = sapply(FWD.orients, primerHits, fn = fnRs.cut[[index]]), 
       REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.cut[[index]]), 
-      REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.cut[[index]]))
+      REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.cut[[index]])) %>%
+      write.table("detected_primers_cutadapt.csv", sep="\t", row.names=TRUE, col.names=TRUE, quote=FALSE)
 
 # Forward and reverse fastq filenames have the format:
 cutFs <- sort(list.files(path.cut, pattern = "_R1_001", full.names = TRUE)) #remember to change this so it matches ALL your file names!
@@ -124,12 +129,20 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 ####trim & filter####
 #filter and trim command. dada2 can canonically handle lots of errors, I am typically permissive in the maxEE parameter set here, in order to retain the maximum number of reads possible. error correction steps built into the dada2 pipeline have no trouble handling data with this many expected errors.
 #it is best, after primer removal, to not truncate with 18s data, or with data from any region in which the length is broadly variable. you may exclude organisms that have a shorter insert than the truncation length (definitely possible, good example is giardia). defining a minimum sequence length is best.
-out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, truncLen=c(0,0), trimLeft = c(0, 0), trimRight = c(0,0), minLen = c(150,150),
-                     maxN=c(0,0), maxEE=c(4,6), truncQ=c(2,2), rm.phix=TRUE, matchIDs=TRUE,
-                     compress=TRUE, multithread=32)
+out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs,
+                    truncLen=c(0,0),
+                    trimLeft = c(0, 0), 
+                    trimRight = c(0,0), 
+                    minLen = c(150,150),
+                    maxN=c(0,0),
+                    maxEE=c(4,6),
+                    truncQ=c(2,2),
+                    rm.phix=TRUE, matchIDs=TRUE,
+                    compress=TRUE, multithread=32)
+                    
 retained <- as.data.frame(out)
 retained$percentage_retained <- retained$reads.out/retained$reads.in*100
-write.table(retained, "retained_reads.CO1.filterAndTrim_step.txt", sep="\t", row.names=TRUE, col.names=TRUE, quote=FALSE)
+write.table(retained, "retained_reads.CO1.filterAndTrim_step.csv", sep="\t", row.names=TRUE, col.names=TRUE, quote=FALSE)
 
 ####learn error rates####
 #the next three sections (learn error rates, dereplication, sample inference) are the core of dada2's sequence processing pipeline. read the dada2 paper and their online documentation (linked at top of this guide) for more information on how these steps work
