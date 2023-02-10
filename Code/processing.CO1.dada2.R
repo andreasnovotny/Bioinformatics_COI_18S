@@ -4,6 +4,11 @@
 #last modified: Dec 5th, 2021
 
 
+###########################################################
+# Execute from command line
+# Rscript processing.COI.dada2.R "/path/to/data/directory"
+###########################################################
+
 #### Intro ####
 # The pipleline assumes a starting point of a project directory with a
 # subfolder containing raw sequencing data the raw data may be in paired
@@ -56,10 +61,11 @@ if(!dir.exists(path.report)) dir.create(path.report)
 # Prepare a ASV report file:
 appendASV <- function(...) {
   cat(...,
-      file = "Report/ASV_report.txt",
+      file = "Report/Progress_report.txt",
       sep = "\t", append = TRUE)
 }
-appendASV(" \n Report for system date: ", Sys.Date())
+appendASV(" \n Report for ASV analysis:", wd,
+          "\n Date:", date())
 
 
 # Create final result file:
@@ -83,12 +89,15 @@ sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 #### Plot Quality Scores #####
 
 #randomly select a set of 49 samples
-a <- sample(fnFs, 49)
+a <- sample(fnFs, ifelse(length(fnFs) < 49,length(fnFs), 49))
+
 #identify the indices of those samples
 b <- which(fnFs %in% a)
 # use the indices to create two lists of corresponding fwd and rev files to plot
 plotfnFs <- fnFs[b]
 plotfnRs <- fnRs[b]
+
+appendASV(" \n \n - Plotting Quality scores")
 
 # this plots the quality profiles for each sample
 pdf("Report/quality_plots.dada2.R1s.pdf", width = 16, height = 9)
@@ -124,6 +133,7 @@ FWD.orients
 fnFs.filtN <- file.path(path, "filtN", basename(fnFs))
 fnRs.filtN <- file.path(path, "filtN", basename(fnRs))
 
+appendASV(" \n - Removing ambigous sequences")
 # This initial filter and trim will only remove sequences that has "Ns".
 # This is to improve accuracy of cutadapt.
 filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN,
@@ -141,9 +151,10 @@ primerHits <- function(primer, fn) {
 
 
 
-index <- 5  # this is the index of the file we want to check for primers,
-            # within the lists "fn*s.filtN", it can be any number from 1
-            # to N, where N is the number of samples you are processing
+index <- ifelse(length(fnFs) < 5,length(fnFs), 5)
+# this is the index of the file we want to check for primers,
+# within the lists "fn*s.filtN", it can be any number from 1
+# to N, where N is the number of samples you are processing
 
 # Construct table of detected primers.
 rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits,
@@ -164,7 +175,6 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits,
 
 # CHANGE ME to the cutadapt path on your machine
 cutadapt <- "/usr/local/bin/cutadapt"
-system2(cutadapt, args = "--version")
 
 fnFs.cut <- file.path(path.cut, basename(fnFs))
 fnRs.cut <- file.path(path.cut, basename(fnRs))
@@ -177,6 +187,7 @@ R1.flags <- paste("-g", FWD, "-a", REV.RC)
 # Trim REV and the reverse-complement of FWD off of R2 (reverse reads)
 R2.flags <- paste("-G", REV, "-A", FWD.RC)
 
+appendASV(" \n - Running Cutadapt")
 #Run Cutadapt
 for (i in seq_along(fnFs)) {
   system2(cutadapt, args = c(R1.flags, R2.flags,
@@ -189,10 +200,11 @@ for (i in seq_along(fnFs)) {
 
 
 # sanity check, should report zero for all orientations and read sets
-index <- 5  # this is the index of the file we want to check for
-            # primers, within the lists "fn*s.cut", it can be any
-            # number from 1 to N, where N is the number of samples
-            # you are processing
+index <- ifelse(length(fnFs) < 5,length(fnFs), 5)
+# this is the index of the file we want to check for
+# primers, within the lists "fn*s.cut", it can be any
+# number from 1 to N, where N is the number of samples
+# you are processing
 
 rbind(FWD.ForwardReads = sapply(FWD.orients,
                                 primerHits,
@@ -231,18 +243,23 @@ cutRs <- sort(list.files(path.cut, pattern = "_R2_001", full.names = TRUE))
 filtFs <- file.path(path.cut, "filtered", basename(cutFs))
 filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 
+appendASV(" \n - Running Main FilterAndTrim")
+
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs,
-                    truncLen = c(280, 265),
-                    trimLeft = c(0, 0),
-                    trimRight = c(0, 0),
-                    minLen = c(150, 150),
-                    maxN = c(0, 0),
-                    maxEE = c(3, 4),
-                    # LOGGBOOK: 270, 250
+                    truncLen = c(270, 250),  # CHANGE ME
+                    trimLeft = c(0, 0),      # CHANGE ME
+                    trimRight = c(0, 0),     # CHANGE ME
+                    minLen = c(150, 150),    # CHANGE ME
+                    maxN = c(0, 0),          # CHANGE ME
+                    maxEE = c(3, 4),         # CHANGE ME
+                    # LOGGBOOK maxEE:
+                    # with trunclen, 270, 250 maxEE:
                     #1,1 retained 25-30 percent of reads;
                     #2,2 retained 30-50 percent;
                     #3,4 retained around 60 percent
-                    truncQ = c(2, 2),
+                    # with trunclen 280, 265:fwd:fwd
+                    #3,4, retained 0.2 percent SIC!
+                    truncQ = c(2, 2),       # CHANGE ME
                     rm.phix = TRUE, matchIDs = TRUE,
                     compress = TRUE, multithread = 32)
 
@@ -281,6 +298,7 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 # and their online documentation (linked at top of this guide) for more
 # information on how these steps work
 
+appendASV(" \n - Learning Errors")
 errF <- learnErrors(filtFs, multithread = 32)
 errR <- learnErrors(filtRs, multithread = 32)
 
@@ -295,6 +313,7 @@ dev.off()
 
 
 #### Sequence dereplication ####
+appendASV(" \n - Sequence dereplication")
 derepFs <- derepFastq(filtFs, verbose = TRUE)
 derepRs <- derepFastq(filtRs, verbose = TRUE)
 
@@ -305,6 +324,7 @@ names(derepRs) <- sample.names
 
 
 #### DADA sample inference ####
+appendASV(" \n - DADA ASV inference")
 dadaFs <- dada(derepFs, err = errF, multithread = 32)
 dadaRs <- dada(derepRs, err = errR, multithread = 32)
 
@@ -347,6 +367,7 @@ samples_to_remove <- names(samples_to_keep)[which(samples_to_keep == FALSE)]
 # sample-inference steps (section just above)
 
 #OPTION 2: modify command when removing low-sequence samples
+appendASV(" \n - Merge Pair End reads")
 mergers <- mergePairs(dadaFs[samples_to_keep],
                       derepFs[samples_to_keep],
                       dadaRs[samples_to_keep],
@@ -357,7 +378,7 @@ head(mergers[[1]])
 
 #### construct sequence table ####
 seqtab <- makeSequenceTable(mergers)
-dim(seqtab) #what are the dimensions of our merged sequence table?
+
 
 
 #### View Sequence Length Distribution Post-Merging ####
@@ -376,6 +397,7 @@ dev.off()
 ##################################################
 
 #### remove low-count singleton ASVs ####
+appendASV(" \n \n - Remove singletons:")
 #create phyloseq otu_table
 otus <- otu_table(t(seqtab), taxa_are_rows = TRUE)
 
@@ -384,12 +406,10 @@ otu_pres_abs <- otus
 otu_pres_abs[otu_pres_abs >= 1] <- 1 #creating a presence/absence table
 otu_pres_abs_rowsums <- rowSums(otu_pres_abs) #counts of sample per ASV
 
-dim(seqtab) # sanity check
-dim(otus)
+# sanity check
 # (this should be the same as last command, but the dimensions reversed)
 
-appendASV("\n Dimentions of sequence table:", dim(seqtab),
-          "\n Dimentions of otu table: ")
+appendASV("\n Dimentions of sequence table with singeltons:", dim(seqtab))
 
 
  #create relative abundance table
@@ -417,7 +437,6 @@ b <- which(otus_rel_ab.rowsums <= 0.001)
  #A also in B (we remove singleton ASVs that have a lower relative
  # abundance value than our threshold)
 rows_to_remove <- intersect(a, b)
-
 #filter OTU table we created earlier
 otus_filt <- otus[-rows_to_remove, ]
 
@@ -427,11 +446,11 @@ seqtab.nosingletons <- t(as.matrix(unclass(otus_filt)))
 
 
 appendASV(
-  "\n dimensions of unfiltered ASV table:", dim(otus),
+  "\n dimensions of ASV table with singletons:", dim(otus),
   #how many of our singleton ASVs fail on this filter
-  "\n # ASVs Removed:", length(intersect(a, b)),
+  "\n # ASVs singeltons removed:", length(intersect(a, b)),
   #how many ASVs did you retain?
-  "\n dimensions of filtered ASV table:", dim(otus_filt))
+  "\n dimensions of ASV table without singletons:", dim(otus_filt))
 
 
 #### remove chimeras ####
@@ -441,6 +460,7 @@ appendASV(
 
 #this step can take a few minutes to a few hours,
 # depending on the size of your dataset
+appendASV("\n \n - Remove Bimeras")
 seqtab.nosingletons.nochim <- removeBimeraDenovo(
   seqtab.nosingletons,
   method = "pooled",
@@ -460,6 +480,8 @@ appendASV("\n proprtion of chimeric to non chimeric reads:",
 ##################################################
 #### Section 5: Finalizing quality steps #########
 ##################################################
+
+appendASV("\n \n - Creating final outputs")
 
 #### track read retention through steps ####
 getN <- function(x) sum(getUniques(x))
@@ -486,7 +508,7 @@ colnames(track) <- c(
 
 #### save output from sequnce table construction steps ####
 write.table(data.frame("row_names" = rownames(track), track),
-                      "Report/read_retention.CO1_merged.txt",
+                      "Report/read_retention.CO1_merged.csv",
                       row.names = FALSE, quote = FALSE, sep = "\t")
 
 write.table(data.frame("row_names" = rownames(seqtab.nosingletons.nochim),
@@ -533,3 +555,5 @@ write.table(data.frame("row_names" = rownames(seqtab.nosingletons.nochim),
                       seqtab.nosingletons.nochim),
            "ASV/sequence_table.CO1.merged.w_ASV_names.txt",
            row.names = FALSE, quote = FALSE, sep = "\t")
+
+appendASV("\n \n ASV ANALYSIS COMPLETE")
