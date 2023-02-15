@@ -1,3 +1,5 @@
+#!/usr/bin/Rscript
+
 #pipeline for processing CO1 amplicon sequencing data
 #author: Evan Morien
 #modified by: Andreas Novotny
@@ -7,6 +9,8 @@
 ###########################################################
 # Execute from command line
 # Rscript processing.COI.dada2.R "/path/to/data/directory"
+#
+# Revisit lines marked CHANGE ME before executing script
 ###########################################################
 
 #### Intro ####
@@ -46,17 +50,18 @@ theme_set(theme_bw())
 #### File Path Setup ####
 wd <- commandArgs(TRUE)[1] #should contain WD
 setwd(wd)
+#wd <-"/home/andreas.novotny/AmpliconSeqAnalysis/Data/COI_Zoopsprint2022"
 
 # CHANGE ME to sequence Input
-path <- file.path(wd, "Fastq/")
+path <- file.path(wd, "Fastq")
 
 # Create Cutadapt output
 path.cut <- file.path(path, "cutadapt")
-if(!dir.exists(path.cut)) dir.create(path.cut)
+if (!dir.exists(path.cut)) dir.create(path.cut)
 
 # Create Report directory
 path.report <- file.path(wd, "Report/")
-if(!dir.exists(path.report)) dir.create(path.report)
+if (!dir.exists(path.report)) dir.create(path.report)
 
 # Prepare a ASV report file:
 appendASV <- function(...) {
@@ -70,7 +75,7 @@ appendASV(" \n Report for ASV analysis:", wd,
 
 # Create final result file:
 path.ASV <- file.path(wd, "ASV/")
-if(!dir.exists(path.ASV)) dir.create(path.ASV)
+if (!dir.exists(path.ASV)) dir.create(path.ASV)
 
 #CHANGE ME to match the pattern of all your R1 files
 fnFs <- sort(list.files(path, pattern = "_R1_001.fastq.gz", full.names = TRUE))
@@ -81,7 +86,6 @@ fnRs <- sort(list.files(path, pattern = "_R2_001.fastq.gz", full.names = TRUE))
 # unique sample name
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 
-
 ##################################################
 #### Section 2: Cut Adapters, Filter and Trim ####
 ##################################################
@@ -89,7 +93,7 @@ sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 #### Plot Quality Scores #####
 
 #randomly select a set of 49 samples
-a <- sample(fnFs, ifelse(length(fnFs) < 49,length(fnFs), 49))
+a <- sample(fnFs, ifelse(length(fnFs) < 49, length(fnFs), 49))
 
 #identify the indices of those samples
 b <- which(fnFs %in% a)
@@ -136,12 +140,20 @@ fnRs.filtN <- file.path(path, "filtN", basename(fnRs))
 appendASV(" \n - Removing ambigous sequences")
 # This initial filter and trim will only remove sequences that has "Ns".
 # This is to improve accuracy of cutadapt.
-filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN,
+tmp_out <- filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN,
               trimLeft = c(0, 0),
               maxN = 0,
               multithread = 32,
               compress = TRUE,
               matchIDs = TRUE)
+
+
+retained <- as.data.frame(tmp_out)
+retained$percentage_retained <- retained$reads.out / retained$reads.in * 100
+
+write.table(retained,
+            "Report/retained_reads.CO1.filterAndTrim_step.csv",
+            sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
 
 primerHits <- function(primer, fn) {
   # Counts number of reads in which the primer is found
@@ -151,7 +163,7 @@ primerHits <- function(primer, fn) {
 
 
 
-index <- ifelse(length(fnFs) < 5,length(fnFs), 5)
+index <- ifelse(length(fnFs) < 5, length(fnFs), 5)
 # this is the index of the file we want to check for primers,
 # within the lists "fn*s.filtN", it can be any number from 1
 # to N, where N is the number of samples you are processing
@@ -198,9 +210,8 @@ for (i in seq_along(fnFs)) {
                             fnFs.filtN[i], fnRs.filtN[i])) # input files
 }
 
-
 # sanity check, should report zero for all orientations and read sets
-index <- ifelse(length(fnFs) < 5,length(fnFs), 5)
+index <- ifelse(length(fnFs) < 5, length(fnFs), 5)
 # this is the index of the file we want to check for
 # primers, within the lists "fn*s.cut", it can be any
 # number from 1 to N, where N is the number of samples
@@ -246,7 +257,7 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 appendASV(" \n - Running Main FilterAndTrim")
 
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs,
-                    truncLen = c(270, 250),  # CHANGE ME
+                    truncLen = c(220, 200),  # CHANGE ME
                     trimLeft = c(0, 0),      # CHANGE ME
                     trimRight = c(0, 0),     # CHANGE ME
                     minLen = c(150, 150),    # CHANGE ME
@@ -274,21 +285,11 @@ write.table(retained,
 #### Section 3: Sequence Dereplication ###########
 ##################################################
 
-
-# Optional, to get back on track:
 # File Path Setup
-path <- file.path(wd, "Fastq/")
-path.cut <- file.path(path, "cutadapt")
-fnFs <- sort(list.files(path, pattern = "_R1_001.fastq.gz", full.names = TRUE))
-fnRs <- sort(list.files(path, pattern = "_R2_001.fastq.gz", full.names = TRUE))
-sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
-cutFs <- sort(list.files(path.cut, pattern = "_R1_001", full.names = TRUE))
-#remember to change this so it matches ALL your file names!
-cutRs <- sort(list.files(path.cut, pattern = "_R2_001", full.names = TRUE))
-#remember to change this so it matches ALL your file names!
-filtFs <- file.path(path.cut, "filtered", basename(cutFs))
-filtRs <- file.path(path.cut, "filtered", basename(cutRs))
-
+path.cut.filt <-file.path(wd, "Fastq/cutadapt/filtered")
+filtFs <- sort(list.files(path.cut.filt, pattern = "_R1_001.fastq.gz", full.names = TRUE))
+filtRs <- sort(list.files(path.cut.filt, pattern = "_R2_001.fastq.gz", full.names = TRUE))
+sample.names <- sapply(strsplit(basename(filtFs), "_"), `[`, 1)
 
 
 #### Learn and plot error rates ####
@@ -388,7 +389,7 @@ seqtab <- makeSequenceTable(mergers)
 #tabulate sequence length distribution
 length.histogram <- as.data.frame(table(nchar(getSequences(seqtab))))
 pdf("Report/length_histogram.CO1.merged_reads.pdf", width = 10, height = 8)
-plot(x = length.histogram[, 1], y = length.histogram[, 2]) 
+plot(x = length.histogram[, 1], y = length.histogram[, 2])
 dev.off()
 
 
