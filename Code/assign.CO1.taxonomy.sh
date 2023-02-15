@@ -13,11 +13,11 @@
 
 # Start by merging ASV tables from DADA2
 # CHANGE ME: to output directory followed by several DADA analysis directories:
-Rscript Code/Merge_ASV.r \
+Rscript Code/HelpScripts/Merge_ASV.r \
     Data/Assign_COI_Taxonomy/ASV \
     Data/COI_QU39-2017 \
     Data/COI_QU39-2018 \
-    Data/QU39-2018 \
+    Data/COI_QU39-2019 \
     Data/COI_Zoopsprint2022
     
 
@@ -46,6 +46,7 @@ blastn -task megablast \
     -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' \
     -query ${querry}/CO1_ASV_sequences.fasta  \
     -out blast_96_sim/CO1_ASV_sequences.customDB.blast.out
+
 
 # blast against genbank NT blast DB
 blastn -task megablast \
@@ -127,11 +128,9 @@ blastn -task megablast \
     -out blast_80_sim/CO1_ASV_sequences.blast.out
 
 
-#IMPORTANT: next steps are done in R, for simplicity's sake. a custom script here would also work. this is simpler.
+#IMPORTANT: next steps are done in R,
 #we need to add taxonIDs for the customDB (adding them directly to the blast DB has not worked in the past, they don't get returned in the blast output). Using the blast output and a map of accessions to taxonIDs, we add the taxonIDs for each blast result.
-
-# TODO: Fix!!!! 
-Rscript ../../Code/modify.blast.COI.R
+Rscript ../../Code/HelpScripts/modify.blast.COI.R
 
 #avoid " keyerror: 'NA' " with python script by filtering on "NA" as a wholeword string
 #explanation: occasionally, an output line from blast has an NA, which causes an error with the Simple-LCA script below. quick fix is to remove these lines (they're quite rare anyway)

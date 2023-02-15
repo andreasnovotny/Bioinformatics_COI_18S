@@ -23,6 +23,7 @@ readASV <- function(dirpath){
 out_dir <- commandArgs(TRUE)[1]
 in_dirs <- commandArgs(TRUE)[-1]
 #in_dirs <- c("Data/DebZoop", "Data/DebZoop")
+if (!dir.exists(out_dir)) dir.create(out_dir)
 
 # Read in all ASV tables:
 table_list <- mapply(readASV, in_dirs, SIMPLIFY = FALSE)
@@ -37,7 +38,6 @@ mergedASV <- mergedASV %>%
 
 
 # Save merged ASV table
-if (!dir.exists(out_dir)) dir.create(out_dir)
 write.table(mergedASV, file.path(out_dir, "sequence_table.merged.txt"))
 
 # Rename ASVs to short names
@@ -54,3 +54,5 @@ write.table(cbind(ASV.num, ASV.seq),
 write.fasta(sequences = as.list(ASV.seq),
             names = ASV.num,
             file.path(out_dir, "CO1_ASV_sequences.fasta"))
+
+print("Merged Sequences Rscript finalised")
