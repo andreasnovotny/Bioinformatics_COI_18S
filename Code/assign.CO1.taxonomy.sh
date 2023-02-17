@@ -223,7 +223,7 @@ mv -f tmp blast_96_sim/CO1_ASV_sequences.combined_all.blast.out #put tmp file wh
      -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out \
      -o taxonomy_table.CO1.iterative_blast.LCA+best_hit.txt \
      -b 100 \
-     -id 96 \
+     -id 90 \
      -cov 50 \
      -t best_hit \
      -tid 98 \
@@ -235,7 +235,7 @@ mv -f tmp blast_96_sim/CO1_ASV_sequences.combined_all.blast.out #put tmp file wh
      -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out \
      -o taxonomy_table.CO1.iterative_blast.LCA_only.txt \
      -b 100 \
-     -id 96 \
+     -id 90 \
      -cov 50 \
      -t only_lca \
      -fh environmental,unidentified,kingdom \
@@ -245,9 +245,8 @@ mv -f tmp blast_96_sim/CO1_ASV_sequences.combined_all.blast.out #put tmp file wh
 
 
 #Move final outputs away from gitignore space
-
-cp -r ASV ../../ProcessedData/COI_Andreas
-
 cp taxonomy_table.CO1.iterative_blast.LCA+best_hit.txt ../../ProcessedData/COI_Andreas/COI_taxonomy
 cp taxonomy_table.CO1.iterative_blast.LCA_only.txt ../../ProcessedData/COI_Andreas/COI_taxonomy
 cp blast_96_sim/CO1_ASV_sequences.combined_all.blast.out ../../ProcessedData/COI_Andreas/COI_taxonomy
+
+cp -r ASV ../../ProcessedData/COI_Andreas
