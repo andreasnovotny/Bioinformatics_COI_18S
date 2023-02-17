@@ -97,8 +97,9 @@ blastn -task megablast \
 
 #filter input fasta to only contain sequences with no hits in the above two blast runs
 cat blast_90_sim/CO1_ASV_sequences*blast.out | cut -f1,1 | sort | uniq > blast_90_sim/blast_hit_ASVs.txt
-grep -wv -f blast_90_sim/blast_hit_ASVs.txt ${querry}/sequence_ASVname_mapping.CO1.txt | cut -f1,1 | sort > blast_90_sim/no_blast_hit_ASVs.txt
-awk -F'>' 'NR==FNR{ids[$0]; next} NF>1{f=($2 in ids)} f' blast_90_sim/no_blast_hit_ASVs.txt ${querry}/CO1_ASV_sequences.fasta > blast_90_sim/CO1_ASV_sequences.no_blast_hit.fasta
+cat blast_90_sim/blast_hit_ASVs.txt blast_96_sim/blast_hit_ASVs.txt > blast_90_sim/blast_90_96_hit_ASVs.txt
+grep -wv -f blast_90_sim/blast_90_96_hit_ASVs.txt ${querry}/sequence_ASVname_mapping.CO1.txt | cut -f1,1 | sort > blast_90_sim/no_blast_hit_90_96_ASVs.txt
+awk -F'>' 'NR==FNR{ids[$0]; next} NF>1{f=($2 in ids)} f' blast_90_sim/no_blast_hit_90_96_ASVs.txt ${querry}/CO1_ASV_sequences.fasta > blast_90_sim/CO1_ASV_sequences.no_blast_hit.fasta
 
 
 #blast this output with lower thresholds for similarity
@@ -127,6 +128,10 @@ blastn -task megablast \
     -query blast_90_sim/CO1_ASV_sequences.no_blast_hit.fasta  \
     -out blast_80_sim/CO1_ASV_sequences.blast.out
 
+cat blast_80_sim/CO1_ASV_sequences*blast.out | cut -f1,1 | sort | uniq > blast_80_sim/blast_hit_ASVs.txt
+cat blast_80_sim/blast_hit_ASVs.txt blast_90_sim/blast_hit_ASVs.txt blast_96_sim/blast_hit_ASVs.txt > blast_80_sim/blast_80_90_96_hit_ASVs.txt
+grep -wv -f blast_80_sim/blast_80_90_96_hit_ASVs.txt ${querry}/sequence_ASVname_mapping.CO1.txt | cut -f1,1 | sort > blast_80_sim/no_blast_hit_80_90_96_ASVs.txt
+awk -F'>' 'NR==FNR{ids[$0]; next} NF>1{f=($2 in ids)} f' blast_80_sim/no_blast_hit_80_90_96_ASVs.txt ${querry}/CO1_ASV_sequences.fasta > blast_90_sim/CO1_ASV_sequences.no_blast_hit.fasta
 
 #IMPORTANT: next steps are done in R,
 #we need to add taxonIDs for the customDB (adding them directly to the blast DB has not worked in the past, they don't get returned in the blast output). Using the blast output and a map of accessions to taxonIDs, we add the taxonIDs for each blast result.
@@ -148,7 +153,7 @@ cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_tmp
 #IMPORTANT: please note that the filtering criteria in the final step depend on some of this filtering (e.g. blast hits with the word "phylum" will be removed. see -fh parameter in final step) 
 # because i'm replacing "unknown phylum" in these sed commands, these sequences are retained.
 # if you choose not to do the replacement, the blast hits with "unknown plylum" will not be used in LCA determination unless you also change the filtering criteria set in the -fh parameter during the final step.
-# also note, "unknown phylum" is present in any taxonomy where the clade's phylum is uncertain in the NCBI taxonomy system, it doesn't indicate any other kind of uncertainty about the provenance of the sequence.
+# also note, "unknown phylum" is present in any taxonomy where the clade's phylum is uncertain in the NCBI taxonomy system, it doesn't indicate any other kind of uncertainty about the provenance of the sequence
 
 #label fix for clades missing "kingdom" label
 sed -i 's/unknown kingdom \/ Bacillariophyta/Eukaryota \/ Bacillariophyta/g' tmp #Bacillariophyta
@@ -185,27 +190,11 @@ sed -i 's/Eukaryota \/ unknown phylum \/ unknown class \/ Pirsoniales/Eukaryota 
 mv -f tmp blast_96_sim/CO1_ASV_sequences.combined_all.blast.out #put tmp file where it belongs, add label (this is an overwrite, careful!!)
 
 
-python2 ~/programs/galaxy-tool-lca/lca.py \
-    -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out \
-    -o taxonomy_table.CO1.NCBI_NT+customDB.iterative_blast.txt \
-    -b 100 \
-    -id 90 \
-    -cov 50 \
-    -t best_hit \
-    -tid 98 \
-    -tcov 50 \
-    -fh environmental,unidentified,kingdom \
-    -flh unclassified
-
-#cleanup
-rm taxonomy_tmp blast_96_sim/tmp #remove redundant files
-
-
-# python2 ~/programs/galaxy-tool-lca/lca.species.py \
+# python2 ~/programs/galaxy-tool-lca/lca.py \
 #     -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out \
-#     -o taxonomy_table.CO1.NCBI_NT+customDB.iterative_blast.LCA+best_hit.txt \
+#     -o taxonomy_table.iterative_blast.txt \
 #     -b 100 \
-#     -id 90 \
+#     -id 80 \
 #     -cov 50 \
 #     -t best_hit \
 #     -tid 98 \
@@ -213,13 +202,52 @@ rm taxonomy_tmp blast_96_sim/tmp #remove redundant files
 #     -fh environmental,unidentified,kingdom \
 #     -flh unclassified
 
-# python2 ~/programs/galaxy-tool-lca/lca.species.py \
-#     -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out \
-#     -o taxonomy_table.CO1.NCBI_NT+customDB.iterative_blast.LCA_only.txt \
-#     -b 100 \
-#     -id 90 \
-#     -cov 50 \
-#     -t only_lca \
-#     -fh environmental,unidentified,kingdom \
-#     -flh unclassified
+# #cleanup
+# rm taxonomy_tmp blast_96_sim/tmp #remove redundant files
 
+# lca.species.py
+# -i	Input file
+# -o	Output file
+# -b	Bitscore top percentage threshold
+# -id	Minimum identity threshold
+# -cov	Minimum coverage threshold
+# -t	Check the top hit first or perform an lca analysis on all hits. Options:['only_lca', 'best_hit', "best_hits_range"]
+# -tid	Identity threshold for the tophit, only used when -t best_hit or best_hits_range
+# -tcov	Coverage threshold for the tophit, only used when -t best_hit or best_hits_range
+# -fh	Filter hits, filter out lines that contain a certain string
+# -flh	Filter lca hits, during the determination of the lca ignore this string
+# -minbit	Minimum bitscore threshold
+
+
+ python2 ~/programs/galaxy-tool-lca/lca.species.py \
+     -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out \
+     -o taxonomy_table.CO1.iterative_blast.LCA+best_hit.txt \
+     -b 100 \
+     -id 96 \
+     -cov 50 \
+     -t best_hit \
+     -tid 98 \
+     -tcov 50 \
+     -fh environmental,unidentified,kingdom \
+     -flh unclassified
+
+ python2 ~/programs/galaxy-tool-lca/lca.species.py \
+     -i blast_96_sim/CO1_ASV_sequences.combined_all.blast.out \
+     -o taxonomy_table.CO1.iterative_blast.LCA_only.txt \
+     -b 100 \
+     -id 96 \
+     -cov 50 \
+     -t only_lca \
+     -fh environmental,unidentified,kingdom \
+     -flh unclassified
+
+
+
+
+#Move final outputs away from gitignore space
+
+cp -r ASV ../../ProcessedData/COI_Andreas
+
+cp taxonomy_table.CO1.iterative_blast.LCA+best_hit.txt ../../ProcessedData/COI_Andreas/COI_taxonomy
+cp taxonomy_table.CO1.iterative_blast.LCA_only.txt ../../ProcessedData/COI_Andreas/COI_taxonomy
+cp blast_96_sim/CO1_ASV_sequences.combined_all.blast.out ../../ProcessedData/COI_Andreas/COI_taxonomy
