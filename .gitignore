@@ -5,6 +5,7 @@
 # Output and Data files
 Data/*
 Outputs/*
+ProcessedData/COI_Andreas/COI_Hakai_AN.txt
 
 
 # Session Data files
