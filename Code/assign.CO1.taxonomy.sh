@@ -18,7 +18,8 @@ Rscript Code/HelpScripts/Merge_ASV.r \
     Data/COI_QU39-2017 \
     Data/COI_QU39-2018 \
     Data/COI_QU39-2019 \
-    Data/COI_Zoopsprint2022
+    Data/COI_Zoopsprint2022 \
+    Data/COI_QPKbulk_2017
     
 
 # CHANGE ME: Define paths to databases, querry sequences (produced by script above) and 
@@ -26,6 +27,7 @@ BOLD_genbank_combo='/data/taxonomyDBs/CO1_database/blast_DB/CO1.BOLD_genbank_com
 genbank_NT_blast='/data/taxonomyDBs/NCBI_NT/2023-02-07/nt'
 querry='/home/andreas.novotny/AmpliconSeqAnalysis/Data/Assign_COI_Taxonomy/ASV'
 wd='/home/andreas.novotny/AmpliconSeqAnalysis/Data/Assign_COI_Taxonomy'
+
 
 #############################################################
 
@@ -145,7 +147,8 @@ grep -v -w "NA" blast_96_sim/CO1_ASV_sequences.combined_all.blast.out > blast_96
 python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py \
     -i blast_96_sim/tmp \
     -t /data/taxonomyDBs/NCBI_taxonomy/2023-02-03/rankedlineage.dmp \
-    -m /data/taxonomyDBs/NCBI_taxonomy/2023-02-03/merged.dmp -o taxonomy #HERE
+    -m /data/taxonomyDBs/NCBI_taxonomy/2023-02-03/merged.dmp \
+    -o taxonomy #HERE
 
 cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_tmp > tmp
 

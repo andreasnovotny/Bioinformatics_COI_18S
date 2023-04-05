@@ -8,7 +8,7 @@
 
 ###########################################################
 # Execute from command line
-# Rscript processing.COI.dada2.R "/path/to/data/directory"
+# Rscript processing.COI.dada2.R "/path/to/data/directory" "COI"
 #
 # Revisit lines marked CHANGE ME before executing script
 ###########################################################
@@ -52,6 +52,7 @@ wd <- commandArgs(TRUE)[1] #should contain WD
 setwd(wd)
 #wd <-"/home/andreas.novotny/AmpliconSeqAnalysis/Data/COI_Zoopsprint2022"
 
+
 # CHANGE ME to sequence Input
 path <- file.path(wd, "Fastq")
 
@@ -69,6 +70,7 @@ appendASV <- function(...) {
       file = "Report/Progress_report.txt",
       sep = "\t", append = TRUE)
 }
+
 appendASV(" \n Report for ASV analysis:", wd,
           "\n Date:", date())
 
@@ -85,6 +87,40 @@ fnRs <- sort(list.files(path, pattern = "_R2_001.fastq.gz", full.names = TRUE))
 # decide how to split up the file name, and which element to extract for a
 # unique sample name
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
+
+
+
+# Define Primers 
+if (commandArgs(TRUE)[2] == "COI") {
+  # COI primers
+  FWD <- "GGWACWGGWTGAACWGTWTAYCCYCC"
+  REV <- "TANACYTCNGGRTGNCCRAARAAYCA"
+  } else {
+    if (commandArgs(TRUE)[2] == "MiFish-U") {
+      #these are the MiFish-U primers
+      FWD <- "GTCGGTAAAACTCGTGCCAGC"
+      REV <- "CATAGTGGGGTATCTAATCCCAGTTTG"
+    } else {
+      if (commandArgs(TRUE)[2] == "MiFish-E") {
+        #these are the MiFish-E primers
+        FWD <- "GTTGGTAAATCTCGTGCCAGC"
+        REV <- "CATAGTGGGGTATCTAATCCTAGTTTG"
+      } else {
+        if (commandArgs(TRUE)[2] == "V4_18S") {
+          FWD <- "CCAGCASCYGCGGTAATTCC" ## V4F 565F
+          REV <- "ACTTTCGTTCTTGATYRR"   ## V4RB 981R
+        } else {
+          FWD <- commandArgs(TRUE)[2]
+          REV <- commandArgs(TRUE)[3]
+        }
+      }
+    }
+  }
+
+
+appendASV(" \n FWD Primers:", FWD,
+          "\n REV Primers:", REV)
+
 
 ##################################################
 #### Section 2: Cut Adapters, Filter and Trim ####
@@ -110,13 +146,6 @@ dev.off()
 pdf("Report/quality_plots.dada2.R2s.pdf", width = 16, height = 9)
   plotQualityProfile(plotfnRs)
 dev.off()
-
-
-#### Primer removal with Biostrings ####
-
-# CHANGE ME to your forward primer sequence
-FWD <- "GGWACWGGWTGAACWGTWTAYCCYCC"
-REV <- "TANACYTCNGGRTGNCCRAARAAYCA"
 
 # Create all orientations of the input sequence
 # The Biostrings works w/ DNAString objects rather than character vectors

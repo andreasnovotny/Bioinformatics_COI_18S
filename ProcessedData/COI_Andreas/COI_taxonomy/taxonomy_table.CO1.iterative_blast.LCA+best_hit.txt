@@ -158,80 +158,719 @@ ASV10237	no identification	no identification	no identification	no identification
 ASV10239	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1024	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV10240	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10241	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10242	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10243	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10244	species	Eukrohnia sp. c882	Eukaryota	Chaetognatha	Sagittoidea	Phragmophora	Eukrohniidae	Eukrohnia	Eukrohnia sp. c882	best hit
+ASV10245	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10246	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	best hit
+ASV10247	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10248	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10249	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1025	species	Clytia gregaria	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Clytiidae	Clytia	Clytia gregaria	best hit
+ASV10250	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10251	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10252	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10253	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10254	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10255	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10256	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	best hit
+ASV10257	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10258	species	Bathycoccus prasinos	Viridiplantae	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos	best hit
+ASV10259	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	best hit
 ASV1026	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10260	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10261	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10262	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10263	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10264	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10265	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10266	genus	Pseudocalanus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	no identification	lca
+ASV10267	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10269	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
 ASV1027	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10270	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10271	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10272	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10273	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10274	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10275	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10276	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10277	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10278	species	Calliopius laeviusculus	Eukaryota	Arthropoda	Malacostraca	Amphipoda	Calliopiidae	Calliopius	Calliopius laeviusculus	lca
+ASV10279	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1028	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10280	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10281	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10282	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	best hit
+ASV10283	species	Pinnixa sp. NJCGS300-10	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pinnotheridae	Pinnixa	Pinnixa sp. NJCGS300-10	best hit
+ASV10284	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10285	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10286	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10287	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10288	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10289	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
 ASV1029	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10290	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	best hit
+ASV10291	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10292	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10293	species	Pseudocalanus newmani	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus newmani	best hit
+ASV10294	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10295	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10296	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10297	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10298	species	Placida dendritica	Eukaryota	Mollusca	Gastropoda	unknown order	Limapontiidae	Placida	Placida dendritica	best hit
+ASV10299	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1030	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10300	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10301	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10302	genus	Pseudocalanus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	no identification	lca
+ASV10303	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10304	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10305	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10306	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10307	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10308	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1031	species	Strongylocentrotus pallidus	Eukaryota	Echinodermata	Echinoidea	Camarodonta	Strongylocentrotidae	Strongylocentrotus	Strongylocentrotus pallidus	best hit
+ASV10310	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10311	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10312	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10313	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10314	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10315	species	Sagitta	Eukaryota	Chaetognatha	Sagittoidea	Aphragmophora	Sagittidae	unknown genus	Sagitta	lca
+ASV10316	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10317	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10318	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10319	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
 ASV1032	genus	Pseudocalanus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	no identification	lca
+ASV10320	species	Bathycoccus prasinos	Viridiplantae	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos	best hit
+ASV10321	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10322	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10323	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10324	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10325	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10326	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10327	species	Metacarcinus magister	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus magister	best hit
+ASV10328	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10329	species	Cancer productus	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Cancer	Cancer productus	best hit
+ASV10330	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10331	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10332	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10333	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10334	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10335	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10336	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10337	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10338	species	Euphausia pacifica	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	Euphausiidae	Euphausia	Euphausia pacifica	best hit
+ASV10339	species	Bathycoccus prasinos	Viridiplantae	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos	best hit
 ASV1034	species	Phoronopsis harmeri	Eukaryota	Phoronida	unknown class	unknown order	Phoronidae	Phoronopsis	Phoronopsis harmeri	best hit
+ASV10340	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10341	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10342	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10343	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10344	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10346	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10347	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10348	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10349	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
 ASV1035	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10350	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10351	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10352	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10353	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10354	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10355	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	lca
+ASV10356	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10359	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1036	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10361	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10362	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10363	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10364	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10366	species	Metacarcinus magister	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus magister	best hit
+ASV10367	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	lca
+ASV10368	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10369	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
 ASV1037	species	Paracalanus parvus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus parvus	best hit
+ASV10370	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10371	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10372	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10373	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10374	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10375	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10376	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV10377	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10378	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10379	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1038	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10380	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10381	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10382	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	best hit
+ASV10383	species	Calanidae	Eukaryota	Arthropoda	Hexanauplia	Calanoida	unknown family	unknown genus	Calanidae	lca
+ASV10384	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10385	species	Scolecithricella	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Scolecitrichidae	unknown genus	Scolecithricella	best hit
+ASV10386	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10387	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	best hit
+ASV10389	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
 ASV1039	species	Galathowenia oculata	Eukaryota	Annelida	Polychaeta	Sabellida	Oweniidae	Galathowenia	Galathowenia oculata	best hit
+ASV10390	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10391	species	Cancer productus	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Cancer	Cancer productus	best hit
+ASV10392	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV10393	kingdom	Eukaryota	Eukaryota	no identification	no identification	no identification	no identification	no identification	no identification	lca
+ASV10394	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10395	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	lca
+ASV10396	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10397	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10398	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10399	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
 ASV1040	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10400	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10401	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10402	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10403	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10404	species	Grimothea quadrispina	Eukaryota	Arthropoda	Malacostraca	Decapoda	Munididae	Grimothea	Grimothea quadrispina	best hit
+ASV10405	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10406	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10407	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10408	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10409	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1041	species	Muggiaea atlantica	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Diphyidae	Muggiaea	Muggiaea atlantica	best hit
+ASV10410	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10411	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10412	species	Margalefidinium polykrikoides	Eukaryota	Dinophyceae	Dinophyceae	Gymnodiniales	Gymnodiniaceae	Margalefidinium	Margalefidinium polykrikoides	best hit
+ASV10413	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10415	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10416	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10417	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10418	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10419	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10420	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10421	species	Pseudocalanus minutus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus minutus	best hit
+ASV10422	species	Placida dendritica	Eukaryota	Mollusca	Gastropoda	unknown order	Limapontiidae	Placida	Placida dendritica	best hit
+ASV10423	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10424	species	Euphausia pacifica	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	Euphausiidae	Euphausia	Euphausia pacifica	best hit
+ASV10425	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10426	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10427	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10428	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	best hit
+ASV10429	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10430	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10431	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10432	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10433	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10434	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV10435	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10436	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10437	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV10438	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10439	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
 ASV1044	species	Pseudopolydora bassarginensis	Eukaryota	Annelida	Polychaeta	Spionida	Spionidae	Pseudopolydora	Pseudopolydora bassarginensis	best hit
+ASV10440	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10441	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10442	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10443	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10444	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10446	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10447	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10448	species	Eualus sp. BOLD:ABX4202	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	Eualus	Eualus sp. BOLD:ABX4202	lca
+ASV10449	species	Pseudocalanus newmani	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus newmani	best hit
+ASV10450	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10451	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10452	species	Neocalanus plumchrus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Neocalanus	Neocalanus plumchrus	best hit
+ASV10453	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10455	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10456	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10457	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10458	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10459	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
 ASV1046	genus	Candidatus Pelagibacter	Bacteria	Pseudomonadota	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	Candidatus Pelagibacter	no identification	lca
+ASV10460	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10461	species	Euphausia pacifica	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	Euphausiidae	Euphausia	Euphausia pacifica	best hit
+ASV10462	species	Chthamalus fragilis	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Chthamalidae	Chthamalus	Chthamalus fragilis	best hit
+ASV10463	species	Eualus sp. BOLD:ABX4202	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	Eualus	Eualus sp. BOLD:ABX4202	lca
+ASV10464	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10465	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10466	species	Metacarcinus magister	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus magister	best hit
+ASV10467	species	Metacarcinus magister	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus magister	best hit
+ASV10468	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10469	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1047	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10470	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10472	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10473	species	Metacarcinus magister	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus magister	lca
+ASV10474	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10476	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10477	species	Pseudo-nitzschia hasleana	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Pseudo-nitzschia	Pseudo-nitzschia hasleana	best hit
+ASV10478	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10479	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
 ASV1048	species	Candidatus Pelagibacter ubique HTCC1062	Bacteria	Pseudomonadota	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	Candidatus Pelagibacter	Candidatus Pelagibacter ubique HTCC1062	lca
+ASV10480	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10481	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10482	genus	Pseudocalanus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	no identification	lca
+ASV10483	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10484	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10485	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	best hit
+ASV10486	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10487	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10488	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10489	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
 ASV1049	genus	Candidatus Pelagibacter	Bacteria	Pseudomonadota	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	Candidatus Pelagibacter	no identification	lca
+ASV10490	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	best hit
+ASV10491	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10492	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10493	species	Balanus crenatus	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Balanidae	Balanus	Balanus crenatus	best hit
+ASV10494	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10495	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10496	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10497	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10498	species	Eualus sp. BOLD:ABX4202	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	Eualus	Eualus sp. BOLD:ABX4202	lca
+ASV10499	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
 ASV105	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1050	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10500	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10501	species	Phaeocystis antarctica	Eukaryota	Haptophyta	unknown class	Phaeocystales	Phaeocystaceae	Phaeocystis	Phaeocystis antarctica	lca
+ASV10502	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10503	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV10504	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10505	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10506	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10507	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10508	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10509	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
 ASV1051	species	Galathowenia oculata	Eukaryota	Annelida	Polychaeta	Sabellida	Oweniidae	Galathowenia	Galathowenia oculata	best hit
+ASV10510	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10511	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10512	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10513	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10515	species	Eualus pusiolus	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	Eualus	Eualus pusiolus	lca
+ASV10516	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10517	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	lca
+ASV10518	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10519	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
 ASV1052	species	Clytia gregaria	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Clytiidae	Clytia	Clytia gregaria	best hit
+ASV10520	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10521	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10522	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10523	species	Corycaeidae	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	unknown family	unknown genus	Corycaeidae	best hit
+ASV10524	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10525	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10526	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10527	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10528	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10529	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1053	species	Clytia	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Clytiidae	unknown genus	Clytia	best hit
+ASV10530	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10531	species	Balanus	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Balanidae	unknown genus	Balanus	best hit
+ASV10532	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10533	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10534	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10535	species	Scolecithricella	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Scolecitrichidae	unknown genus	Scolecithricella	lca
+ASV10536	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10537	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10538	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV10539	species	Metacarcinus magister	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus magister	lca
 ASV1054	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10540	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10541	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10542	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10543	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10544	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10545	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10546	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10547	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10548	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	lca
+ASV10549	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10550	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10551	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10552	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10553	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10554	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10556	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10557	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10558	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10559	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
 ASV1056	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10560	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10561	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10562	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10563	species	Pagurus hirsutiusculus	Eukaryota	Arthropoda	Malacostraca	Decapoda	Paguridae	Pagurus	Pagurus hirsutiusculus	best hit
+ASV10564	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10565	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10566	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10567	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10568	species	Clione sp. USNM IZ 1163609	Eukaryota	Mollusca	Gastropoda	Pteropoda	Clionidae	Clione	Clione sp. USNM IZ 1163609	best hit
+ASV10569	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10570	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10571	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10572	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10573	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10574	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10575	genus	Pseudocalanus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	no identification	lca
+ASV10576	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10578	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10579	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
 ASV1058	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10580	family	Pinnotheridae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pinnotheridae	no identification	no identification	lca
+ASV10581	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10582	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10583	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10584	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10585	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10586	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10587	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	best hit
+ASV10588	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10589	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10590	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10591	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10592	species	Pandalus tridens	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus tridens	best hit
+ASV10593	species	Hippolyte clarki	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	Hippolyte	Hippolyte clarki	best hit
+ASV10594	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10596	species	Phaeocystis antarctica	Eukaryota	Haptophyta	unknown class	Phaeocystales	Phaeocystaceae	Phaeocystis	Phaeocystis antarctica	lca
+ASV10597	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10598	kingdom	Eukaryota	Eukaryota	no identification	no identification	no identification	no identification	no identification	no identification	lca
+ASV10599	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV106	species	Aequorea sp. USCABGF	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Aequoreidae	Aequorea	Aequorea sp. USCABGF	best hit
 ASV1060	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10600	genus	Gaetanus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Aetideidae	Gaetanus	no identification	lca
+ASV10601	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10602	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10604	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10605	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	lca
+ASV10606	species	Phaeocystis antarctica	Eukaryota	Haptophyta	unknown class	Phaeocystales	Phaeocystaceae	Phaeocystis	Phaeocystis antarctica	lca
+ASV10607	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10608	species	Balanus	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Balanidae	unknown genus	Balanus	best hit
+ASV10609	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1061	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10610	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10611	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10612	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10613	genus	Gaetanus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Aetideidae	Gaetanus	no identification	lca
+ASV10614	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10615	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10616	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10617	species	Cancer productus	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Cancer	Cancer productus	best hit
+ASV10618	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10619	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1062	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10620	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10621	species	Pseudocalanus minutus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus minutus	best hit
+ASV10622	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10623	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10624	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10625	species	Corycaeidae	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	unknown family	unknown genus	Corycaeidae	best hit
+ASV10626	species	Lophopanopeus bellus	Eukaryota	Arthropoda	Malacostraca	Decapoda	Panopeidae	Lophopanopeus	Lophopanopeus bellus	best hit
+ASV10627	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10628	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10629	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10630	species	Calanus sp. NJGS-42	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus sp. NJGS-42	best hit
+ASV10631	species	Corycaeidae	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	unknown family	unknown genus	Corycaeidae	best hit
+ASV10632	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	best hit
+ASV10633	species	Euphausia pacifica	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	Euphausiidae	Euphausia	Euphausia pacifica	best hit
+ASV10635	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10636	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10637	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10638	species	Scolecithricella	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Scolecitrichidae	unknown genus	Scolecithricella	best hit
+ASV10639	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10640	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10641	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10642	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10643	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10645	kingdom	Eukaryota	Eukaryota	no identification	no identification	no identification	no identification	no identification	no identification	lca
+ASV10646	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10647	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10648	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10649	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
 ASV1065	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10650	species	Pasiphaea pacifica	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pasiphaeidae	Pasiphaea	Pasiphaea pacifica	best hit
+ASV10651	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10653	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10654	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10655	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10656	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10657	species	Centropages abdominalis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Centropagidae	Centropages	Centropages abdominalis	best hit
+ASV10658	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10659	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
 ASV1066	species	Vannella sp.	Eukaryota	Discosea	Flabellinia	unknown order	Vannellidae	Vannella	Vannella sp.	lca
+ASV10660	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	best hit
+ASV10661	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10662	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10663	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10664	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10665	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10666	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10667	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10669	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10670	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10671	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10672	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10673	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10674	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10675	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10676	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10677	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10678	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10679	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
 ASV1068	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10680	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10682	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10683	species	Placida dendritica	Eukaryota	Mollusca	Gastropoda	unknown order	Limapontiidae	Placida	Placida dendritica	best hit
+ASV10684	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10685	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10686	species	Balanus	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Balanidae	unknown genus	Balanus	best hit
+ASV10687	species	Metacarcinus magister	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus magister	lca
+ASV10688	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10689	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
 ASV1069	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10690	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10691	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10692	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10694	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10695	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10696	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10698	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10699	order	Decapoda	Eukaryota	Arthropoda	Malacostraca	Decapoda	no identification	no identification	no identification	lca
 ASV107	genus	Skeletonema	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	no identification	lca
 ASV1070	species	Chthamalus fragilis	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Chthamalidae	Chthamalus	Chthamalus fragilis	best hit
+ASV10700	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10701	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10702	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10703	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10704	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10705	species	Glebocarcinus oregonensis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Glebocarcinus	Glebocarcinus oregonensis	best hit
+ASV10706	species	Pseudocalanus newmani	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus newmani	best hit
+ASV10707	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10708	species	Balanus	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Balanidae	unknown genus	Balanus	best hit
 ASV1071	species	Dendraster excentricus	Eukaryota	Echinodermata	Echinoidea	Clypeasteroida	Dendrasteridae	Dendraster	Dendraster excentricus	best hit
+ASV10710	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10711	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10712	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10713	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10714	species	Pholoides asperus	Eukaryota	Annelida	Polychaeta	Phyllodocida	Pholoidae	Pholoides	Pholoides asperus	best hit
+ASV10715	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10716	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10717	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	lca
+ASV10718	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10719	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
 ASV1072	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10721	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10722	species	Metacarcinus gracilis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus gracilis	best hit
+ASV10723	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10724	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10725	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10726	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10727	family	Hippolytidae	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	no identification	no identification	lca
+ASV10728	species	Spirontocaris holmesi	Eukaryota	Arthropoda	Malacostraca	Decapoda	Hippolytidae	Spirontocaris	Spirontocaris holmesi	best hit
+ASV10729	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
 ASV1073	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10730	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10731	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10732	species	Neocalanus plumchrus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Neocalanus	Neocalanus plumchrus	best hit
+ASV10733	species	Calanus pacificus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus	best hit
+ASV10734	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10735	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10736	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10737	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	lca
+ASV10738	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10739	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1074	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10740	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	best hit
+ASV10741	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10743	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	best hit
+ASV10745	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10746	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10747	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	lca
+ASV10748	species	Pandalus stenolepis	Eukaryota	Arthropoda	Malacostraca	Decapoda	Pandalidae	Pandalus	Pandalus stenolepis	lca
+ASV10749	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
 ASV1075	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10750	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	best hit
+ASV10751	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10756	species	Metridia pacifica	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia pacifica	best hit
+ASV10758	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10759	species	Balanus nubilus	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Balanidae	Balanus	Balanus nubilus	best hit
 ASV1076	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10762	species	Pseudocalanus sp. PsAkkeshi1	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus sp. PsAkkeshi1	lca
+ASV10763	species	Pseudocalanus mimus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus mimus	best hit
+ASV10764	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10765	species	Corycaeidae	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	unknown family	unknown genus	Corycaeidae	best hit
+ASV10766	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10767	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10768	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10769	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10770	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10772	species	uncultured Kareniaceae	Eukaryota	Dinophyceae	Dinophyceae	Gymnodiniales	Kareniaceae	unknown genus	uncultured Kareniaceae	best hit
+ASV10774	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10777	species	Membranipora membranacea	Eukaryota	Bryozoa	Gymnolaemata	Cheilostomatida	Membraniporidae	Membranipora	Membranipora membranacea	best hit
+ASV10778	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10779	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
 ASV1078	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10780	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10782	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10784	species	Pseudocalanus minutus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus minutus	best hit
+ASV10787	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10788	species	Euphausia pacifica	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	Euphausiidae	Euphausia	Euphausia pacifica	best hit
 ASV1079	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10790	kingdom	Eukaryota	Eukaryota	no identification	no identification	no identification	no identification	no identification	no identification	lca
+ASV10791	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10793	species	Balanus	Eukaryota	Arthropoda	Thecostraca	Balanomorpha	Balanidae	unknown genus	Balanus	best hit
+ASV10797	species	Candidatus Pelagibacter ubique HTCC1062	Bacteria	Pseudomonadota	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	Candidatus Pelagibacter	Candidatus Pelagibacter ubique HTCC1062	lca
+ASV10798	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
 ASV108	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1080	species	Clytia gregaria	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Clytiidae	Clytia	Clytia gregaria	best hit
+ASV10800	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10802	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10804	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	lca
+ASV10806	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10809	species	Gaetanus minutus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Aetideidae	Gaetanus	Gaetanus minutus	lca
 ASV1081	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10810	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10811	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10813	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10814	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10815	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10816	species	Metacarcinus magister	Eukaryota	Arthropoda	Malacostraca	Decapoda	Cancridae	Metacarcinus	Metacarcinus magister	best hit
+ASV10818	species	Alvania	Eukaryota	Mollusca	Gastropoda	Littorinimorpha	Rissoidae	unknown genus	Alvania	best hit
 ASV1082	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10821	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10822	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10823	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10827	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10828	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10829	species	Calanidae	Eukaryota	Arthropoda	Hexanauplia	Calanoida	unknown family	unknown genus	Calanidae	lca
 ASV1083	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV10830	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10831	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10832	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10834	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10836	species	Pseudocalanus newmani	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus newmani	best hit
+ASV10837	order	Calanoida	Eukaryota	Arthropoda	Hexanauplia	Calanoida	no identification	no identification	no identification	lca
+ASV10839	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1084	species	Placida dendritica	Eukaryota	Mollusca	Gastropoda	unknown order	Limapontiidae	Placida	Placida dendritica	best hit
+ASV10841	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10848	species	Pseudocalanus newmani	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus newmani	best hit
 ASV1085	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10851	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10859	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1086	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10863	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10864	species	uncultured dinoflagellate	Eukaryota	Dinophyceae	Dinophyceae	unknown order	unknown family	unknown genus	uncultured dinoflagellate	best hit
+ASV10865	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10868	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10869	order	Euphausiacea	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	no identification	no identification	no identification	lca
 ASV1087	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10870	species	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Discoconchoecia	Discoconchoecia aff. elegans CMARA05309_Os109.1.1	lca
+ASV10873	species	uncultured dinoflagellate	Eukaryota	Dinophyceae	Dinophyceae	unknown order	unknown family	unknown genus	uncultured dinoflagellate	lca
+ASV10875	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10876	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10877	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10878	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1088	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10880	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10882	species	Pseudocalanus mimus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus mimus	best hit
+ASV10883	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10886	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10887	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
 ASV1089	species	Bathycoccus prasinos	Viridiplantae	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos	best hit
+ASV10890	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10892	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10893	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10894	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10896	species	Micromonas pusilla	Viridiplantae	Chlorophyta	Mamiellophyceae	Mamiellales	Mamiellaceae	Micromonas	Micromonas pusilla	lca
+ASV10897	species	uncultured Kareniaceae	Eukaryota	Dinophyceae	Dinophyceae	Gymnodiniales	Kareniaceae	unknown genus	uncultured Kareniaceae	best hit
 ASV109	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1090	species	Clytia	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Clytiidae	unknown genus	Clytia	best hit
+ASV10902	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10903	species	Gaetanus minutus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Aetideidae	Gaetanus	Gaetanus minutus	lca
+ASV10904	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10905	species	Chironomidae sp. BIOUG28580-D12	Eukaryota	Arthropoda	Insecta	Diptera	Chironomidae	unknown genus	Chironomidae sp. BIOUG28580-D12	best hit
+ASV10906	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10907	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10908	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10909	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
 ASV1091	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10910	species	Eucalanus bungii	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus bungii	lca
+ASV10918	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1092	species	Paracalanus sp. C AC-2013	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013	best hit
+ASV10920	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10921	class	Hexanauplia	Eukaryota	Arthropoda	Hexanauplia	no identification	no identification	no identification	no identification	lca
+ASV10924	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10925	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10926	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10929	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1093	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10931	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10932	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10935	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10936	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10937	species	Caprella laeviuscula	Eukaryota	Arthropoda	Malacostraca	Amphipoda	Caprellidae	Caprella	Caprella laeviuscula	best hit
+ASV10938	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10941	class	Dinophyceae	Eukaryota	Dinophyceae	Dinophyceae	no identification	no identification	no identification	no identification	lca
+ASV10945	species	Parathemisto pacifica	Eukaryota	Arthropoda	Malacostraca	Amphipoda	Hyperiidae	Parathemisto	Parathemisto pacifica	best hit
+ASV10946	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10948	species	Scolecithricella	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Scolecitrichidae	unknown genus	Scolecithricella	best hit
 ASV1095	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10950	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10956	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10957	species	Pseudocalanus acuspes	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus acuspes	best hit
 ASV1096	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10960	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10963	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10964	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10966	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1097	species	Brisaster latifrons	Eukaryota	Echinodermata	Echinoidea	Spatangoida	Schizasteridae	Brisaster	Brisaster latifrons	best hit
+ASV10971	species	Pseudocalanus mimus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus mimus	best hit
+ASV10972	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10974	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10977	species	Paraeuchaeta elongata	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	Paraeuchaeta elongata	best hit
+ASV10979	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1098	species	Leitoscoloplos pugettensis	Eukaryota	Annelida	Polychaeta	unknown order	Orbiniidae	Leitoscoloplos	Leitoscoloplos pugettensis	best hit
+ASV10983	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10984	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10987	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10989	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10992	species	Thysanoessa longipes	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	Euphausiidae	Thysanoessa	Thysanoessa longipes	best hit
+ASV10993	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10995	class	Dinophyceae	Eukaryota	Dinophyceae	Dinophyceae	no identification	no identification	no identification	no identification	lca
+ASV10996	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV10997	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV10998	kingdom	Eukaryota	Eukaryota	no identification	no identification	no identification	no identification	no identification	no identification	lca
 ASV11	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV110	species	Harmothoe sp. P_6 NJ-2021	Eukaryota	Annelida	Polychaeta	Phyllodocida	Polynoidae	Harmothoe	Harmothoe sp. P_6 NJ-2021	best hit
 ASV1100	species	Nanomia bijuga	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga	best hit
+ASV11000	family	Clausocalanidae	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	no identification	no identification	lca
+ASV11002	genus	Paraeuchaeta	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Euchaetidae	Paraeuchaeta	no identification	lca
+ASV11003	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11005	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11006	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11007	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11008	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11009	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1101	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV11010	species	Scina sp. USNM IZ 1449314	Eukaryota	Arthropoda	Malacostraca	Amphipoda	Scinidae	Scina	Scina sp. USNM IZ 1449314	best hit
+ASV11012	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11014	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11016	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11020	species	Pseudocalanus mimus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus mimus	best hit
+ASV11021	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11027	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11029	species	Epiactis	Eukaryota	Cnidaria	Anthozoa	Actiniaria	Actiniidae	unknown genus	Epiactis	best hit
 ASV1103	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11030	species	Cladophialophora bantiana	Fungi	Ascomycota	Eurotiomycetes	Chaetothyriales	Herpotrichiellaceae	Cladophialophora	Cladophialophora bantiana	lca
+ASV11031	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11032	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11034	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11035	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11036	species	Acartia longiremis	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia longiremis	best hit
+ASV11037	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11039	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1104	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11040	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11041	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11042	species	Metridia lucens	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia lucens	best hit
+ASV11044	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11046	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
+ASV11048	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1105	species	Spinocalanus brevicaudatus	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Spinocalanidae	Spinocalanus	Spinocalanus brevicaudatus	best hit
+ASV11052	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1106	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
 ASV1107	species	Akanthomyces lecanii	Fungi	Ascomycota	Sordariomycetes	Hypocreales	Cordycipitaceae	Akanthomyces	Akanthomyces lecanii	best hit
 ASV1109	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no identification	no lca
