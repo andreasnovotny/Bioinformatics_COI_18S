@@ -32,9 +32,20 @@ rm taxonomy_12S_ASV_sequences.length_var.blast.out #remove redundant file
 mv tmp blast_96_sim_LCA_besthit/12S_ASV_sequences.length_var.blast.out #replace with taxonomy added blast output
 
 
+
 #### 18S amplicon blast with NCBI SSU database ####
 mkdir blast_96_sim
-blastn -task megablast -num_threads 38 -evalue 1e-5 -max_target_seqs 10 -perc_identity 96 -qcov_hsp_perc 50 -db ~/projects/taxonomyDBs/NCBI_SSU_euks/SSU_eukaryote_rRNA -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' -query 18S_ASV_sequences.fasta  -out blast_96_sim/18S_ASV_sequences.NCBI_SSU.blast.out
+blastn -task megablast \
+    -num_threads 38 \
+    -evalue 1e-5 \
+    -max_target_seqs 10 \
+    -perc_identity 96 \
+    -qcov_hsp_perc 50 \
+    -db ~/projects/taxonomyDBs/NCBI_SSU_euks/SSU_eukaryote_rRNA \
+    -outfmt '6 qseqid stitle sacc staxid pident qcovs evalue bitscore' \
+    -query 18S_ASV_sequences.fasta  \
+    -out blast_96_sim/18S_ASV_sequences.NCBI_SSU.blast.out
+    
 python2 ~/programs/galaxy-tool-BLAST/blastn_add_taxonomy_lite.py -i blast_96_sim/18S_ASV_sequences.NCBI_SSU.blast.out -t ~/projects/taxonomyDBs/NCBI_taxonomy/2021-11-05/rankedlineage.dmp -m ~/projects/taxonomyDBs/NCBI_taxonomy/2021-11-05/merged.dmp -o taxonomy
 cat <(head -n 1 ~/programs/galaxy-tool-lca/example/example.tabular) taxonomy_18S_ASV_sequences.NCBI_SSU.blast.out > tmp
 
