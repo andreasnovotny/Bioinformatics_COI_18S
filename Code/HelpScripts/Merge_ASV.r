@@ -11,7 +11,7 @@ readASV <- function(dirpath){
     require(tidyverse)
 
     dirpath %>%
-        file.path("ASV/sequence_table.CO1.merged.txt") %>%
+        file.path("ASV/sequence_table.merged.txt") %>%
         read.delim() %>%
         column_to_rownames("row_names") %>%
         t()%>%
@@ -46,13 +46,13 @@ ASV.num <- paste0("ASV", seq(ASV.seq), sep = "") #create new names
 
 # Save ASV name mapping
 write.table(cbind(ASV.num, ASV.seq),
-            file.path(out_dir, "sequence_ASVname_mapping.CO1.txt"),
+            file.path(out_dir, "sequence_ASVname_mapping.txt"),
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 
 #Save ASV table with ASV names
 write.fasta(sequences = as.list(ASV.seq),
             names = ASV.num,
-            file.path(out_dir, "CO1_ASV_sequences.fasta"))
+            file.path(out_dir, "ASV_sequences.fasta"))
 
 print("Merged Sequences Rscript finalised")

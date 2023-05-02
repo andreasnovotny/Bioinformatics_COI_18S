@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-#pipeline for processing CO1 amplicon sequencing data
+#pipeline for processing 12S amplicon sequencing data
 #author: Evan Morien
 #modified by: Andreas Novotny
 #last modified: Dec 5th, 2021
@@ -8,7 +8,7 @@
 
 ###########################################################
 # Execute from command line
-# Rscript processing.COI.dada2.R "/path/to/data/directory" "COI"
+# Rscript processing.12S.dada2.R "/path/to/data/directory"
 #
 # Revisit lines marked CHANGE ME before executing script
 ###########################################################
@@ -90,33 +90,18 @@ sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 
 
 
-# Define Primers 
-if (commandArgs(TRUE)[2] == "COI") {
-  # COI primers
-  FWD <- "GGWACWGGWTGAACWGTWTAYCCYCC"
-  REV <- "TANACYTCNGGRTGNCCRAARAAYCA"
-  } else {
-    if (commandArgs(TRUE)[2] == "MiFish-U") {
-      #these are the MiFish-U primers
-      FWD <- "GTCGGTAAAACTCGTGCCAGC"
-      REV <- "CATAGTGGGGTATCTAATCCCAGTTTG"
-    } else {
-      if (commandArgs(TRUE)[2] == "MiFish-E") {
-        #these are the MiFish-E primers
-        FWD <- "GTTGGTAAATCTCGTGCCAGC"
-        REV <- "CATAGTGGGGTATCTAATCCTAGTTTG"
-      } else {
-        if (commandArgs(TRUE)[2] == "V4_18S") {
-          FWD <- "CCAGCASCYGCGGTAATTCC" ## V4F 565F
-          REV <- "ACTTTCGTTCTTGATYRR"   ## V4RB 981R
-        } else {
-          FWD <- commandArgs(TRUE)[2]
-          REV <- commandArgs(TRUE)[3]
-        }
-      }
-    }
-  }
 
+
+# Define Primers 
+if (commandArgs(TRUE)[2] == "MiFish-E") {
+  #these are the MiFish-E primers
+  FWD <- "GTTGGTAAATCTCGTGCCAGC"
+  REV <- "CATAGTGGGGTATCTAATCCTAGTTTG"
+} else {
+  #these are the MiFish-U primers
+  FWD <- "GTCGGTAAAACTCGTGCCAGC"
+  REV <- "CATAGTGGGGTATCTAATCCCAGTTTG"
+}
 
 appendASV(" \n FWD Primers:", FWD,
           "\n REV Primers:", REV)
@@ -181,7 +166,7 @@ retained <- as.data.frame(tmp_out)
 retained$percentage_retained <- retained$reads.out / retained$reads.in * 100
 
 write.table(retained,
-            "Report/retained_reads.CO1.filterAndTrim_step.csv",
+            "Report/retained_reads.filterAndTrim_step.csv",
             sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
 
 primerHits <- function(primer, fn) {
@@ -307,7 +292,7 @@ retained <- as.data.frame(out)
 retained$percentage_retained <- retained$reads.out / retained$reads.in * 100
 
 write.table(retained,
-            "Report/retained_reads.CO1.filterAndTrim_step.csv",
+            "Report/retained_reads.filterAndTrim_step.csv",
             sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
 
 ##################################################
@@ -334,10 +319,10 @@ errR <- learnErrors(filtRs, multithread = 32)
 
 # assess this graph. it shows the error rates observed in your dataset. strange
 # or unexpected shapes in the plot should be considered before moving on.
-pdf("Report/error_rates.dada2.CO1.R1s.pdf", width = 10, height = 10)
+pdf("Report/error_rates.dada2.R1s.pdf", width = 10, height = 10)
   plotErrors(errF, nominalQ = TRUE)
 dev.off()
-pdf("Report/error_rates.dada2.CO1.R2s.pdf", width = 10, height = 10)
+pdf("Report/error_rates.dada2.R2s.pdf", width = 10, height = 10)
   plotErrors(errR, nominalQ = TRUE)
 dev.off()
 
@@ -417,7 +402,7 @@ seqtab <- makeSequenceTable(mergers)
 
 #tabulate sequence length distribution
 length.histogram <- as.data.frame(table(nchar(getSequences(seqtab))))
-pdf("Report/length_histogram.CO1.merged_reads.pdf", width = 10, height = 8)
+pdf("Report/length_histogram.merged_reads.pdf", width = 10, height = 8)
 plot(x = length.histogram[, 1], y = length.histogram[, 2])
 dev.off()
 
@@ -538,12 +523,12 @@ colnames(track) <- c(
 
 #### save output from sequnce table construction steps ####
 write.table(data.frame("row_names" = rownames(track), track),
-                      "Report/read_retention.CO1_merged.csv",
+                      "Report/read_retention.merged.csv",
                       row.names = FALSE, quote = FALSE, sep = "\t")
 
 write.table(data.frame("row_names" = rownames(seqtab.nosingletons.nochim),
                       seqtab.nosingletons.nochim),
-                      "ASV/sequence_table.CO1.merged.txt",
+                      "ASV/sequence_table.merged.txt",
                       row.names = FALSE, quote = FALSE, sep = "\t")
 
 #### save sequences for both ASV tables , and do taxonomy assignment ####
@@ -560,12 +545,12 @@ my_otu_table <- t(as.data.frame(seqtab.nosingletons.nochim))
 ASV.seq <- as.character(unclass(row.names(my_otu_table)))
 ASV.num <- paste0("ASV", seq(ASV.seq), sep = "") #create new names
 write.table(cbind(ASV.num, ASV.seq),
-            "ASV/sequence_ASVname_mapping.CO1.txt",
+            "ASV/sequence_ASVname_mapping.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 #save sequences with new names in fasta format
 write.fasta(sequences = as.list(ASV.seq),
-            names = ASV.num, "ASV/CO1_ASV_sequences.fasta")
+            names = ASV.num, "ASV/ASV_sequences.fasta")
 
 #IMPORTANT: sanity checks
 testCols <- colnames(seqtab.nosingletons.nochim) == ASV.seq
@@ -583,7 +568,7 @@ colnames(seqtab.nosingletons.nochim) <- ASV.num
 #re-save sequence and taxonomy tables with updated names
 write.table(data.frame("row_names" = rownames(seqtab.nosingletons.nochim),
                       seqtab.nosingletons.nochim),
-           "ASV/sequence_table.CO1.merged.w_ASV_names.txt",
+           "ASV/sequence_table.merged.w_ASV_names.txt",
            row.names = FALSE, quote = FALSE, sep = "\t")
 
 appendASV("\n \n ASV ANALYSIS COMPLETE")

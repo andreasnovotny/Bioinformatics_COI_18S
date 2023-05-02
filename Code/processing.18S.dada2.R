@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-#pipeline for processing COI amplicon sequencing data
+#pipeline for processing 18S amplicon sequencing data
 #author: Evan Morien
 #modified by: Andreas Novotny
 #last modified: Dec 5th, 2021
@@ -8,7 +8,7 @@
 
 ###########################################################
 # Execute from command line
-# Rscript processing.COI.dada2.R "/path/to/data/directory" "COI"
+# Rscript processing.18S.dada2.R "/path/to/data/directory"
 #
 # Revisit lines marked CHANGE ME before executing script
 ###########################################################
@@ -48,9 +48,10 @@ theme_set(theme_bw())
 
 
 #### File Path Setup ####
+#wd <-"/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QPKbulk_2017"
 wd <- commandArgs(TRUE)[1] #should contain WD
 setwd(wd)
-#wd <-"/home/andreas.novotny/AmpliconSeqAnalysis/Data/COI_Zoopsprint2022"
+#wd <-"/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QPKbulk_2017"
 
 
 # CHANGE ME to sequence Input
@@ -88,9 +89,9 @@ fnRs <- sort(list.files(path, pattern = "_R2_001.fastq.gz", full.names = TRUE))
 # unique sample name
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 
-# COI primers
-FWD <- "GGWACWGGWTGAACWGTWTAYCCYCC"
-REV <- "TANACYTCNGGRTGNCCRAARAAYCA"
+# Define Primers
+FWD <- "CCAGCASCYGCGGTAATTCC" ## V4F 565F
+REV <- "ACTTTCGTTCTTGATYRR"   ## V4RB 981R
 
 appendASV(" \n FWD Primers:", FWD,
           "\n REV Primers:", REV)
@@ -260,7 +261,7 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 appendASV(" \n - Running Main FilterAndTrim")
 
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs,
-                    truncLen = c(220, 200),  # CHANGE ME
+                    truncLen = c(170, 165),  # CHANGE ME
                     trimLeft = c(0, 0),      # CHANGE ME
                     trimRight = c(0, 0),     # CHANGE ME
                     minLen = c(150, 150),    # CHANGE ME
