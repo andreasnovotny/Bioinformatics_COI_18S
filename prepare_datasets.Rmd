@@ -1,0 +1,327 @@
+---
+title: "Merge COI taxonomy, abundance and metadata"
+---
+
+```{r}
+library(lubridate)
+library(plotly)
+library(tidyverse)
+library(readxl)
+'%!in%' <- function(x,y)!('%in%'(x,y))
+```
+
+
+# COI #################
+
+## Load and merge data tables:
+
+### ASV table:
+
+Read in ASV table, and modify names:
+```{r}
+ASV_COI_tmp <-
+  read.delim("ProcessedData/COI_Andreas/ASV/sequence_table.merged.txt",
+             sep = " ") %>% 
+  rename_with(~gsub(., pattern = "\\.", replacement = "_")) %>%
+  rownames_to_column("ASV") %>% 
+  select(!Sequence) %>% 
+  replace(is.na(.), 0) %>% 
+  mutate(ASV = paste("ASV", ASV, sep = ""))
+
+ASV_COI_tmp
+```
+
+### Sample metadata:
+
+Read in metadata:
+
+```{r}
+Samptab_COI_tmp <-
+  readxl::read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx",
+                     sheet = "COI")
+Samptab_COI_tmp
+```
+
+Check what original samples are missing from the ASV table:
+
+```{r}
+SamplesNotInASV <-
+  Samptab_COI_tmp %>%
+  filter(Library_ID %!in% colnames(ASV_COI_tmp)) %>% 
+  pull(Library_ID)
+
+SamplesNotInASV
+```
+
+**Investigate why samples are not present by back-tracing intermediates:**
+
+-FW22XN01_COI removed in filtering step (Blank, no reads left)\
+-Blank1_COI removed in filtering step (Blank, no reads left)\
+-QMIC3678_COI low read abundance before and after filter and trim\
+-QMIC3601_COI low read abundance before and after filter and trim\
+-QMIC2991_COI low read abundance before and after filter and trim\
+-QMIC2867_COI low read abundance before and after filter and trim
+
+These samples exist in sequence data but not metadata:
+
+```{r}
+samplesNotInMetadata <- 
+  colnames(ASV_COI_tmp) %>% 
+  tibble() %>% 
+  filter(. %!in% pull(Samptab_COI_tmp, Library_ID)) %>% 
+  pull
+
+samplesNotInMetadata
+
+```
+
+Undetermined samples are produced in the bioinformatic pipeline. It is sequences that due to errors canot be assigned any sample.\
+the presences of undermined samples are ok. If othr samples show up here it is due to errors. Check.
+
+
+### Taxonomy Table
+```{r}
+Taxtab_COI_tmp <- read.delim( "ProcessedData/COI_Andreas/COI_taxonomy/taxonomy_table.CO1.iterative_blast.LCA+best_hit.txt") %>% 
+  rename_with(~gsub(., pattern = "X.", replacement = "")) %>% 
+  rename(ASV = Query)
+Taxtab_COI_tmp
+```
+
+
+### Merge datasets
+
+```{r}
+
+COI_df <- 
+  Taxtab_COI_tmp %>%
+  full_join(ASV_COI_tmp, by = "ASV") %>%
+  pivot_longer(!1:12, names_to = "Library_ID", values_to = "Abundance") %>%
+  full_join(Samptab_COI_tmp, by = "Library_ID")
+
+
+write_tsv(COI_df, "ProcessedData/COI_Andreas/COI_Hakai_AN.txt")
+```
+
+## Plot Sequencing Depth
+
+```{r}
+depth <-
+  COI_df %>% 
+  group_by(Library_ID) %>% 
+  summarize(Abundance=sum(Abundance))
+depth
+
+
+depth %>% 
+  ggplot() +
+  geom_bar(aes(Library_ID, Abundance), stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+COI_df %>% 
+  filter(Library_ID %in% c("Blank_COI", "Blank_COI_2018", "FW22XN04_COI", "FW22XN05_COI"),
+         Abundance > 0)
+```
+
+
+## PLot Negative controls
+
+```{r}
+nullplot <- 
+  COI_df %>% 
+  filter(is.na(Project_name)) %>% 
+  ggplot() +
+  geom_bar(aes(Library_ID, Abundance, fill=phylum), stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+plotly::ggplotly(nullplot)
+```
+
+# 18S #################
+
+## Load and merge data tables:
+
+### ASV table:
+
+Read in ASV table, and modify names:
+```{r}
+ASV_18S_tmp <-
+  read.delim("ProcessedData/18S_Andreas/ASV/sequence_table.merged.txt",
+             sep = " ") %>% 
+  rename_with(~gsub(., pattern = "\\.", replacement = "_")) %>%
+  rownames_to_column("ASV") %>% 
+  select(!Sequence) %>% 
+  replace(is.na(.), 0) %>% 
+  mutate(ASV = paste("ASV", ASV, sep = ""))
+
+ASV_18S_tmp
+```
+### Sample metadata:
+
+Read in metadata:
+
+```{r}
+Samptab_18S_tmp <-
+  readxl::read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx",
+                     sheet = "18S")
+Samptab_18S_tmp
+```
+
+
+
+Check what original samples are missing from the ASV table:
+
+```{r}
+SamplesNotInASV <-
+  Samptab_18S_tmp %>%
+  filter(Library_ID %!in% colnames(ASV_18S_tmp)) %>% 
+  pull(Library_ID)
+
+SamplesNotInASV
+
+
+
+
+colnames(ASV_18S_tmp)
+Samptab_18S_tmp$Library_ID
+
+"QMIC4813_COI"
+"QMIC4813_18S"
+```
+
+**Investigate why samples are not present by back-tracing intermediates:**
+
+These samples exist in sequence data but not metadata:
+
+```{r}
+samplesNotInMetadata <- 
+  colnames(ASV_18S_tmp) %>% 
+  tibble() %>% 
+  filter(. %!in% pull(Samptab_18S_tmp, Library_ID)) %>% 
+  pull
+
+samplesNotInMetadata
+```
+
+### Taxonomy Table
+#### TODO: FIX 18S rds format
+```{r}
+  Taxtab_18S_tmp <- read.delim( "ProcessedData/12S_Andreas/Taxonomy/taxonomy_table.12S.NCBI_NT.96sim.LCA+besthit.txt") %>% 
+  rename_with(~gsub(., pattern = "X.", replacement = "")) %>% 
+  rename(ASV = Query)
+Taxtab_12S_tmp
+```
+
+### Merge datasets
+
+```{r}
+df_12S <- 
+  Taxtab_18S_tmp %>%
+  full_join(ASV_18S_tmp, by = "ASV") %>%
+  pivot_longer(!1:12, names_to = "Library_ID", values_to = "Abundance") %>%
+  full_join(Samptab_18S_tmp, by = "Library_ID")
+
+write_tsv(df_18S, "ProcessedData/12S_Andreas/12S_Hakai_AN.txt")
+
+df_18S
+```
+
+## Plot Sequencing Depth
+
+```{r}
+depth <-
+  df_18S %>% 
+  group_by(Library_ID) %>% 
+  summarize(Abundance=sum(Abundance))
+depth
+
+depth %>%
+  filter(is.na(Abundance) == FALSE) %>% 
+  ggplot() +
+  geom_bar(aes(Library_ID, Abundance), stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+# 12S ##################
+
+### ASV table:
+
+Read in ASV table, and modify names:
+```{r}
+ASV_12S_tmp <-
+  read.delim("ProcessedData/12S_Andreas/ASV/sequence_table.merged.txt",
+             sep = " ") %>% 
+  rename_with(~gsub(., pattern = "\\.", replacement = "_")) %>%
+  rownames_to_column("ASV") %>% 
+  select(!Sequence) %>% 
+  replace(is.na(.), 0) %>% 
+  mutate(ASV = paste("ASV", ASV, sep = ""))
+
+ASV_12S_tmp
+```
+
+### Sample metadata:
+
+Read in metadata:
+
+```{r}
+Samptab_12S_tmp <-
+  readxl::read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx",
+                     sheet = "12S")
+Samptab_12S_tmp
+```
+
+Check what original samples are missing from the ASV table:
+
+```{r}
+SamplesNotInASV <-
+  Samptab_12S_tmp %>%
+  filter(Library_ID %!in% colnames(ASV_12S_tmp)) %>% 
+  pull(Library_ID)
+
+SamplesNotInASV
+
+```
+
+### Taxonomy Table
+
+```{r}
+  Taxtab_12S_tmp <- read.delim( "ProcessedData/12S_Andreas/Taxonomy/taxonomy_table.12S.NCBI_NT.96sim.LCA+besthit.txt") %>% 
+  rename_with(~gsub(., pattern = "X.", replacement = "")) %>% 
+  rename(ASV = Query)
+Taxtab_12S_tmp
+```
+
+### Merge datasets
+
+```{r}
+
+df_12S <- 
+  Taxtab_12S_tmp %>%
+  full_join(ASV_12S_tmp, by = "ASV") %>%
+  pivot_longer(!1:12, names_to = "Library_ID", values_to = "Abundance") %>%
+  full_join(Samptab_12S_tmp, by = "Library_ID")
+
+write_tsv(df_12S, "ProcessedData/12S_Andreas/12S_Hakai_AN.txt")
+
+df_12S
+```
+
+## Plot Sequencing Depth
+
+```{r}
+depth <-
+  df_12S %>% 
+  group_by(Library_ID) %>% 
+  summarize(Abundance=sum(Abundance))
+depth
+
+depth %>%
+  filter(is.na(Abundance) == FALSE) %>% 
+  ggplot() +
+  geom_bar(aes(Library_ID, Abundance), stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+
+
+
