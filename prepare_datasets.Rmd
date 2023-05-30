@@ -178,14 +178,6 @@ SamplesNotInASV <-
 
 SamplesNotInASV
 
-
-
-
-colnames(ASV_18S_tmp)
-Samptab_18S_tmp$Library_ID
-
-"QMIC4813_COI"
-"QMIC4813_18S"
 ```
 
 **Investigate why samples are not present by back-tracing intermediates:**
@@ -203,12 +195,13 @@ samplesNotInMetadata
 ```
 
 ### Taxonomy Table
-#### TODO: FIX 18S rds format
+
 ```{r}
-  Taxtab_18S_tmp <- read.delim( "ProcessedData/12S_Andreas/Taxonomy/taxonomy_table.12S.NCBI_NT.96sim.LCA+besthit.txt") %>% 
-  rename_with(~gsub(., pattern = "X.", replacement = "")) %>% 
-  rename(ASV = Query)
-Taxtab_12S_tmp
+Taxtab_18S_tmp <- readRDS("ProcessedData/18S_Andreas/taxonomy/tax_tab_18S.RDS")$tax %>% 
+  as.data.frame()
+Taxtab_18S_tmp
+
+
 ```
 
 ### Merge datasets
