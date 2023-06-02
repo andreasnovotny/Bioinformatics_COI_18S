@@ -196,7 +196,7 @@ samplesNotInMetadata
 ### Taxonomy Table
 
 ```{r}
-Taxtab_18S_tmp <- readRDS("ProcessedData/18S_Andreas/taxonomy/tax_tab_18S.RDS")$tax %>% 
+Taxtab_18S_tmp <- readRDS("ProcessedData/18S_Andreas/taxonom")
   as.data.frame() %>% 
   rownames_to_column("Sequence")
 Taxtab_18S_tmp %>% 
