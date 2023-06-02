@@ -9,4 +9,4 @@ cd ${wd}
 Rscript ../../Code/HelpScripts/AssignTaxonomy_18S.R
 
 cp -r ASV ../../ProcessedData/18S_Andreas
-cp tax_tab_18S.RDS ../../ProcessedData/18S_Andreas/taxonomy
+cp tax_tab_18S.RDS ../../ProcessedData/18S_Andreas/tax_tab_18S.RDSs
