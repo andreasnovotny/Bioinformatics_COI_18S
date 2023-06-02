@@ -261,20 +261,13 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 appendASV(" \n - Running Main FilterAndTrim")
 
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs,
-                    truncLen = c(170, 165),  # CHANGE ME
+                    truncLen = c(220, 200),  # CHANGE ME
                     trimLeft = c(0, 0),      # CHANGE ME
                     trimRight = c(0, 0),     # CHANGE ME
                     minLen = c(150, 150),    # CHANGE ME
                     maxN = c(0, 0),          # CHANGE ME
                     maxEE = c(3, 4),         # CHANGE ME
-                    # LOGGBOOK maxEE:
-                    # with trunclen, 270, 250 maxEE:
-                    #1,1 retained 25-30 percent of reads;
-                    #2,2 retained 30-50 percent;
-                    #3,4 retained around 60 percent
-                    # with trunclen 280, 265:fwd:fwd
-                    #3,4, retained 0.2 percent SIC!
-                    truncQ = c(2, 2),       # CHANGE ME
+                    truncQ = c(2, 2),        # CHANGE ME
                     rm.phix = TRUE, matchIDs = TRUE,
                     compress = TRUE, multithread = 32)
 
