@@ -149,7 +149,6 @@ ASV_18S_tmp <-
              sep = " ") %>% 
   rename_with(~gsub(., pattern = "\\.", replacement = "_")) %>%
   rownames_to_column("ASV") %>% 
-  select(!Sequence) %>% 
   replace(is.na(.), 0) %>% 
   mutate(ASV = paste("ASV", ASV, sep = ""))
 
@@ -198,24 +197,28 @@ samplesNotInMetadata
 
 ```{r}
 Taxtab_18S_tmp <- readRDS("ProcessedData/18S_Andreas/taxonomy/tax_tab_18S.RDS")$tax %>% 
-  as.data.frame()
+  as.data.frame() %>% 
+  rownames_to_column("Sequence")
+Taxtab_18S_tmp %>% 
+  filter(is.na(Species)==FALSE)
+
 Taxtab_18S_tmp
-
-
 ```
 
 ### Merge datasets
 
 ```{r}
-df_12S <- 
+df_18S <- 
   Taxtab_18S_tmp %>%
-  full_join(ASV_18S_tmp, by = "ASV") %>%
-  pivot_longer(!1:12, names_to = "Library_ID", values_to = "Abundance") %>%
-  full_join(Samptab_18S_tmp, by = "Library_ID")
+  full_join(ASV_18S_tmp, by = "Sequence") %>% 
+  pivot_longer(!1:10, names_to = "Library_ID", values_to = "Abundance") %>% 
+  full_join(Samptab_18S_tmp, by = "Library_ID") %>% 
+  filter(is.na(ASV)==FALSE)
 
 write_tsv(df_18S, "ProcessedData/12S_Andreas/12S_Hakai_AN.txt")
 
-df_18S
+df_18S 
+  
 ```
 
 ## Plot Sequencing Depth
