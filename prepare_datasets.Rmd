@@ -196,13 +196,15 @@ samplesNotInMetadata
 ### Taxonomy Table
 
 ```{r}
-Taxtab_18S_tmp <- readRDS("ProcessedData/18S_Andreas/taxonom")
+Taxtab_18S_tmp <- readRDS("ProcessedData/18S_Andreas/tax_tab_18S.RDS")$tax %>%
   as.data.frame() %>% 
   rownames_to_column("Sequence")
 Taxtab_18S_tmp %>% 
   filter(is.na(Species)==FALSE)
 
 Taxtab_18S_tmp
+
+readRDS()
 ```
 
 ### Merge datasets
@@ -215,7 +217,7 @@ df_18S <-
   full_join(Samptab_18S_tmp, by = "Library_ID") %>% 
   filter(is.na(ASV)==FALSE)
 
-write_tsv(df_18S, "ProcessedData/12S_Andreas/12S_Hakai_AN.txt")
+write_tsv(df_18S, "ProcessedData/18S_Andreas/18S_Hakai_AN.txt")
 
 df_18S 
   

@@ -1,0 +1,112 @@
+---
+title: "Comparing Methods"
+
+---
+
+# Prepare environment
+
+Packages
+```{r}
+library(tidyverse)
+library(plotly)
+```
+
+
+Datasets
+```{r}
+df_18S <- read.delim("ProcessedData/18S_Andreas/18S_Hakai_AN.txt") 
+colnames(df_18S)
+df_18S
+```
+
+Division Raw
+```{r}
+
+plot <- df_18S %>% 
+  filter(Project_name == "Vertical",
+         year(Sample_date) == 2022) %>%
+  group_by(Library_ID) %>% 
+  summarize(Abundance=sum(Abundance),
+            Order, Class, Division) %>% 
+  filter(is.na(Abundance) == FALSE) %>% 
+  ggplot() +
+  geom_bar(aes(Library_ID, Abundance, fill = Division), stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggplotly(plot)
+
+```
+
+```{r}
+plot <- df_18S %>% 
+  filter(Project_name == "Vertical",
+         year(Sample_date) == 2022,
+         Division == "Metazoa") %>%
+  group_by(Library_ID) %>% 
+  summarize(Abundance=Abundance/sum(Abundance),
+            Genus) %>% 
+  filter(is.na(Abundance) == FALSE) %>% 
+  ggplot() +
+  geom_bar(aes(Library_ID, Abundance, fill = Genus), stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggplotly(plot)
+```
+
+
+Vertical eDNA
+```{r}
+plot <- df_18S %>% 
+  filter(Project_name == "Vertical",
+         year(Sample_date) == 2022,
+         Division == "Metazoa",
+         Sample_type == "eDNA",
+         Genus %in% prev
+         ) %>%
+  group_by(Library_ID) %>% 
+  summarize(Abundance=Abundance/sum(Abundance),
+            Genus, Line_out_depth, Site_ID) %>% 
+  filter(is.na(Abundance) == FALSE) %>%
+  mutate(Depth = factor(Line_out_depth, levels = c(
+    "40", "80", "100", "120", "160"))) %>% 
+  ggplot() +
+  geom_bar(aes(Site_ID, Abundance, fill = Genus), stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  facet_grid(Depth ~ .)
+
+ggplotly(plot)
+
+```
+
+Vertical Net DNA     
+```{r}
+prev <- c("Calanus",
+          "Paracalanus",
+          "Pseudocalanus",
+          "Euphausia",
+          "Metridia")
+
+plot <- df_18S %>% 
+  filter(Project_name == "Vertical",
+         year(Sample_date) == 2022,
+         Division == "Metazoa",
+         Sample_type == "Zp_Net",
+         Genus %in% prev
+         ) %>%
+  group_by(Library_ID) %>% 
+  summarize(Abundance=Abundance/sum(Abundance),
+            Genus, Line_out_depth, Site_ID) %>% 
+  filter(is.na(Abundance) == FALSE) %>%
+  mutate(Depth = factor(Line_out_depth, levels = c(
+    "80-0", "120-80", "200-120"
+  ))) %>% 
+  ggplot() +
+  geom_bar(aes(Site_ID, Abundance, fill = Genus), stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  facet_grid(Depth ~ .)
+
+ggplotly(plot)
+
+
+
+```
