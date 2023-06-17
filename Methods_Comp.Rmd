@@ -9,6 +9,8 @@ Packages
 ```{r}
 library(tidyverse)
 library(plotly)
+
+'%!in%' <- function(x,y)!('%in%'(x,y))
 ```
 
 
@@ -18,6 +20,17 @@ df_18S <- read.delim("ProcessedData/18S_Andreas/18S_Hakai_AN.txt")
 colnames(df_18S)
 df_18S
 ```
+
+Datasets
+```{r}
+df_COI <- read.delim("ProcessedData/COI_Andreas/COI_Hakai_AN.txt") 
+colnames(df_COI)
+df_18S
+```
+
+
+# Exploration
+
 
 Division Raw
 ```{r}
@@ -84,14 +97,25 @@ prev <- c("Calanus",
           "Paracalanus",
           "Pseudocalanus",
           "Euphausia",
-          "Metridia")
+          "Metridia",
+          "Oithona",
+          "Tomopteris",
+          "Meganyctiphanes",
+          "Eucalanus",
+          "Nanomia",
+          "Corycaeus",
+          "Aplysia",
+          "Aglaura",
+          "Crustacea_XX",
+          "Centropages")
 
 plot <- df_18S %>% 
   filter(Project_name == "Vertical",
          year(Sample_date) == 2022,
          Division == "Metazoa",
          Sample_type == "Zp_Net",
-         Genus %in% prev
+         Genus %in% prev,
+         is.na(Genus) == FALSE
          ) %>%
   group_by(Library_ID) %>% 
   summarize(Abundance=Abundance/sum(Abundance),
@@ -110,3 +134,143 @@ ggplotly(plot)
 
 
 ```
+
+# Plot eDNA Index:
+
+## 18S
+
+eDNA:
+
+```{r}
+df_18S %>% 
+  filter(Project_name == "Vertical",
+         year(Sample_date) == 2022,
+         Division == "Metazoa",
+         Sample_type == "eDNA",
+         is.na(Genus) == FALSE) %>% 
+  #sum over genus
+  group_by(Genus, Line_out_depth, Site_ID) %>% 
+  summarise(Abundance = sum(Abundance)) %>%
+  group_by(Genus) %>% 
+  filter(sum(Abundance) > 0) %>% 
+  #relative abundance
+  group_by(Line_out_depth, Site_ID) %>% 
+  reframe(relative_abundance = Abundance / sum(Abundance, na.rm = TRUE),
+          Genus) %>%  
+  #eDNA index
+  group_by(Genus) %>% 
+  reframe(eDNA_index = relative_abundance/max(relative_abundance),
+          Line_out_depth, Site_ID) %>%
+  filter(is.na(eDNA_index) == FALSE) %>% 
+  
+  mutate(Line_out_depth = as.integer(Line_out_depth)) %>% 
+  ggplot() +
+  geom_point(aes(Line_out_depth, eDNA_index, shape = Site_ID)) +
+  facet_wrap(facets = "Genus")
+  
+
+
+
+```
+Zp_Net:
+
+```{r}
+df_18S %>% 
+  filter(Project_name == "Vertical",
+         year(Sample_date) == 2022,
+         Division == "Metazoa",
+         Sample_type == "Zp_Net",
+         is.na(Genus) == FALSE) %>% 
+  #sum over genus
+  group_by(Genus, Line_out_depth, Site_ID) %>% 
+  summarise(Abundance = sum(Abundance)) %>%
+  group_by(Genus) %>% 
+  filter(sum(Abundance) > 0) %>% 
+  #relative abundance
+  group_by(Line_out_depth, Site_ID) %>% 
+  reframe(relative_abundance = Abundance / sum(Abundance, na.rm = TRUE),
+          Genus) %>%  
+  #eDNA index
+  group_by(Genus) %>% 
+  reframe(eDNA_index = relative_abundance/max(relative_abundance),
+          Line_out_depth, Site_ID) %>%
+  filter(is.na(eDNA_index) == FALSE) %>% 
+  
+  mutate(Line_out_depth = factor(Line_out_depth, levels = c(
+    "80-0", "120-80", "200-120"
+  ))) %>% 
+  ggplot() +
+  geom_point(aes(Line_out_depth, eDNA_index, shape = Site_ID)) +
+  facet_wrap(facets = "Genus")
+```
+## COI
+
+eDNA:
+
+```{r}
+df_COI
+
+df_COI %>%
+  mutate(Sample_date = as_datetime(Time_collected)) %>% 
+  filter(Project_name == "Vertical",
+         year(Sample_date) == 2022,
+         kingdom == "Metazoa",
+         Sample_type == "eDNA",
+         is.na(genus) == FALSE) %>% 
+  #sum over genus
+  group_by(genus, Line_out_depth, Site_ID) %>% 
+  summarise(Abundance = sum(Abundance)) %>%
+  group_by(genus) %>% 
+  filter(sum(Abundance) > 0)
+  #relative abundance
+  group_by(Line_out_depth, Site_ID) %>% 
+  reframe(relative_abundance = Abundance / sum(Abundance, na.rm = TRUE),
+          genus) %>% 
+  #eDNA index
+  group_by(genus) %>% 
+  reframe(eDNA_index = relative_abundance/max(relative_abundance),
+          Line_out_depth, Site_ID) %>%
+  filter(is.na(eDNA_index) == FALSE) %>% 
+  
+  mutate(Line_out_depth = as.integer(Line_out_depth)) %>% 
+  ggplot() +
+  geom_point(aes(Line_out_depth, eDNA_index, shape = Site_ID)) +
+  facet_wrap(facets = "genus")
+
+df_COI %>% 
+mutate(Date = as_datetime(Time_collected))
+```
+
+Zp_Net:
+
+```{r}
+df_18S %>% 
+  filter(Project_name == "Vertical",
+         year(Sample_date) == 2022,
+         Division == "Metazoa",
+         Sample_type == "Zp_Net",
+         is.na(Genus) == FALSE) %>% 
+  #sum over genus
+  group_by(Genus, Line_out_depth, Site_ID) %>% 
+  summarise(Abundance = sum(Abundance)) %>%
+  group_by(Genus) %>% 
+  filter(sum(Abundance) > 0) %>% 
+  #relative abundance
+  group_by(Line_out_depth, Site_ID) %>% 
+  reframe(relative_abundance = Abundance / sum(Abundance, na.rm = TRUE),
+          Genus) %>%  
+  #eDNA index
+  group_by(Genus) %>% 
+  reframe(eDNA_index = relative_abundance/max(relative_abundance),
+          Line_out_depth, Site_ID) %>%
+  filter(is.na(eDNA_index) == FALSE) %>% 
+  
+  mutate(Line_out_depth = factor(Line_out_depth, levels = c(
+    "80-0", "120-80", "200-120"
+  ))) %>% 
+  ggplot() +
+  geom_point(aes(Line_out_depth, eDNA_index, shape = Site_ID)) +
+  facet_wrap(facets = "Genus")
+```
+
+
