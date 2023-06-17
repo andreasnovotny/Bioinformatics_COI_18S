@@ -204,6 +204,7 @@ df_18S %>%
   facet_wrap(facets = "Genus")
 ```
 ## COI
+###TODO 2023-06-16: FIX code for COI
 
 eDNA:
 
