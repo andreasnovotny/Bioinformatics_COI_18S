@@ -7,10 +7,20 @@ seqs <- read.delim("ASV/sequence_table.merged.txt", sep = " ") %>%
   rename(sequence = Sequence) %>%
   as.data.frame()
 
+
+taxa_boot <- assignTaxonomy(seqs,
+    "/data/taxonomyDBs/silva_for_dada2/v132/silva_nr_v132_train_set.fa.gz",
+    multithread=TRUE,
+    taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
+    outputBootstraps = TRUE)
+
+saveRDS(taxa_boot, "tax_tab_18S_SILVA.RDS")
+
+
 taxa_boot <- assignTaxonomy(seqs,
     "/data/taxonomyDBs/PR2/pr2_version_4.14.0_SSU_dada2.fasta.gz",
     multithread=TRUE,
     taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
     outputBootstraps = TRUE)
 
-saveRDS(taxa_boot, "tax_tab_18S.RDS")
+saveRDS(taxa_boot, "tax_tab_18S_pr2.RDS")
