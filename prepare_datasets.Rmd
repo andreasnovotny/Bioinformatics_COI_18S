@@ -37,9 +37,18 @@ Read in metadata:
 
 ```{r}
 Samptab_COI_tmp <-
-  readxl::read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx",
-                     sheet = "COI")
+  read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx", 
+             sheet = "COI", col_types = c("text",
+        "text", "date", "text", "text", "text", 
+        "text", "date", "date", "numeric", 
+        "text", "date", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "date", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "numeric", "numeric", "text"))
 Samptab_COI_tmp
+
+
 ```
 
 Check what original samples are missing from the ASV table:
@@ -98,8 +107,11 @@ COI_df <-
   pivot_longer(!1:12, names_to = "Library_ID", values_to = "Abundance") %>%
   full_join(Samptab_COI_tmp, by = "Library_ID")
 
+COI_df
+
 
 write_tsv(COI_df, "ProcessedData/COI_Andreas/COI_Hakai_AN.txt")
+
 ```
 
 ## Plot Sequencing Depth
