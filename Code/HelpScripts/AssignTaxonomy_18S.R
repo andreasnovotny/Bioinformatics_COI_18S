@@ -9,9 +9,9 @@ seqs <- read.delim("ASV/sequence_table.merged.txt", sep = " ") %>%
 
 
 taxa_boot <- assignTaxonomy(seqs,
-    "/data/taxonomyDBs/silva_for_dada2/v132/silva_nr_v132_train_set.fa.gz",
+    "/data/taxonomyDBs/silva_for_dada2/v132_for_parfreylab/18s/silva_132.18s.99_rep_set.dada2.fa.gz",
     multithread=TRUE,
-    taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
+    taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species","Accession"),
     outputBootstraps = TRUE)
 
 saveRDS(taxa_boot, "tax_tab_18S_SILVA.RDS")
