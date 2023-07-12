@@ -8,6 +8,8 @@ Outputs/*
 ProcessedData/COI_Andreas/COI_Hakai_AN.txt
 ProcessedData/18S_Andreas/18S_Hakai_AN.txt
 
+# Figures
+Figure_Output
 
 # Session Data files
 .RData
@@ -44,3 +46,6 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Apple Variables
+ProcessedData/.DS_Store
