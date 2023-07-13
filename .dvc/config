@@ -1,4 +1,2 @@
-[core]
-    autostage = true
 ['remote "origin"']
     url = https://dagshub.com/andreasnovotny/AmpliconSeqAnalysis.dvc
