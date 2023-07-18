@@ -113,18 +113,10 @@ COI_df
 # This object is very large. Do not push to git remote.
 # Rather save the individual components or upload to cloud.
 
-# Upload each component to the cloud:
 saveRDS(Taxtab_COI_tmp, "Data_export/Taxtab_COI.rds")
-drive_rm("Data_Novotny/Taxtab_COI.rds")
-drive_upload("Data_export/Taxtab_COI.rds", "Data_Novotny/Taxtab_COI.rds")
-
 saveRDS(ASV_COI_tmp, "Data_export/ASV_COI.rds")
-drive_rm("Data_Novotny/ASV_COI.rds")
-drive_upload("Data_export/ASV_COI.rds", "Data_Novotny/ASV_COI.rds")
-
 saveRDS(Samptab_COI_tmp, "Data_export/Samptab_COI.rds")
-drive_rm("Data_Novotny/Samptab_COI.rds")
-drive_upload("Data_export/Samptab_COI.rds", "Data_Novotny/Samptab_COI.rds")
+
 
 ```
 
@@ -249,8 +241,8 @@ df_18S <-
 df_18S
 
 saveRDS(Taxtab_18S_tmp, "Data_export/Taxtab_18S.rds")
-drive_rm("Data_Novotny/Taxtab_18S.rds")
-drive_upload("Data_export/Taxtab_18S.rds", "Data_Novotny/Taxtab_18S.rds")
+drive_rm("Data_Novotny/AmpliconSeqAnalysis/Taxtab_18S.rds")
+drive_upload("Data_export/Taxtab_18S.rds", "Data_Novotny/AmpliconSeqAnalysis/Taxtab_18S.rds")
 
 saveRDS(ASV_18S_tmp, "Data_export/ASV_18S.rds")
 drive_rm("Data_Novotny/ASV_18S.rds")
