@@ -97,7 +97,7 @@ Taxtab_COI_tmp
 ```
 
 
-### Merge datasets
+### Merge and save datasets
 
 ```{r}
 
@@ -109,9 +109,12 @@ COI_df <-
 
 COI_df
 
+# This object is very large. Do not push to git remote.
+# Rather save the individual components.
 
-write_tsv(COI_df, "ProcessedData/COI_Andreas/COI_Hakai_AN.txt")
-
+saveRDS(Taxtab_COI_tmp, "Data_export/COI/Taxtab_COI.rds")
+saveRDS(ASV_COI_tmp, "Data_export/COI/ASV_COI.rds")
+saveRDS(Samptab_COI_tmp, "Data_export/COI/Samptab_COI.rds")
 ```
 
 ## Plot Sequencing Depth
