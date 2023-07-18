@@ -7,6 +7,7 @@ library(lubridate)
 library(plotly)
 library(tidyverse)
 library(readxl)
+library("googledrive")
 '%!in%' <- function(x,y)!('%in%'(x,y))
 ```
 
@@ -100,6 +101,7 @@ Taxtab_COI_tmp
 ### Merge and save datasets
 
 ```{r}
+# Merge data components to one big dataframe
 
 COI_df <- 
   Taxtab_COI_tmp %>%
@@ -108,23 +110,31 @@ COI_df <-
   full_join(Samptab_COI_tmp, by = "Library_ID")
 
 COI_df
-
 # This object is very large. Do not push to git remote.
-# Rather save the individual components.
+# Rather save the individual components or upload to cloud.
 
+# Upload each component to the cloud:
 saveRDS(Taxtab_COI_tmp, "Data_export/Taxtab_COI.rds")
+drive_rm("Data_Novotny/Taxtab_COI.rds")
+drive_upload("Data_export/Taxtab_COI.rds", "Data_Novotny/Taxtab_COI.rds")
+
 saveRDS(ASV_COI_tmp, "Data_export/ASV_COI.rds")
+drive_rm("Data_Novotny/ASV_COI.rds")
+drive_upload("Data_export/ASV_COI.rds", "Data_Novotny/ASV_COI.rds")
+
 saveRDS(Samptab_COI_tmp, "Data_export/Samptab_COI.rds")
+drive_rm("Data_Novotny/Samptab_COI.rds")
+drive_upload("Data_export/Samptab_COI.rds", "Data_Novotny/Samptab_COI.rds")
 
-
-library("googledrive")
-
-drive_find(n_max = 30)
-
-drive_upload("Data_export/COI/Taxtab_COI.rds", "Data_Novotny/Taxtab_COI.rds")
-
-drive_example_local("chicken.csv")
 ```
+
+
+
+
+
+
+
+
 
 ## Plot Sequencing Depth
 
@@ -242,7 +252,7 @@ Taxtab_18S_tmp %>%
 Taxtab_18S_tmp
 ```
 
-### Merge datasets
+### Merge and save datasets
 
 ```{r}
 df_18S <- 
@@ -252,9 +262,21 @@ df_18S <-
   full_join(Samptab_18S_tmp, by = "Library_ID") %>% 
   filter(is.na(ASV)==FALSE)
 
-write_tsv(df_18S, "ProcessedData/18S_Andreas/18S_Hakai_AN.txt")
 
 df_18S
+
+saveRDS(Taxtab_18S_tmp, "Data_export/Taxtab_18S.rds")
+drive_rm("Data_Novotny/Taxtab_18S.rds")
+drive_upload("Data_export/Taxtab_18S.rds", "Data_Novotny/Taxtab_18S.rds")
+
+saveRDS(ASV_18S_tmp, "Data_export/ASV_18S.rds")
+drive_rm("Data_Novotny/ASV_18S.rds")
+drive_upload("Data_export/ASV_18S.rds", "Data_Novotny/ASV_18S.rds")
+
+saveRDS(Samptab_18S_tmp, "Data_export/Samptab_18S.rds")
+drive_rm("Data_Novotny/Samptab_18S.rds")
+drive_upload("Data_export/Samptab_18S.rds", "Data_Novotny/Samptab_18S.rds")
+
   
 ```
 
@@ -334,9 +356,23 @@ df_12S <-
   pivot_longer(!1:12, names_to = "Library_ID", values_to = "Abundance") %>%
   full_join(Samptab_12S_tmp, by = "Library_ID")
 
-write_tsv(df_12S, "ProcessedData/12S_Andreas/12S_Hakai_AN.txt")
-
 df_12S
+
+
+
+saveRDS(Taxtab_12S_tmp, "Data_export/Taxtab_12S.rds")
+drive_rm("Data_Novotny/Taxtab_12S.rds")
+drive_upload("Data_export/Taxtab_12S.rds", "Data_Novotny/Taxtab_12S.rds")
+
+saveRDS(ASV_12S_tmp, "Data_export/ASV_12S.rds")
+drive_rm("Data_Novotny/ASV_12S.rds")
+drive_upload("Data_export/ASV_12S.rds", "Data_Novotny/ASV_12S.rds")
+
+saveRDS(Samptab_12S_tmp, "Data_export/Samptab_12S.rds")
+drive_rm("Data_Novotny/Samptab_12S.rds")
+drive_upload("Data_export/Samptab_12S.rds", "Data_Novotny/Samptab_12S.rds")
+
+
 ```
 
 ## Plot Sequencing Depth
