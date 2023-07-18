@@ -49,4 +49,4 @@ vignettes/*.pdf
 
 # Apple Variables
 ProcessedData/.DS_Store
-.DS_Store
+*.DS_Store
