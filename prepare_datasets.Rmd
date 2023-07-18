@@ -1,5 +1,5 @@
 ---
-title: "Merge COI taxonomy, abundance and metadata"
+title: "Inspect prepare and combine datasets"
 ---
 
 ```{r}
@@ -7,10 +7,9 @@ library(lubridate)
 library(plotly)
 library(tidyverse)
 library(readxl)
-library("googledrive")
+library(googledrive)
 '%!in%' <- function(x,y)!('%in%'(x,y))
 ```
-
 
 # COI #################
 
@@ -91,7 +90,7 @@ the presences of undermined samples are ok. If othr samples show up here it is d
 
 ### Taxonomy Table
 ```{r}
-Taxtab_COI_tmp <- read.delim( "ProcessedData/COI_Andreas/COI_taxonomy/taxonomy_table.CO1.iterative_blast.LCA+best_hit.txt") %>% 
+Taxtab_COI_tmp <- read.delim("ProcessedData/COI_Andreas/COI_taxonomy/taxonomy_table.CO1.iterative_blast.LCA+best_hit.txt") %>% 
   rename_with(~gsub(., pattern = "X.", replacement = "")) %>% 
   rename(ASV = Query)
 Taxtab_COI_tmp
@@ -117,14 +116,7 @@ saveRDS(Taxtab_COI_tmp, "Data_export/Taxtab_COI.rds")
 saveRDS(ASV_COI_tmp, "Data_export/ASV_COI.rds")
 saveRDS(Samptab_COI_tmp, "Data_export/Samptab_COI.rds")
 
-
 ```
-
-
-
-
-
-
 
 
 
@@ -237,22 +229,11 @@ df_18S <-
   full_join(Samptab_18S_tmp, by = "Library_ID") %>% 
   filter(is.na(ASV)==FALSE)
 
-
 df_18S
 
 saveRDS(Taxtab_18S_tmp, "Data_export/Taxtab_18S.rds")
-drive_rm("Data_Novotny/AmpliconSeqAnalysis/Taxtab_18S.rds")
-drive_upload("Data_export/Taxtab_18S.rds", "Data_Novotny/AmpliconSeqAnalysis/Taxtab_18S.rds")
-
 saveRDS(ASV_18S_tmp, "Data_export/ASV_18S.rds")
-drive_rm("Data_Novotny/ASV_18S.rds")
-drive_upload("Data_export/ASV_18S.rds", "Data_Novotny/ASV_18S.rds")
-
 saveRDS(Samptab_18S_tmp, "Data_export/Samptab_18S.rds")
-drive_rm("Data_Novotny/Samptab_18S.rds")
-drive_upload("Data_export/Samptab_18S.rds", "Data_Novotny/Samptab_18S.rds")
-
-  
 ```
 
 ## Plot Sequencing Depth
@@ -273,6 +254,7 @@ depth %>%
 
 # 12S ##################
 
+## Load and merge data tables
 ### ASV table:
 
 Read in ASV table, and modify names:
@@ -324,7 +306,6 @@ Taxtab_12S_tmp
 ### Merge datasets
 
 ```{r}
-
 df_12S <- 
   Taxtab_12S_tmp %>%
   full_join(ASV_12S_tmp, by = "ASV") %>%
@@ -333,21 +314,9 @@ df_12S <-
 
 df_12S
 
-
-
 saveRDS(Taxtab_12S_tmp, "Data_export/Taxtab_12S.rds")
-drive_rm("Data_Novotny/Taxtab_12S.rds")
-drive_upload("Data_export/Taxtab_12S.rds", "Data_Novotny/Taxtab_12S.rds")
-
 saveRDS(ASV_12S_tmp, "Data_export/ASV_12S.rds")
-drive_rm("Data_Novotny/ASV_12S.rds")
-drive_upload("Data_export/ASV_12S.rds", "Data_Novotny/ASV_12S.rds")
-
 saveRDS(Samptab_12S_tmp, "Data_export/Samptab_12S.rds")
-drive_rm("Data_Novotny/Samptab_12S.rds")
-drive_upload("Data_export/Samptab_12S.rds", "Data_Novotny/Samptab_12S.rds")
-
-
 ```
 
 ## Plot Sequencing Depth
@@ -366,6 +335,16 @@ depth %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
+# Data Export ###############
 
+Upload clean version to remote repository.
+Here Google Drive is used. Change according to preference.
+
+```{r}
+drive_auth()
+source("Code/HelpScripts/Data_Export_Final.R")
+
+upload_to_drive(repo = "Data_Novotny/AmpliconSeqAnalysis")
+```
 
 
