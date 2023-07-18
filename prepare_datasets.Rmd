@@ -233,23 +233,6 @@ samplesNotInMetadata
 Taxtab_18S_tmp <- readRDS("ProcessedData/18S_Andreas/tax_tab_18S.RDS")$tax %>%
   as.data.frame() %>% 
   rownames_to_column("Sequence")
-
-
-Taxtab_18S_tmp
-
-
-
-
-Taxtab_18S_tmp <- readRDS("ProcessedData/18S_Andreas/tax_tab_18S_SILVA.RDS")$tax %>% 
-  as.data.frame() %>% 
-  rownames_to_column("Sequence") %>% 
-  filter(is.na(Genus)==FALSE)
-
-Taxtab_18S_tmp %>% 
-  filter(Family == "Calanoida") %>% 
-  pull(Genus) %>% unique
-
-Taxtab_18S_tmp
 ```
 
 ### Merge and save datasets
