@@ -112,9 +112,18 @@ COI_df
 # This object is very large. Do not push to git remote.
 # Rather save the individual components.
 
-saveRDS(Taxtab_COI_tmp, "Data_export/COI/Taxtab_COI.rds")
-saveRDS(ASV_COI_tmp, "Data_export/COI/ASV_COI.rds")
-saveRDS(Samptab_COI_tmp, "Data_export/COI/Samptab_COI.rds")
+saveRDS(Taxtab_COI_tmp, "Data_export/Taxtab_COI.rds")
+saveRDS(ASV_COI_tmp, "Data_export/ASV_COI.rds")
+saveRDS(Samptab_COI_tmp, "Data_export/Samptab_COI.rds")
+
+
+library("googledrive")
+
+drive_find(n_max = 30)
+
+drive_upload("Data_export/COI/Taxtab_COI.rds", "Data_Novotny/Taxtab_COI.rds")
+
+drive_example_local("chicken.csv")
 ```
 
 ## Plot Sequencing Depth
