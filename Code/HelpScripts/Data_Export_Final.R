@@ -40,4 +40,7 @@ upload_to_drive <- function(repo = "Data_Novotny/AmpliconSeqAnalysis") {
   
   drive_rm(file.path(repo, "Samptab_12S.rds"))
   drive_upload("Data_export/Samptab_12S.rds", file.path(repo, "Samptab_12S.rds"))
-}
+} 
+  repo = "Data_Novotny/AmpliconSeqAnalysis"
+  drive_rm(file.path(repo, "Samptab_12S.rds"))
+  drive_upload("Data_export/Samptab_12S.rds", file.path(repo, "Samptab_12S.rds"))

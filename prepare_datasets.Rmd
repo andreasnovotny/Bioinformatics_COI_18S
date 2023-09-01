@@ -276,9 +276,15 @@ ASV_12S_tmp
 Read in metadata:
 
 ```{r}
-Samptab_12S_tmp <-
-  readxl::read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx",
-                     sheet = "12S")
+Samptab_12S_tmp <- read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx", 
+    sheet = "12S", col_types = c("text", 
+        "text", "date", "text", "text", "text", 
+        "text", "date", "date", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "numeric", "text", "text", "numeric", 
+        "numeric", "text", "text", "text", 
+        "text", "numeric", "numeric", "text"))
 Samptab_12S_tmp
 ```
 
