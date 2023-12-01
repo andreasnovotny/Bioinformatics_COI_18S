@@ -271,7 +271,7 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 appendASV(" \n - Running Main FilterAndTrim")
 
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs,
-                    truncLen = c(170, 165),  # CHANGE ME
+                    truncLen = c(165, 155),  # CHANGE ME
                     trimLeft = c(0, 0),      # CHANGE ME
                     trimRight = c(0, 0),     # CHANGE ME
                     minLen = c(150, 150),    # CHANGE ME

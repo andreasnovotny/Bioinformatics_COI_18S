@@ -21,15 +21,38 @@ Rscript Code/processing.CO1.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/D
 
 sh Code/assign.CO1.taxonomy.sh
 
-
 # 18S analysis
 ###############################
+mkdir Data/18S_QU39_1/Fastq Data/18S_QU39_2/Fastq Data/18S_QU39_3/Fastq Data/18S_QU39_4/Fastq
+mkdir Data/18S_QU39_5/Fastq
+cp /mnt/RawData/QU39-18S-data/1stPool_Plates1-2-3/rerun/KelloggHakai18SPool1Rerun/*fastq.gz Data/18S_QU39_1/Fastq
+cp /mnt/RawData/QU39-18S-data/2ndPool_Plates10-11-12/full-run/Hakai18SPool2_finalV3/*fastq.gz Data/18S_QU39_2/Fastq
+cp /mnt/RawData/QU39-18S-data/3rdPool_plates4-5-6/full-run/Hakai18SPool3_finalV3/*fastq.gz Data/18S_QU39_3/Fastq
+cp /mnt/RawData/QU39-18S-data/HOME-18S-run4/*fastq.gz Data/18S_QU39_4/Fastq
+cp /mnt/RawData/QU39-18S-data/HOME-18S-run5/*fastq.gz Data/18S_QU39_5/Fastq
+
 cp -r /mnt/MiSeq/18S_QPKbulk_2017_Run20230331/Run20230331/Alignment_1/20230403_003911/Fastq Data/
+
+Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_1"
+Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_2"
+Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_3"
+Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_4"
+Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_5"
+
 Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QPKbulk_2017"
+
+
 sh Code/assign.18S.taxonomy.sh
 
 # 12S analysis
 ###############################
 cp -r /mnt/MiSeq/12S_Q39_2018_Run20230329/Run20230329/Alignment_1/20230331_065301/Fastq
-Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2018"
+Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2018" "MiFish-U"
+
+cp -r /mnt/MiSeq/12S_Q39_2016_Run20230804/Run209230804/Alignment_1/20230806_011559/Fastq Data/12S_QU39_2016
+Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2016" "MiFish-E"
+
+cp -r /mnt/MiSeq/12S_Q39_2017_Run20230814/Run20230814/Alignment_1/20230816_055824/Fastq Data/12S_QU39_2017
+Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2017" "MiFish-E"
+
 sh Code/assign.12S.taxonomy.sh

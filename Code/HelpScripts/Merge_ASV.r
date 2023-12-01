@@ -29,13 +29,12 @@ if (!dir.exists(out_dir)) dir.create(out_dir)
 table_list <- mapply(readASV, in_dirs, SIMPLIFY = FALSE)
 
 # Merge all ASV tables to one big dataframe
-mergedASV <- data.frame(Sequence = as.character())
+mergedASV <- data.frame(table_list[[i]])
 
-for (i in seq(table_list)){
+for (i in seq(table_list)[-1]){
 mergedASV <- mergedASV %>%
-    full_join(table_list[[i]], by = "Sequence")
+    merge(table_list[[i]], by = "Sequence")
 }
-
 
 # Save merged ASV table
 write.table(mergedASV, file.path(out_dir, "sequence_table.merged.txt"))

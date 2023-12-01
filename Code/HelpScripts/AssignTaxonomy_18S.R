@@ -18,9 +18,9 @@ saveRDS(taxa_boot, "tax_tab_18S_SILVA.RDS")
 
 
 taxa_boot <- assignTaxonomy(seqs,
-    "/data/taxonomyDBs/PR2/pr2_version_4.14.0_SSU_dada2.fasta.gz",
-    multithread=TRUE,
-    taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
-    outputBootstraps = TRUE)
+"/data/taxonomyDBs/PR2/pr2_version_4.14.0_SSU_dada2.fasta.gz",
+multithread=TRUE,
+taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
+outputBootstraps = TRUE)
 
 saveRDS(taxa_boot, "tax_tab_18S_pr2.RDS")

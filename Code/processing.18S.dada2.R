@@ -475,6 +475,18 @@ appendASV("\n dimensions of ASV table after chimera removal",
 appendASV("\n proprtion of chimeric to non chimeric reads:",
           sum(seqtab.nosingletons.nochim) / sum(seqtab.nosingletons))
 
+
+appendASV("\n attempt taxonomy assignment....")
+
+
+taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
+"/data/taxonomyDBs/PR2/pr2_version_4.14.0_SSU_dada2.fasta.gz",
+multithread=TRUE,
+taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
+outputBootstraps = TRUE)
+
+saveRDS(taxa_boot, "tax_tab_18S_pr2.RDS")
+
 ##################################################
 #### Section 5: Finalizing quality steps #########
 ##################################################
@@ -554,4 +566,22 @@ write.table(data.frame("row_names" = rownames(seqtab.nosingletons.nochim),
            "ASV/sequence_table.merged.w_ASV_names.txt",
            row.names = FALSE, quote = FALSE, sep = "\t")
 
+
+saveRDS(seqtab.nosingletons.nochim, "seqtab.nosingletons.nochim.RDS")
+
 appendASV("\n \n ASV ANALYSIS COMPLETE")
+
+
+
+############
+
+
+#taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
+#    "/data/taxonomyDBs/silva_for_dada2/v132_for_parfreylab/18s/silva_132.18s.99_rep_set.dada2.fa.gz",
+#   multithread=TRUE,
+#    taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species","Accession"),
+#    outputBootstraps = TRUE)
+
+#saveRDS(taxa_boot, "tax_tab_18S_SILVA.RDS")
+
+

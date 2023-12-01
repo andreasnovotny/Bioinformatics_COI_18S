@@ -3,7 +3,9 @@
 # CHANGE ME: to output directory followed by several DADA analysis directories:
 Rscript Code/HelpScripts/Merge_ASV.r \
     Data/Assign_12S_Taxonomy/ASV \
-    Data/12S_QU39_2018
+    Data/12S_QU39_2018 \
+    Data/12S_QU39_2017 \
+    Data/12S_QU39_2016
 
 # CHANGE ME: Define paths to databases, querry sequences (produced by script above) and 
 
