@@ -39,10 +39,31 @@ Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/D
 Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_4"
 Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_5"
 
-Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QPKbulk_2017"
 
+# Copy Output 
+mkdir ProcessedData/18S_Andreas/18S_QU39_1
+cp Data/18S_QU39_1/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QU39_1
+cp Data/18S_QU39_1/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_1
 
-sh Code/assign.18S.taxonomy.sh
+mkdir ProcessedData/18S_Andreas/18S_QU39_2
+cp Data/18S_QU39_2/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QU39_2
+cp Data/18S_QU39_2/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_2
+
+mkdir ProcessedData/18S_Andreas/18S_QU39_3
+cp Data/18S_QU39_3/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QU39_3
+cp Data/18S_QU39_3/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_3
+
+mkdir ProcessedData/18S_Andreas/18S_QU39_4
+cp Data/18S_QU39_4/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QU39_4
+cp Data/18S_QU39_4/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_4
+
+mkdir ProcessedData/18S_Andreas/18S_QU39_5
+cp Data/18S_QU39_5/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QU39_5
+cp Data/18S_QU39_5/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_5
+
+mkdir ProcessedData/18S_Andreas/18S_QPKbulk_2017
+cp Data/18S_QPKbulk_2017/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QPKbulk_2017
+cp Data/18S_QPKbulk_2017/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QPKbulk_2017
 
 # 12S analysis
 ###############################
