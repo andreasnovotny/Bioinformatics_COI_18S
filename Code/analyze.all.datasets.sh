@@ -68,12 +68,12 @@ cp Data/18S_QPKbulk_2017/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QPKbu
 # 12S analysis
 ###############################
 cp -r /mnt/MiSeq/12S_Q39_2018_Run20230329/Run20230329/Alignment_1/20230331_065301/Fastq
-Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2018" "MiFish-U"
+Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2018" "MiFish-E"
 
 cp -r /mnt/MiSeq/12S_Q39_2016_Run20230804/Run209230804/Alignment_1/20230806_011559/Fastq Data/12S_QU39_2016
-Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2016" "MiFish-E"
+Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2016" "MiFish-U"
 
 cp -r /mnt/MiSeq/12S_Q39_2017_Run20230814/Run20230814/Alignment_1/20230816_055824/Fastq Data/12S_QU39_2017
-Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2017" "MiFish-E"
+Rscript Code/processing.12S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/12S_QU39_2017" "MiFish-U"
 
 sh Code/assign.12S.taxonomy.sh
