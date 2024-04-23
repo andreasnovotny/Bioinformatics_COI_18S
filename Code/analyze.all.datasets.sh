@@ -23,13 +23,14 @@ sh Code/assign.CO1.taxonomy.sh
 
 # 18S analysis
 ###############################
-mkdir Data/18S_QU39_1/Fastq Data/18S_QU39_2/Fastq Data/18S_QU39_3/Fastq Data/18S_QU39_4/Fastq
-mkdir Data/18S_QU39_5/Fastq
+mkdir Data/18S_QU39_1/Fastq Data/18S_QU39_2/Fastq Data/18S_QU39_3/Fastq Data/18S_QU39_4/Fastq Data/18S_QU39_5/Fastq
 cp /mnt/RawData/QU39-18S-data/1stPool_Plates1-2-3/rerun/KelloggHakai18SPool1Rerun/*fastq.gz Data/18S_QU39_1/Fastq
 cp /mnt/RawData/QU39-18S-data/2ndPool_Plates10-11-12/full-run/Hakai18SPool2_finalV3/*fastq.gz Data/18S_QU39_2/Fastq
 cp /mnt/RawData/QU39-18S-data/3rdPool_plates4-5-6/full-run/Hakai18SPool3_finalV3/*fastq.gz Data/18S_QU39_3/Fastq
-cp /mnt/RawData/QU39-18S-data/HOME-18S-run4/*fastq.gz Data/18S_QU39_4/Fastq
-cp /mnt/RawData/QU39-18S-data/HOME-18S-run5/*fastq.gz Data/18S_QU39_5/Fastq
+cp /mnt/RawData/QU39-18S-data/HakaiEUKpool4/*fastq.gz Data/18S_QU39_4/Fastq
+cp /mnt/RawData/QU39-18S-data/HakaiEUKpool5/*fastq.gz Data/18S_QU39_5/Fastq
+cp /mnt/Genomics/MiSeq/18S_HOME6_Run20240301/Run20240301/Alignment_1/20240304_025441/Fastq/*fastq.gz Data/18S_QU39_6/Fastq
+
 
 cp -r /mnt/MiSeq/18S_QPKbulk_2017_Run20230331/Run20230331/Alignment_1/20230403_003911/Fastq Data/
 
@@ -38,7 +39,7 @@ Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/D
 Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_3"
 Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_4"
 Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_5"
-
+Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QU39_6"
 
 # Copy Output 
 mkdir ProcessedData/18S_Andreas/18S_QU39_1
@@ -60,6 +61,10 @@ cp Data/18S_QU39_4/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_4
 mkdir ProcessedData/18S_Andreas/18S_QU39_5
 cp Data/18S_QU39_5/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QU39_5
 cp Data/18S_QU39_5/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_5
+
+mkdir ProcessedData/18S_Andreas/18S_QU39_6
+cp Data/18S_QU39_6/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QU39_6
+cp Data/18S_QU39_6/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_6
 
 mkdir ProcessedData/18S_Andreas/18S_QPKbulk_2017
 cp Data/18S_QPKbulk_2017/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QPKbulk_2017
