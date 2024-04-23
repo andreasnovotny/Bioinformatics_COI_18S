@@ -293,6 +293,7 @@ Check what original samples are missing from the ASV table:
 ```{r}
 SamplesNotInASV <-
   Samptab_18S_all %>%
+  filter(year(Sample_date) %in% 2015:2018) %>% 
   filter(Library_ID %!in% colnames(ASV_18S_all)) %>% 
   pull(Library_ID)
 
@@ -318,32 +319,6 @@ samplesNotInMetadata <-
 
 samplesNotInMetadata
 ```
-
-
-
-
-
-## Plot Sequencing Depth
-
-```{r}
-depth <-
-  df_18S %>% 
-  group_by(Library_ID) %>% 
-  summarize(Abundance=sum(Abundance))
-depth
-
-depth %>%
-  filter(is.na(Abundance) == FALSE) %>% 
-  ggplot() +
-  geom_bar(aes(Library_ID, Abundance), stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-```
-
-
-
-
-
-
 
 
 
