@@ -196,13 +196,15 @@ ASV_18S_QU39_2 <- read_18S("18S_QU39_2")
 ASV_18S_QU39_3 <- read_18S("18S_QU39_3")
 ASV_18S_QU39_4 <- read_18S("18S_QU39_4")
 ASV_18S_QU39_5 <- read_18S("18S_QU39_5")
+ASV_18S_QU39_6 <- read_18S("18S_QU39_6")
 
 ASV_18S_all <- shrink(ASV_18S_QPKbulk2017) %>% 
   full_join(shrink(ASV_18S_QU39_1), by = "Taxa") %>% 
   full_join(shrink(ASV_18S_QU39_2), by = "Taxa") %>%
   full_join(shrink(ASV_18S_QU39_3), by = "Taxa") %>%
   full_join(shrink(ASV_18S_QU39_4), by = "Taxa") %>%
-  full_join(shrink(ASV_18S_QU39_5), by = "Taxa") %>% 
+  full_join(shrink(ASV_18S_QU39_5), by = "Taxa") %>%
+  full_join(shrink(ASV_18S_QU39_6), by = "Taxa") %>% 
   separate(Taxa, into = c("Kingdom", "Supergroup", "Divition", "Class",
                           "Order","Family", "Genus", "Species"),
            sep = "&")
@@ -283,6 +285,13 @@ all_18S <- ASV_18S_all %>%
   pivot_longer(9:length(.), names_to = "Library_ID", values_to = "Abundance") %>% 
   left_join(Samptab_18S_all, by = c("Library_ID"))
 
+all_18S %>%
+  filter(Site_ID == "QU39") %>%
+  group_by(Library_ID, Sample_date, Line_out_depth) %>% 
+  summarise(Abundance = sum(Abundance, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_point(aes(Sample_date, Abundance))
+
 all_18S
 ```
 
@@ -293,17 +302,16 @@ Check what original samples are missing from the ASV table:
 ```{r}
 SamplesNotInASV <-
   Samptab_18S_all %>%
-  filter(year(Sample_date) %in% 2015:2018) %>% 
+  filter(year(Sample_date) %in% 2019:2019) %>% 
   filter(Library_ID %!in% colnames(ASV_18S_all)) %>% 
   pull(Library_ID)
 
 SamplesNotInASV
 
 
-Samptab_18S_all
-
-ASV_18S_all
-
+shrink(ASV_18S_QU39_6) %>% 
+  pivot_longer(!1) %>% 
+  pull(name) %>% unique
 ```
 
 **Investigate why samples are not present by back-tracing intermediates:**
@@ -312,12 +320,21 @@ These samples exist in sequence data but not metadata:
 
 ```{r}
 samplesNotInMetadata <- 
-  colnames(ASV_18S_all) %>% 
+  colnames(ASV_18S_QU39_6) %>% 
   tibble() %>% 
   filter(. %!in% pull(Samptab_18S_all, Library_ID)) %>% 
   pull
 
 samplesNotInMetadata
+
+
+
+
+colnames(ASV_18S_QU39_6)
+
+Samptab_18S_all %>% 
+  filter(Hakai_ID == "QMIC3194")
+
 ```
 
 
@@ -424,5 +441,3 @@ source("Code/HelpScripts/Data_Export_Final.R")
 
 upload_to_drive(repo = "Data_Novotny/AmpliconSeqAnalysis", datasets = c("18S"))
 ```
-
-
