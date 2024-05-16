@@ -78,7 +78,8 @@ cp Data/18S_QU39_6/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_Q
 cp Data/18S_QU39_6/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QU39_6
 
 mkdir ProcessedData/18S_Andreas/18S_QPKbulk_2017
-cp Data/18S_QPKbulk_2017/ASV/sequence_table.merged.txt ProcessedData/18S_Andreas/18S_QPKbulk_2017
+cp Data/18S_QPKbulk_2017/ASV/sequence_ASVname_mapping.txt ProcessedData/18S_Andreas/18S_QPKbulk_2017
+cp Data/18S_QPKbulk_2017/ASV/sequence_table.merged.w_ASV_names.txt ProcessedData/18S_Andreas/18S_QPKbulk_2017
 cp Data/18S_QPKbulk_2017/tax_tab_18S_pr2.RDS ProcessedData/18S_Andreas/18S_QPKbulk_2017
 cp Data/18S_QPKbulk_2017/tax_tab_18S_MZGdb.RDS ProcessedData/18S_Andreas/18S_QPKbulk_2017
 
