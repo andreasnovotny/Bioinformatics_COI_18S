@@ -73,10 +73,20 @@ appendASV <- function(...) {
 }
 
 appendASV(" \n Report for ASV analysis:", wd,
-          "\n Date:", date())
+          "\n Date:", date()
+)
 
 
-# Create final result file:
+
+# Create taxonomy result folder:
+path.tax <- file.path(wd, "Taxonomy/")
+if (!dir.exists(path.tax)) dir.create(path.tax)
+
+# Create intermediate result folder:
+path.interm <- file.path(wd, "Intermetiate/")
+if (!dir.exists(path.interm)) dir.create(path.interm)
+
+# Create ASV result file:
 path.ASV <- file.path(wd, "ASV/")
 if (!dir.exists(path.ASV)) dir.create(path.ASV)
 
@@ -94,7 +104,8 @@ FWD <- "CCAGCASCYGCGGTAATTCC" ## V4F 565F
 REV <- "ACTTTCGTTCTTGATYRR"   ## V4RB 981R
 
 appendASV(" \n FWD Primers:", FWD,
-          "\n REV Primers:", REV)
+          "\n REV Primers:", REV
+)
 
 
 ##################################################
@@ -130,7 +141,6 @@ allOrients <- function(primer) {
   orients <- c(Forward = dna, Complement = complement(dna),
                 Reverse = reverse(dna), RevComp = reverseComplement(dna))
   return(sapply(orients, toString))  # Convert back to character vector
-
 } # End of allOrients function
 
 FWD.orients <- allOrients(FWD)
@@ -149,7 +159,8 @@ tmp_out <- filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN,
               maxN = 0,
               multithread = 32,
               compress = TRUE,
-              matchIDs = TRUE)
+              matchIDs = TRUE
+)
 
 
 retained <- as.data.frame(tmp_out)
@@ -181,10 +192,8 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits,
                                 fn = fnFs.filtN[[index]]),
       REV.ReverseReads = sapply(REV.orients, primerHits,
                                 fn = fnRs.filtN[[index]])) %>%
-
-      write.table("Report/detected_primers.csv", sep = "\t",
+  write.table("Report/detected_primers.csv", sep = "\t",
                   row.names = TRUE, col.names = TRUE, quote = FALSE)
-
 
 
 #### primer removal with Cutadapt ####
@@ -204,6 +213,7 @@ R1.flags <- paste("-g", FWD, "-a", REV.RC)
 R2.flags <- paste("-G", REV, "-A", FWD.RC)
 
 appendASV(" \n - Running Cutadapt")
+
 #Run Cutadapt
 for (i in seq_along(fnFs)) {
   system2(cutadapt, args = c(R1.flags, R2.flags,
@@ -233,7 +243,8 @@ rbind(FWD.ForwardReads = sapply(FWD.orients,
       REV.ReverseReads = sapply(REV.orients,
                                 primerHits,
                                 fn = fnRs.cut[[index]])) %>%
-      write.table("Report/detected_primers_cutadapt.csv", sep = "\t",
+  
+  write.table("Report/detected_primers_cutadapt.csv", sep = "\t",
       row.names = TRUE, col.names = TRUE, quote = FALSE)
 
 # Forward and reverse fastq filenames have the format:
@@ -269,14 +280,16 @@ out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs,
                     maxEE = c(3, 4),         # CHANGE ME
                     truncQ = c(2, 2),        # CHANGE ME
                     rm.phix = TRUE, matchIDs = TRUE,
-                    compress = TRUE, multithread = 32)
+                    compress = TRUE, multithread = 32
+)
 
 retained <- as.data.frame(out)
 retained$percentage_retained <- retained$reads.out / retained$reads.in * 100
 
 write.table(retained,
             "Report/retained_reads.filterAndTrim_step.csv",
-            sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
+            sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE
+)
 
 ##################################################
 #### Section 3: Sequence Dereplication ###########
@@ -305,6 +318,7 @@ errR <- learnErrors(filtRs, multithread = 32)
 pdf("Report/error_rates.dada2.R1s.pdf", width = 10, height = 10)
   plotErrors(errF, nominalQ = TRUE)
 dev.off()
+
 pdf("Report/error_rates.dada2.R2s.pdf", width = 10, height = 10)
   plotErrors(errR, nominalQ = TRUE)
 dev.off()
@@ -345,7 +359,8 @@ getN <- function(x) sum(getUniques(x))
 track <- cbind(sapply(derepFs, getN),
               sapply(derepRs, getN),
               sapply(dadaFs, getN),
-              sapply(dadaRs, getN))
+              sapply(dadaRs, getN)
+)
 
 samples_to_keep <- track[, 4] > 20 #your threshold.
 # try different ones to get the lowest one that will work.
@@ -409,15 +424,15 @@ otu_pres_abs_rowsums <- rowSums(otu_pres_abs) #counts of sample per ASV
 
 appendASV("\n Dimentions of sequence table with singeltons:", dim(seqtab))
 
-
- #create relative abundance table
+#create relative abundance table
 otus_rel_ab <- transform_sample_counts(otus, function(x) x / sum(x))
 df <- as.data.frame(unclass(otus_rel_ab)) #convert to plain data frame
 
- # if there are samples with no merged reads in them, and they passed the
- # merge step (a possiblity, converting to a relative abundance table
- # produes all NaNs for that sample. these need to be set to zero so we
- # can do the calculations in the next steps.)
+
+# if there are samples with no merged reads in them, and they passed the
+# merge step (a possiblity, converting to a relative abundance table
+# produes all NaNs for that sample. these need to be set to zero so we
+# can do the calculations in the next steps.)
 df[is.na(df)] <- 0
 
 # compute row sums (sum of relative abundances per ASV. for those only
@@ -432,8 +447,8 @@ a <- which(as.data.frame(otu_pres_abs_rowsums) == 1)
 # pass our filter for relative abundance
 b <- which(otus_rel_ab.rowsums <= 0.001)
 
- #A also in B (we remove singleton ASVs that have a lower relative
- # abundance value than our threshold)
+#A also in B (we remove singleton ASVs that have a lower relative
+# abundance value than our threshold)
 rows_to_remove <- intersect(a, b)
 #filter OTU table we created earlier
 otus_filt <- otus[-rows_to_remove, ]
@@ -448,7 +463,8 @@ appendASV(
   #how many of our singleton ASVs fail on this filter
   "\n # ASVs singeltons removed:", length(intersect(a, b)),
   #how many ASVs did you retain?
-  "\n dimensions of ASV table without singletons:", dim(otus_filt))
+  "\n dimensions of ASV table without singletons:", dim(otus_filt)
+)
 
 
 #### remove chimeras ####
@@ -476,19 +492,35 @@ appendASV("\n proprtion of chimeric to non chimeric reads:",
           sum(seqtab.nosingletons.nochim) / sum(seqtab.nosingletons))
 
 
-appendASV("\n attempt taxonomy assignment....")
+##################################################
+#### Section 5: Taxonomic Assignment #############
+##################################################
 
+appendASV("\n Assigning taxonomy to PR2 database")
 
 taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
-"/data/taxonomyDBs/PR2/pr2_version_4.14.0_SSU_dada2.fasta.gz",
-multithread=TRUE,
-taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
-outputBootstraps = TRUE)
-
+  "/data/taxonomyDBs/PR2/pr2_version_4.14.0_SSU_dada2.fasta.gz",
+  multithread=TRUE,
+  taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
+  outputBootstraps = TRUE)
 saveRDS(taxa_boot, "tax_tab_18S_pr2.RDS")
 
+appendASV("\n Assigning taxonomy to MZG database")
+
+taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
+  "../Metazoogene/MZGdb_18S_NPac_ALL_mode-A_v3.0.fasta.gz",
+  multithread=TRUE,
+  taxLevels = c("Level1","Level4","Level5","Level7","Level8","Level9",
+  "Level10","Level11", "Leve12", "Level16", "Level18", "Level20"),
+  outputBootstraps = TRUE)
+saveRDS(taxa_boot, "tax_tab_18S_MZGdb.RDS")
+
+
+saveRDS(seqtab.nosingletons.nochim, "seqtab.nosingletons.nochim.RDS")
+
+
 ##################################################
-#### Section 5: Finalizing quality steps #########
+#### Section 6: Finalizing quality steps #########
 ##################################################
 
 appendASV("\n \n - Creating final outputs")
@@ -500,31 +532,36 @@ track <- cbind(out[samples_to_keep, ],
               sapply(dadaRs[samples_to_keep], getN),
               sapply(mergers, getN),
               rowSums(seqtab.nosingletons),
-              rowSums(seqtab.nosingletons.nochim))
+              rowSums(seqtab.nosingletons.nochim)
+)
 
 # If processing only a single sample, remove the sapply calls: e.g.
 # replace sapply(dadaFs, getN) with getN(dadaFs)
 track <- cbind(track,
               100 - track[, 6] / track[, 5] * 100,
               100 - track[, 7] / track[, 6] * 100,
-              track[, 7] / track[, 1] * 100)
+              track[, 7] / track[, 1] * 100
+)
 
 colnames(track) <- c(
   "input", "filtered", "denoisedF", "denoisedR", "merged",
   "nosingletons", "nochimeras", "percent_singletons",
-  "percent_chimeras", "percent_retained_of_total")
+  "percent_chimeras", "percent_retained_of_total"
+)
 
 
 
 #### save output from sequnce table construction steps ####
 write.table(data.frame("row_names" = rownames(track), track),
                       "Report/read_retention.merged.csv",
-                      row.names = FALSE, quote = FALSE, sep = "\t")
+                      row.names = FALSE, quote = FALSE, sep = "\t"
+)
 
 write.table(data.frame("row_names" = rownames(seqtab.nosingletons.nochim),
                       seqtab.nosingletons.nochim),
                       "ASV/sequence_table.merged.txt",
-                      row.names = FALSE, quote = FALSE, sep = "\t")
+                      row.names = FALSE, quote = FALSE, sep = "\t"
+)
 
 #### save sequences for both ASV tables , and do taxonomy assignment ####
 
@@ -541,7 +578,8 @@ ASV.seq <- as.character(unclass(row.names(my_otu_table)))
 ASV.num <- paste0("ASV", seq(ASV.seq), sep = "") #create new names
 write.table(cbind(ASV.num, ASV.seq),
             "ASV/sequence_ASVname_mapping.txt",
-            sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+            sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE
+)
 
 #save sequences with new names in fasta format
 write.fasta(sequences = as.list(ASV.seq),
@@ -554,34 +592,17 @@ testCols <- colnames(seqtab.nosingletons.nochim) == ASV.seq
 appendASV("\n",
           ifelse(FALSE %in% testCols == TRUE,
                 print("WARNING - ASVs and Colnames do not agree"),
-                print("ASV names agree - all OK")))
+                print("ASV names agree - all OK"))
+)
 
 #assign new ASV names
 colnames(seqtab.nosingletons.nochim) <- ASV.num
-
 
 #re-save sequence and taxonomy tables with updated names
 write.table(data.frame("row_names" = rownames(seqtab.nosingletons.nochim),
                       seqtab.nosingletons.nochim),
            "ASV/sequence_table.merged.w_ASV_names.txt",
-           row.names = FALSE, quote = FALSE, sep = "\t")
-
-
-saveRDS(seqtab.nosingletons.nochim, "seqtab.nosingletons.nochim.RDS")
+           row.names = FALSE, quote = FALSE, sep = "\t"
+)
 
 appendASV("\n \n ASV ANALYSIS COMPLETE")
-
-
-
-############
-
-
-#taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
-#    "/data/taxonomyDBs/silva_for_dada2/v132_for_parfreylab/18s/silva_132.18s.99_rep_set.dada2.fa.gz",
-#   multithread=TRUE,
-#    taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species","Accession"),
-#    outputBootstraps = TRUE)
-
-#saveRDS(taxa_boot, "tax_tab_18S_SILVA.RDS")
-
-

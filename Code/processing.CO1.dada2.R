@@ -3,11 +3,10 @@
 #pipeline for processing COI amplicon sequencing data
 #author: Evan Morien
 #modified by: Andreas Novotny
-#last modified: Dec 5th, 2021
 
 
 ###########################################################
-# Execute from command line
+# Execute from shell script or command line:
 # Rscript processing.COI.dada2.R "/path/to/data/directory" "COI"
 #
 # Revisit lines marked CHANGE ME before executing script
@@ -48,17 +47,11 @@ theme_set(theme_bw())
 
 
 #### File Path Setup ####
-wd <- commandArgs(TRUE)[1] #should contain WD
+wd <- commandArgs(TRUE)[1] #should contain analysis directory.
 setwd(wd)
-#wd <-"/home/andreas.novotny/AmpliconSeqAnalysis/Data/COI_Zoopsprint2022"
-
 
 # CHANGE ME to sequence Input
 path <- file.path(wd, "Fastq")
-
-# Create Cutadapt output
-path.cut <- file.path(path, "cutadapt")
-if (!dir.exists(path.cut)) dir.create(path.cut)
 
 # Create Report directory
 path.report <- file.path(wd, "Report/")
@@ -73,7 +66,6 @@ appendASV <- function(...) {
 
 appendASV(" \n Report for ASV analysis:", wd,
           "\n Date:", date())
-
 
 # Create final result file:
 path.ASV <- file.path(wd, "ASV/")
@@ -94,6 +86,11 @@ REV <- "TANACYTCNGGRTGNCCRAARAAYCA"
 
 appendASV(" \n FWD Primers:", FWD,
           "\n REV Primers:", REV)
+
+            
+# Create Cutadapt output
+path.cut <- file.path(path, "cutadapt")
+if (!dir.exists(path.cut)) dir.create(path.cut)
 
 
 ##################################################
@@ -183,9 +180,7 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits,
 
       write.table("Report/detected_primers.csv", sep = "\t",
                   row.names = TRUE, col.names = TRUE, quote = FALSE)
-
-
-
+                  
 #### primer removal with Cutadapt ####
 
 # CHANGE ME to the cutadapt path on your machine
@@ -416,14 +411,14 @@ otu_pres_abs_rowsums <- rowSums(otu_pres_abs) #counts of sample per ASV
 appendASV("\n Dimentions of sequence table with singeltons:", dim(seqtab))
 
 
- #create relative abundance table
+#create relative abundance table
 otus_rel_ab <- transform_sample_counts(otus, function(x) x / sum(x))
 df <- as.data.frame(unclass(otus_rel_ab)) #convert to plain data frame
 
- # if there are samples with no merged reads in them, and they passed the
- # merge step (a possiblity, converting to a relative abundance table
- # produes all NaNs for that sample. these need to be set to zero so we
- # can do the calculations in the next steps.)
+# if there are samples with no merged reads in them, and they passed the
+# merge step (a possiblity, converting to a relative abundance table
+# produes all NaNs for that sample. these need to be set to zero so we
+# can do the calculations in the next steps.)
 df[is.na(df)] <- 0
 
 # compute row sums (sum of relative abundances per ASV. for those only
@@ -447,7 +442,6 @@ otus_filt <- otus[-rows_to_remove, ]
 #convert filtered OTU table back to a sequence table matrix
 # to continue with dada2 pipeline
 seqtab.nosingletons <- t(as.matrix(unclass(otus_filt)))
-
 
 appendASV(
   "\n dimensions of ASV table with singletons:", dim(otus),
@@ -474,12 +468,26 @@ seqtab.nosingletons.nochim <- removeBimeraDenovo(
 appendASV("\n dimensions of ASV table after chimera removal",
           dim(seqtab.nosingletons.nochim))
 
+saveRDS(seqtab.nosingletons.nochim, "seqtab.nosingletons.nochim.RDS")
+
 # proportion of nonchimeras #it should be relatively high after
 # filtering out your singletons/low-count ASVs, even if you lose
 # a lot of ASVs, the number of reads lost should be quite low
 
 appendASV("\n proprtion of chimeric to non chimeric reads:",
           sum(seqtab.nosingletons.nochim) / sum(seqtab.nosingletons))
+
+appendASV("\n attempt taxonomy assignment....")
+
+taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
+  "../Metazoogene/MZGdb_COI_NPac_ALL_mode-A_v3.0.fasta.gz",
+  multithread=TRUE,
+  taxLevels = c("Level1","Level4","Level5","Level7","Level8","Level9",
+  "Level10","Level11", "Leve12", "Level16", "Level18", "Level20"),
+  outputBootstraps = TRUE)
+
+
+saveRDS(taxa_boot, "tax_tab_18S_MZGdb.RDS")
 
 ##################################################
 #### Section 5: Finalizing quality steps #########
@@ -557,7 +565,7 @@ colnames(seqtab.nosingletons.nochim) <- ASV.num
 #re-save sequence and taxonomy tables with updated names
 write.table(data.frame("row_names" = rownames(seqtab.nosingletons.nochim),
                       seqtab.nosingletons.nochim),
-           "ASV/sequence_table.merged.w_ASV_names.txt",
-           row.names = FALSE, quote = FALSE, sep = "\t")
+                      "ASV/sequence_table.merged.w_ASV_names.txt",
+                      row.names = FALSE, quote = FALSE, sep = "\t")
 
 appendASV("\n \n ASV ANALYSIS COMPLETE")
