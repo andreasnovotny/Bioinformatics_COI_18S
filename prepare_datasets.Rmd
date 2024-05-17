@@ -2,9 +2,9 @@
 title: "Inspect prepare and combine datasets"
 ---
 
-```{r}
+```{r} 
 library(lubridate)
-library(plotly)
+#library(plotly)
 library(tidyverse)
 library(readxl)
 library(googledrive)
@@ -162,60 +162,34 @@ plotly::ggplotly(nullplot)
 
 ```{r}
 read_18S <- function(dir = "18S_QPKbulk_2017") {
+
   
   ASV_18S_tmp <-
-    read.delim(paste("ProcessedData/18S_Andreas/",dir,"/sequence_table.merged.txt", sep = "")) %>% 
+    read.delim(paste("ProcessedData/",dir,"/sequence_table.merged.w_ASV_names.txt", sep = "")) %>% 
     column_to_rownames("row_names") %>% 
     t() %>%
     as.data.frame() %>% 
-    rownames_to_column("Sequence")
-
-  Taxtab_18S_tmp <- readRDS(paste("ProcessedData/18S_Andreas/",dir,"/tax_tab_18S_pr2.RDS", sep = ""))$tax %>%
+    rownames_to_column("ASV")
+  
+  Taxtab_18S_tmp <- readRDS(paste("ProcessedData/",dir,"/tax_tab_18S_MZGdb.RDS", sep = ""))$tax %>%
     as.data.frame() %>% 
     rownames_to_column("Sequence")
-
-  ASV_Tax_18S_tmp <- Taxtab_18S_tmp %>% 
-    left_join(ASV_18S_tmp, by = "Sequence") %>% 
-    select(!Sequence)
+  
+  ASV_Tax_18S_tmp <- read_delim(
+    "ProcessedData/18S_Andreas/18S_QPKbulk_2017/sequence_ASVname_mapping.txt", 
+    delim = "\t", escape_double = FALSE, 
+    col_names = FALSE, trim_ws = TRUE) %>% 
+    transmute(ASV = X1, Sequence=X2) %>% 
+    left_join(Taxtab_18S_tmp, by = "Sequence") %>% 
+    select(!Sequence) %>% 
+    left_join(ASV_18S_tmp, by = "ASV")
+  
+  return(ASV_Tax_18S_tmp)
 }
 
-shrink <- function(ASV_table) {
-  
-  unite(ASV_table, Taxa, 1:8, sep = "&") %>% 
-  pivot_longer(2:length(.), names_to = "Library_ID", values_to = "Abundance") %>% 
-  group_by(Library_ID, Taxa) %>% 
-  summarise(Abundance = sum(Abundance)) %>% 
-  pivot_wider(names_from = "Library_ID", values_from = "Abundance")
-  
-}
-
-
-ASV_18S_QPKbulk2017 <- read_18S("18S_QPKbulk_2017")
 ASV_18S_QU39_1 <- read_18S("18S_QU39_1")
-ASV_18S_QU39_2 <- read_18S("18S_QU39_2")
-ASV_18S_QU39_3 <- read_18S("18S_QU39_3")
-ASV_18S_QU39_4 <- read_18S("18S_QU39_4")
-ASV_18S_QU39_5 <- read_18S("18S_QU39_5")
-ASV_18S_QU39_6 <- read_18S("18S_QU39_6")
-
-ASV_18S_all <- shrink(ASV_18S_QPKbulk2017) %>% 
-  full_join(shrink(ASV_18S_QU39_1), by = "Taxa") %>% 
-  full_join(shrink(ASV_18S_QU39_2), by = "Taxa") %>%
-  full_join(shrink(ASV_18S_QU39_3), by = "Taxa") %>%
-  full_join(shrink(ASV_18S_QU39_4), by = "Taxa") %>%
-  full_join(shrink(ASV_18S_QU39_5), by = "Taxa") %>%
-  full_join(shrink(ASV_18S_QU39_6), by = "Taxa") %>% 
-  separate(Taxa, into = c("Kingdom", "Supergroup", "Divition", "Class",
-                          "Order","Family", "Genus", "Species"),
-           sep = "&")
-
-ASV_18S_all %>% 
-  saveRDS(file = "Data_export/ASV_Taxtab_18S.rds")
-
-  
+ASV_18S_QU39_1
 ASV_18S_all
-
-
 ```
 
 
@@ -277,12 +251,38 @@ Samptab_18S_all %>%
     saveRDS(file = "Data_export/Samptab_18S.rds")
 
 ```
+```{r}
+ASV_18S_QU39_1 <- read_18S("18S_QU39_5")
+ASV_tax = ASV_18S_QU39_1
+Group = "Home18S"
+
+Long <- ASV_tax %>%
+  pivot_longer(14:length(.), names_to = "Library_ID", values_to = "Abundance")
+
+samples <- Long %>% pull(Library_ID) %>% unique()
+
+Merged <- Samptab_18S_all %>% 
+  filter(MiSeq_library == Group,
+         Library_ID %in% samples) %>% 
+  full_join(Long, by = "Library_ID")
+
+Merged %>% 
+  filter(is.na(Hakai_ID)) %>% 
+  pull(Library_ID) %>% 
+  unique()
+```
+
+
+
+
+
+
 
 ### Merge and check:
 
 ```{r}
 all_18S <- ASV_18S_all %>% 
-  pivot_longer(9:length(.), names_to = "Library_ID", values_to = "Abundance") %>% 
+  pivot_longer(14:length(.), names_to = "Library_ID", values_to = "Abundance") %>% 
   left_join(Samptab_18S_all, by = c("Library_ID"))
 
 all_18S %>%
@@ -292,8 +292,22 @@ all_18S %>%
   ggplot() +
   geom_point(aes(Sample_date, Abundance))
 
-all_18S
+all_18S_pr2
+all_18S_MZG
+all_18S_MZG
 ```
+
+```{r}
+
+
+saveRDS(all_18S_pr2, "Data_export/QPK_18S_pr2.RDS")
+saveRDS(all_18S_MZG, "Data_export/QPK_18S_MZG.RDS")
+```
+
+
+
+
+
 
 
 
