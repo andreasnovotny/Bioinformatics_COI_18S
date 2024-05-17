@@ -20,7 +20,6 @@ Rscript Code/HelpScripts/Merge_ASV.r \
     Data/COI_QU39-2019 \
     Data/COI_Zoopsprint2022 \
     Data/COI_QPKbulk_2017
-    
 
 # CHANGE ME: Define paths to databases, querry sequences (produced by script above) and 
 BOLD_genbank_combo='/data/taxonomyDBs/CO1_database/blast_DB/CO1.BOLD_genbank_combined.rep_set.blast_DB'

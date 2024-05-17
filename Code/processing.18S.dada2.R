@@ -46,13 +46,9 @@ library(Biostrings)
 library(seqinr)
 theme_set(theme_bw())
 
-
 #### File Path Setup ####
-#wd <-"/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QPKbulk_2017"
 wd <- commandArgs(TRUE)[1] #should contain WD
 setwd(wd)
-#wd <-"/home/andreas.novotny/AmpliconSeqAnalysis/Data/18S_QPKbulk_2017"
-
 
 # CHANGE ME to sequence Input
 path <- file.path(wd, "Fastq")
@@ -76,15 +72,9 @@ appendASV(" \n Report for ASV analysis:", wd,
           "\n Date:", date()
 )
 
-
-
 # Create taxonomy result folder:
 path.tax <- file.path(wd, "Taxonomy/")
 if (!dir.exists(path.tax)) dir.create(path.tax)
-
-# Create intermediate result folder:
-path.interm <- file.path(wd, "Intermetiate/")
-if (!dir.exists(path.interm)) dir.create(path.interm)
 
 # Create ASV result file:
 path.ASV <- file.path(wd, "ASV/")
@@ -103,8 +93,9 @@ sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 FWD <- "CCAGCASCYGCGGTAATTCC" ## V4F 565F
 REV <- "ACTTTCGTTCTTGATYRR"   ## V4RB 981R
 
-appendASV(" \n FWD Primers:", FWD,
-          "\n REV Primers:", REV
+appendASV(
+  " \n FWD Primers:", FWD,
+  "\n REV Primers:", REV
 )
 
 
@@ -145,7 +136,6 @@ allOrients <- function(primer) {
 
 FWD.orients <- allOrients(FWD)
 REV.orients <- allOrients(REV)
-FWD.orients
 
 # Put N-filterd files in filtN/ subdirectory
 fnFs.filtN <- file.path(path, "filtN", basename(fnFs))
@@ -323,7 +313,6 @@ pdf("Report/error_rates.dada2.R2s.pdf", width = 10, height = 10)
   plotErrors(errR, nominalQ = TRUE)
 dev.off()
 
-
 #### Sequence dereplication ####
 appendASV(" \n - Sequence dereplication")
 derepFs <- derepFastq(filtFs, verbose = TRUE)
@@ -333,7 +322,6 @@ derepRs <- derepFastq(filtRs, verbose = TRUE)
 # all your R objects have the same sample names in them
 names(derepFs) <- sample.names
 names(derepRs) <- sample.names
-
 
 #### DADA sample inference ####
 appendASV(" \n - DADA ASV inference")
@@ -391,7 +379,6 @@ head(mergers[[1]])
 
 #### construct sequence table ####
 seqtab <- makeSequenceTable(mergers)
-
 
 
 #### View Sequence Length Distribution Post-Merging ####
@@ -492,6 +479,8 @@ appendASV("\n proprtion of chimeric to non chimeric reads:",
           sum(seqtab.nosingletons.nochim) / sum(seqtab.nosingletons))
 
 
+saveRDS(seqtab.nosingletons.nochim, "seqtab.nosingletons.nochim.RDS")
+
 ##################################################
 #### Section 5: Taxonomic Assignment #############
 ##################################################
@@ -503,20 +492,17 @@ taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
   multithread=TRUE,
   taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
   outputBootstraps = TRUE)
-saveRDS(taxa_boot, "tax_tab_18S_pr2.RDS")
+saveRDS(taxa_boot, "Taxonomy/tax_tab_18S_pr2.RDS")
 
 appendASV("\n Assigning taxonomy to MZG database")
 
 taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
   "../Metazoogene/MZGdb_18S_NPac_ALL_mode-A_v3.0.fasta.gz",
   multithread=TRUE,
-  taxLevels = c("Level1","Level4","Level5","Level7","Level8","Level9",
-  "Level10","Level11", "Leve12", "Level16", "Level18", "Level20"),
+  taxLevels = c("Kingdom","Phylum","Subphylum","Superclass","Subsuperclass","Class",
+  "Infraclass", "Superorder", "Order", "Family", "Genus", "Species"),
   outputBootstraps = TRUE)
-saveRDS(taxa_boot, "tax_tab_18S_MZGdb.RDS")
-
-
-saveRDS(seqtab.nosingletons.nochim, "seqtab.nosingletons.nochim.RDS")
+saveRDS(taxa_boot, "Taxonomy/tax_tab_18S_MZGdb.RDS")
 
 
 ##################################################

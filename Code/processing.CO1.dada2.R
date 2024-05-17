@@ -53,6 +53,10 @@ setwd(wd)
 # CHANGE ME to sequence Input
 path <- file.path(wd, "Fastq")
 
+# Create Cutadapt output
+path.cut <- file.path(path, "cutadapt")
+if (!dir.exists(path.cut)) dir.create(path.cut)
+
 # Create Report directory
 path.report <- file.path(wd, "Report/")
 if (!dir.exists(path.report)) dir.create(path.report)
@@ -65,9 +69,14 @@ appendASV <- function(...) {
 }
 
 appendASV(" \n Report for ASV analysis:", wd,
-          "\n Date:", date())
+          "\n Date:", date()
+)
 
-# Create final result file:
+# Create taxonomy result folder:
+path.tax <- file.path(wd, "Taxonomy/")
+if (!dir.exists(path.tax)) dir.create(path.tax)
+
+# Create ASV result file:
 path.ASV <- file.path(wd, "ASV/")
 if (!dir.exists(path.ASV)) dir.create(path.ASV)
 
@@ -482,12 +491,12 @@ appendASV("\n attempt taxonomy assignment....")
 taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
   "../Metazoogene/MZGdb_COI_NPac_ALL_mode-A_v3.0.fasta.gz",
   multithread=TRUE,
-  taxLevels = c("Level1","Level4","Level5","Level7","Level8","Level9",
-  "Level10","Level11", "Leve12", "Level16", "Level18", "Level20"),
+  taxLevels = c("Kingdom","Phylum","Subphylum","Superclass","Subsuperclass","Class",
+  "Infraclass", "Superorder", "Order", "Family", "Genus", "Species"),
   outputBootstraps = TRUE)
 
 
-saveRDS(taxa_boot, "tax_tab_18S_MZGdb.RDS")
+saveRDS(taxa_boot, "tax_tab_COI_MZGdb.RDS")
 
 ##################################################
 #### Section 5: Finalizing quality steps #########
