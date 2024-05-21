@@ -496,7 +496,7 @@ taxa_boot <- assignTaxonomy(seqtab.nosingletons.nochim,
   outputBootstraps = TRUE)
 
 
-saveRDS(taxa_boot, "tax_tab_COI_MZGdb.RDS")
+saveRDS(taxa_boot, "Taxonomy/tax_tab_COI_MZGdb.RDS")
 
 ##################################################
 #### Section 5: Finalizing quality steps #########
