@@ -193,6 +193,37 @@ ASV_18S_all
 ```
 
 
+
+```{r}
+#' Fills unassigned taxonomic levels with useful information.
+#'
+#' This function assigns the higher taxonomic ranks to unassigned taxoomic levels, using the output of DADA2::assignTaxonomy.
+#'
+#' @param tax (Required) A list of two matrices. As returned from DADA2::assignTaxonomy(seqtab, database, outputBootstraps =  TRUE).
+#' @param string (Optional, default="_x") A string. Will be attached at the end of the name comming from the higher taxonomic level.
+#' @return A list of two matrices (modified tax object).
+#' @examples
+#' data("tax_16S")
+#' tax_16S <- filterTaxonomy(tax_16S, minboot = 75)
+#' tax_16S <- completeTaxonomy(tax_16S, string = "_x")
+#'
+#' @export
+completeTaxonomy <- function(tax, string="_x") {
+
+  TAX <- as.matrix(tax$tax)
+  for (row in 1:nrow(TAX)) {
+    for (col in 1:ncol(TAX)) {
+      if (is.na(TAX[row,col])) {
+        TAX[row,col] <- paste(TAX[row,(col-1)],string,sep="")
+      }
+    }
+  }
+  tax$tax <- TAX
+  return(tax)
+}
+```
+
+
 ### Sample data
 All 18S sample data:
 
@@ -224,11 +255,7 @@ qu39DNA_metadata <- read_excel(
     Extraction_staff = `Extraction Staff`,
     MiSeq_library = "Home18S",
     Library_staff = "Catherina Rodriguez"
-  ) #%>% 
-  #filter(Sample_type == "DNA") %>% 
-  #filter(year(Sample_date)<2018)
-
-qu39DNA_metadata
+  )
 
 
 Library_metadata_Andreas <- read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx", 
@@ -242,8 +269,6 @@ Library_metadata_Andreas <- read_excel("ProcessedData/metadata_files/Library_met
          "text", "text", "text", "text", "numeric", 
          "numeric", "numeric"))
 
-Library_metadata_Andreas
-
 
 Samptab_18S_all <- bind_rows(Library_metadata_Andreas, qu39DNA_metadata)
 
@@ -251,27 +276,73 @@ Samptab_18S_all %>%
     saveRDS(file = "Data_export/Samptab_18S.rds")
 
 ```
+
 ```{r}
-ASV_18S_QU39_1 <- read_18S("18S_QU39_5")
-ASV_tax = ASV_18S_QU39_1
-Group = "Home18S"
+# Define function to merge ASV and metadata objects
 
-Long <- ASV_tax %>%
-  pivot_longer(14:length(.), names_to = "Library_ID", values_to = "Abundance")
 
-samples <- Long %>% pull(Library_ID) %>% unique()
+Merge_18S <- function(Run, Group = NA) {
+  
+  Group <- ifelse(is.na(Group), Run, Group)
+  
+  Long <- read_18S(Run) %>%
+    mutate(ASV = paste(ASV, Group, sep = "_")) %>%
+    unite(col = "Taxa", 1:13, sep = ";") %>% 
+    pivot_longer(2:length(.), names_to = "Library_ID", values_to = "Abundance")
+  
+  samples <- Long %>% pull(Library_ID) %>% unique()
+  
+  Merged <- Samptab_18S_all %>% 
+    filter(MiSeq_library == Group,
+           Library_ID %in% samples) %>% 
+    full_join(Long, by = "Library_ID") %>% 
+    mutate(Library_ID = paste(Library_ID, MiSeq_library, sep = "_" ))
+}
 
-Merged <- Samptab_18S_all %>% 
-  filter(MiSeq_library == Group,
-         Library_ID %in% samples) %>% 
-  full_join(Long, by = "Library_ID")
+test <-Merge_18S("18S_QPKbulk_2017")
+test
 
-Merged %>% 
-  filter(is.na(Hakai_ID)) %>% 
-  pull(Library_ID) %>% 
-  unique()
+read_18S("18S_QPKbulk_2017")
+
+
+All_18S_Merged <- bind_rows(
+  Merge_18S("18S_QPKbulk_2017"),
+  Merge_18S("18S_QU39_1", "Home18S"),
+  Merge_18S("18S_QU39_2", "Home18S"),
+  Merge_18S("18S_QU39_3", "Home18S"),
+  Merge_18S("18S_QU39_4", "Home18S"),
+  Merge_18S("18S_QU39_5", "Home18S"))
+
+All_18S_Merged
+
+
+# Compress sample metadata
+Samptab_18S <- All_18S_Merged %>%
+  select(1:33) %>% 
+  distinct()
+
+# Compress Tax_Seq
+Seqtab_18S <- All_18S_Merged %>% 
+  select(34:35, 1) %>% 
+  pivot_wider(names_from = "Library_ID", values_from = "Abundance")
+Seqtab_18S %>% 
+  separate(Taxa, into = c(
+    "ASV", "Kingdom","Phylum","Subphylum","Superclass","Subsuperclass",
+    "Class", "Infraclass", "Superorder", "Order", "Family", "Genus", "Species"
+    ), sep = ";")
+All_18S_Merged
 ```
 
+```{r}
+Run = "18S_QPKbulk_2017"
+Group = NA
+Group <- ifelse(is.na(Group), Run, Group)
+
+test <- read_18S(Run) %>%
+  mutate(ASV = paste(ASV, Group, sep = "_")) %>%
+  unite(col = "Taxa", 1:13, sep = ";")
+test
+```
 
 
 
