@@ -11,32 +11,13 @@ library(googledrive)
 '%!in%' <- function(x,y)!('%in%'(x,y))
 ```
 
-# COI #################
+# 1. Prepare metadata
 
-## Load and merge data tables:
-
-### ASV table:
-
-Read in ASV table, and modify names:
-```{r}
-ASV_COI_tmp <-
-  read.delim("ProcessedData/COI_Andreas/ASV/sequence_table.merged.txt",
-             sep = " ") %>% 
-  rename_with(~gsub(., pattern = "\\.", replacement = "_")) %>%
-  rownames_to_column("ASV") %>% 
-  select(!Sequence) %>% 
-  replace(is.na(.), 0) %>% 
-  mutate(ASV = paste("ASV", ASV, sep = ""))
-
-ASV_COI_tmp
-```
-
-### Sample metadata:
-
-Read in metadata:
+COI metadata
 
 ```{r}
-Samptab_COI_tmp <-
+Samptab_COI_all <-
+  
   read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx", 
              sheet = "COI", col_types = c("text",
         "text", "date", "text", "text", "text", 
@@ -45,193 +26,17 @@ Samptab_COI_tmp <-
         "text", "text", "text", "text", "text", 
         "text", "date", "text", "text", "text", 
         "text", "text", "text", "text", "text", 
-        "numeric", "numeric", "text"))
-Samptab_COI_tmp
-
-
+        "numeric", "numeric", "text"), na = "<NA>") %>% 
+  select(!Quality_log)
+Samptab_COI_all
+write_csv2(Samptab_COI_all, "ProcessedData/metadata_files/sample_data_COI_all.csv")
 ```
 
-Check what original samples are missing from the ASV table:
-
+18S Metadata
 ```{r}
-SamplesNotInASV <-
-  Samptab_COI_tmp %>%
-  filter(Library_ID %!in% colnames(ASV_COI_tmp)) %>% 
-  pull(Library_ID)
-
-SamplesNotInASV
-```
-
-**Investigate why samples are not present by back-tracing intermediates:**
-
--FW22XN01_COI removed in filtering step (Blank, no reads left)\
--Blank1_COI removed in filtering step (Blank, no reads left)\
--QMIC3678_COI low read abundance before and after filter and trim\
--QMIC3601_COI low read abundance before and after filter and trim\
--QMIC2991_COI low read abundance before and after filter and trim\
--QMIC2867_COI low read abundance before and after filter and trim
-
-These samples exist in sequence data but not metadata:
-
-```{r}
-samplesNotInMetadata <- 
-  colnames(ASV_COI_tmp) %>% 
-  tibble() %>% 
-  filter(. %!in% pull(Samptab_COI_tmp, Library_ID)) %>% 
-  pull
-
-samplesNotInMetadata
-
-```
-
-Undetermined samples are produced in the bioinformatic pipeline. It is sequences that due to errors canot be assigned any sample.\
-the presences of undermined samples are ok. If othr samples show up here it is due to errors. Check.
-
-
-### Taxonomy Table
-```{r}
-Taxtab_COI_tmp <- read.delim("ProcessedData/COI_Andreas/COI_taxonomy/taxonomy_table.CO1.iterative_blast.LCA+best_hit.txt") %>% 
-  rename_with(~gsub(., pattern = "X.", replacement = "")) %>% 
-  rename(ASV = Query)
-Taxtab_COI_tmp
-```
-
-
-### Merge and save datasets
-
-```{r}
-# Merge data components to one big dataframe
-
-COI_df <- 
-  Taxtab_COI_tmp %>%
-  full_join(ASV_COI_tmp, by = "ASV") %>%
-  pivot_longer(!1:12, names_to = "Library_ID", values_to = "Abundance") %>%
-  full_join(Samptab_COI_tmp, by = "Library_ID")
-
-COI_df
-# This object is very large. Do not push to git remote.
-# Rather save the individual components or upload to cloud.
-
-saveRDS(Taxtab_COI_tmp, "Data_export/Taxtab_COI.rds")
-saveRDS(ASV_COI_tmp, "Data_export/ASV_COI.rds")
-saveRDS(Samptab_COI_tmp, "Data_export/Samptab_COI.rds")
-
-```
-
-
-
-## Plot Sequencing Depth
-
-```{r}
-depth <-
-  COI_df %>% 
-  group_by(Library_ID) %>% 
-  summarize(Abundance=sum(Abundance))
-depth
-
-
-depth %>% 
-  ggplot() +
-  geom_bar(aes(Library_ID, Abundance), stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-COI_df %>% 
-  filter(Library_ID %in% c("Blank_COI", "Blank_COI_2018", "FW22XN04_COI", "FW22XN05_COI"),
-         Abundance > 0)
-```
-
-
-## PLot Negative controls
-
-```{r}
-nullplot <- 
-  COI_df %>% 
-  filter(is.na(Project_name)) %>% 
-  ggplot() +
-  geom_bar(aes(Library_ID, Abundance, fill=phylum), stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-plotly::ggplotly(nullplot)
-```
-
-# 18S #################
-
-## Load and merge data tables:
-
-### ASV and taxtab
-
-```{r}
-read_18S <- function(dir = "18S_QPKbulk_2017") {
-
-  
-  ASV_18S_tmp <-
-    read.delim(paste("ProcessedData/",dir,"/sequence_table.merged.w_ASV_names.txt", sep = "")) %>% 
-    column_to_rownames("row_names") %>% 
-    t() %>%
-    as.data.frame() %>% 
-    rownames_to_column("ASV")
-  
-  Taxtab_18S_tmp <- readRDS(paste("ProcessedData/",dir,"/tax_tab_18S_MZGdb.RDS", sep = ""))$tax %>%
-    as.data.frame() %>% 
-    rownames_to_column("Sequence")
-  
-  ASV_Tax_18S_tmp <- read_delim(
-    "ProcessedData/18S_Andreas/18S_QPKbulk_2017/sequence_ASVname_mapping.txt", 
-    delim = "\t", escape_double = FALSE, 
-    col_names = FALSE, trim_ws = TRUE) %>% 
-    transmute(ASV = X1, Sequence=X2) %>% 
-    left_join(Taxtab_18S_tmp, by = "Sequence") %>% 
-    select(!Sequence) %>% 
-    left_join(ASV_18S_tmp, by = "ASV")
-  
-  return(ASV_Tax_18S_tmp)
-}
-
-ASV_18S_QU39_1 <- read_18S("18S_QU39_1")
-ASV_18S_QU39_1
-ASV_18S_all
-```
-
-
-
-```{r}
-#' Fills unassigned taxonomic levels with useful information.
-#'
-#' This function assigns the higher taxonomic ranks to unassigned taxoomic levels, using the output of DADA2::assignTaxonomy.
-#'
-#' @param tax (Required) A list of two matrices. As returned from DADA2::assignTaxonomy(seqtab, database, outputBootstraps =  TRUE).
-#' @param string (Optional, default="_x") A string. Will be attached at the end of the name comming from the higher taxonomic level.
-#' @return A list of two matrices (modified tax object).
-#' @examples
-#' data("tax_16S")
-#' tax_16S <- filterTaxonomy(tax_16S, minboot = 75)
-#' tax_16S <- completeTaxonomy(tax_16S, string = "_x")
-#'
-#' @export
-completeTaxonomy <- function(tax, string="_x") {
-
-  TAX <- as.matrix(tax$tax)
-  for (row in 1:nrow(TAX)) {
-    for (col in 1:ncol(TAX)) {
-      if (is.na(TAX[row,col])) {
-        TAX[row,col] <- paste(TAX[row,(col-1)],string,sep="")
-      }
-    }
-  }
-  tax$tax <- TAX
-  return(tax)
-}
-```
-
-
-### Sample data
-All 18S sample data:
-
-```{r}
-
 qu39DNA_metadata <- read_excel(
    "ProcessedData/metadata_files/qu39DNA_metadata.xlsx", 
-   col_types = c("date", "text", "numeric",
+   col_types = c("date", "text", "text",
                  "text", "date", "date", "text", "numeric",
                  "text", "date", "text", "numeric",
                  "numeric", "numeric", "text", "text")) %>% 
@@ -257,10 +62,9 @@ qu39DNA_metadata <- read_excel(
     Library_staff = "Catherina Rodriguez"
   )
 
-
 Library_metadata_Andreas <- read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx", 
      sheet = "18S", col_types = c("text", 
-         "text", "date", "text", "text", "numeric", 
+         "text", "date", "text", "text", "text", 
          "text", "date", "date", "numeric", 
          "text", "date", "text", "numeric", 
          "numeric", "numeric", "numeric", 
@@ -268,252 +72,213 @@ Library_metadata_Andreas <- read_excel("ProcessedData/metadata_files/Library_met
          "text", "text", "numeric", "numeric", 
          "text", "text", "text", "text", "numeric", 
          "numeric", "numeric"))
-
+Library_metadata_Andreas
 
 Samptab_18S_all <- bind_rows(Library_metadata_Andreas, qu39DNA_metadata)
 
 Samptab_18S_all %>% 
-    saveRDS(file = "Data_export/Samptab_18S.rds")
+  select(!Quality_log) %>% 
+  write_csv2("ProcessedData/metadata_files/sample_data_18S_all.csv")
+
+rm(Library_metadata_Andreas, qu39DNA_metadata)
+```
+
+
+
+
+# 2. General merging functions:
+
+## completeTaxonomy()
+```{r}
+
+#' Fills unassigned taxonomic levels with useful information.
+#'
+#' This function assigns the higher taxonomic ranks to unassigned taxoomic levels, using the output of DADA2::assignTaxonomy.
+#'
+#' @param tax (Required) A list of two matrices. As returned from DADA2::assignTaxonomy(seqtab, database, outputBootstraps =  TRUE).
+#' @param string (Optional, default="_x") A string. Will be attached at the end of the name comming from the higher taxonomic level.
+#' @return A list of two matrices (modified tax object).
+#' @examples
+#' data("tax_16S")
+#' tax_16S <- filterTaxonomy(tax_16S, minboot = 75)
+#' tax_16S <- completeTaxonomy(tax_16S, string = "_x")
+#'
+#' @export
+
+completeTaxonomy <- function(tax, string="_x") {
+  
+  TAX <- tax %>%
+    as.data.frame() %>% 
+    mutate(Annotation_level = 0) %>% 
+    as.matrix()
+
+  names <- colnames(TAX)
+  for (row in 1:nrow(TAX)) {
+    Count <- length(colnames(TAX))-1
+    for (col in 1:(ncol(TAX)-1)) {
+      if (is.na(TAX[row,col])) {
+        Count <- Count - 1
+        TAX[row,col] <- paste(TAX[row,(col-1)],string,sep="")
+      }
+    }
+    TAX[row,ncol(TAX)] <- Count
+  }
+  return(TAX)
+}
+```
+
+## merge_ASV_Tax()
+```{r}
+
+#' Merging ASV and Taxonomy table based on sequence
+#' 
+#' Not a generalized function. Only optimised for this analysis directory.
+
+merge_ASV_Tax <- function(dir = "18S_QPKbulk_2017",
+                          taxtab = "tax_tab_18S_MZGdb.RDS") {
+
+  # Read ASV table, transpose and convert to tidy data frame format.
+  ASV_tmp <-
+    read.delim(paste("ProcessedData/",dir,"/sequence_table.merged.w_ASV_names.txt", sep = "")) %>% 
+    column_to_rownames("row_names") %>% 
+    t() %>%
+    as.data.frame() %>% 
+    rownames_to_column("ASV")
+  
+  # Read taxonomy table, fill NAs with readable information
+  Taxtab_tmp <- readRDS(paste("ProcessedData/",dir,"/",taxtab, sep = ""))$tax %>%
+    completeTaxonomy("@") %>% 
+    as.data.frame() %>% 
+    rownames_to_column("Sequence")
+  
+  # Read sequence ASV name file. Convert Taxtab sequences to ASV names,
+  # and merge with ASV table.
+  ASV_Tax_tmp <- read_delim(
+    paste("ProcessedData/",dir,"/sequence_ASVname_mapping.txt", sep = ""),
+    delim = "\t", escape_double = FALSE, 
+    col_names = FALSE) %>% 
+    transmute(ASV = X1, Sequence=X2) %>% 
+    left_join(Taxtab_tmp, by = "Sequence") %>% 
+    select(!Sequence) %>% 
+    left_join(ASV_tmp, by = "ASV")
+}
 
 ```
 
+## merge_ASV_Tax_Samp()
 ```{r}
-# Define function to merge ASV and metadata objects
-
-
-Merge_18S <- function(Run, Group = NA) {
+#' Merging ASV_Tax table with sample data
+#' 
+merge_ASV_Tax_Samp <- function(Run,
+                               Taxtab,
+                               Samptab ,
+                               Group = NA) {
   
   Group <- ifelse(is.na(Group), Run, Group)
   
-  Long <- read_18S(Run) %>%
-    mutate(ASV = paste(ASV, Group, sep = "_")) %>%
-    unite(col = "Taxa", 1:13, sep = ";") %>% 
-    pivot_longer(2:length(.), names_to = "Library_ID", values_to = "Abundance")
-  
-  samples <- Long %>% pull(Library_ID) %>% unique()
-  
-  Merged <- Samptab_18S_all %>% 
+  ASV <- merge_ASV_Tax(Run, Taxtab) %>% 
+    pivot_longer(15:length(.), names_to = "Library_ID", values_to = "Abundance")
+  samples <- ASV %>%
+      pull(Library_ID) %>% unique()
+
+  Merged <- Samptab %>% 
     filter(MiSeq_library == Group,
            Library_ID %in% samples) %>% 
-    full_join(Long, by = "Library_ID") %>% 
+    full_join(ASV, by = "Library_ID") %>%
+    filter(Library_ID != "Undetermined") %>% 
     mutate(Library_ID = paste(Library_ID, MiSeq_library, sep = "_" ))
+
+}
+```
+
+## merge_COI()
+```{r}
+# COI Wrapper:
+merge_COI <- function(Run,
+                      Taxtab = "tax_tab_COI_MZGdb.RDS",
+                      Samptab = Samptab_COI_all,
+                      Group = NA) {
+  merge_ASV_Tax_Samp(Run, Taxtab, Samptab, Group)
+}
+```
+
+## merge_18S()
+```{r}
+# 18S Wrapper:
+merge_18S <- function(Run,
+                      Taxtab = "tax_tab_18S_MZGdb.RDS",
+                      Samptab = Samptab_18S_all,
+                      Group = NA) {
+  merge_ASV_Tax_Samp(Run, Taxtab, Samptab, Group)
 }
 
-test <-Merge_18S("18S_QPKbulk_2017")
-test
-
-read_18S("18S_QPKbulk_2017")
 
 
-All_18S_Merged <- bind_rows(
-  Merge_18S("18S_QPKbulk_2017"),
-  Merge_18S("18S_QU39_1", "Home18S"),
-  Merge_18S("18S_QU39_2", "Home18S"),
-  Merge_18S("18S_QU39_3", "Home18S"),
-  Merge_18S("18S_QU39_4", "Home18S"),
-  Merge_18S("18S_QU39_5", "Home18S"))
-
-All_18S_Merged
-
-
-# Compress sample metadata
-Samptab_18S <- All_18S_Merged %>%
-  select(1:33) %>% 
-  distinct()
-
-# Compress Tax_Seq
-Seqtab_18S <- All_18S_Merged %>% 
-  select(34:35, 1) %>% 
-  pivot_wider(names_from = "Library_ID", values_from = "Abundance")
-Seqtab_18S %>% 
-  separate(Taxa, into = c(
-    "ASV", "Kingdom","Phylum","Subphylum","Superclass","Subsuperclass",
-    "Class", "Infraclass", "Superorder", "Order", "Family", "Genus", "Species"
-    ), sep = ";")
-All_18S_Merged
+Samptab_18S_all
 ```
+
 
 ```{r}
-Run = "18S_QPKbulk_2017"
-Group = NA
-Group <- ifelse(is.na(Group), Run, Group)
-
-test <- read_18S(Run) %>%
-  mutate(ASV = paste(ASV, Group, sep = "_")) %>%
-  unite(col = "Taxa", 1:13, sep = ";")
-test
+seq_depth_plot <- function(data) {
+  tmp <- data %>%
+    mutate(Sample_Type = ifelse(
+      is.na(Line_out_depth),
+      "Control",
+      "True_Sample")) %>% 
+    group_by(Library_ID, Sample_Type, MiSeq_library) %>% 
+    summarise(Library_Size = sum(Abundance)) %>% 
+    arrange(Library_Size)
+  
+  tmp$Index <- seq(nrow(tmp))
+  tmp %>% 
+    ggplot() +
+    geom_point(aes(Index, Library_Size, colour = Sample_Type))
+}
 ```
 
 
+# 3. Merge COI libraries
+```{r}
+All_COI_data <- bind_rows(
+  merge_COI("COI_QPKbulk_2017"),
+  merge_COI("COI_QU39-2017"),
+  merge_COI("COI_QU39-2018"),
+  merge_COI("COI_QU39-2019"),
+  merge_COI("COI_Zoopsprint2022"))
+
+p1 <- seq_depth_plot(All_COI_data)
+plotly::ggplotly(p1) 
+  
+p2 <- All_COI_data %>% 
+  filter(Kingdom == "Animalia") %>% 
+  seq_depth_plot()
+plotly::ggplotly(p2)
+
+```
 
 
-
-
-### Merge and check:
+# 4. Merge 18S
 
 ```{r}
-all_18S <- ASV_18S_all %>% 
-  pivot_longer(14:length(.), names_to = "Library_ID", values_to = "Abundance") %>% 
-  left_join(Samptab_18S_all, by = c("Library_ID"))
+All_18S_data <- bind_rows(
+  merge_18S("18S_QPKbulk_2017"),
+  merge_18S("18S_QU39_1"),
+  merge_18S("18S_QU39_2"),
+  merge_18S("18S_QU39_3"),
+  merge_18S("18S_QU39_4"),
+  merge_18S("18S_QU39_5"),
+  merge_18S("18S_QU39_6")
+  )
 
-all_18S %>%
-  filter(Site_ID == "QU39") %>%
-  group_by(Library_ID, Sample_date, Line_out_depth) %>% 
-  summarise(Abundance = sum(Abundance, na.rm = TRUE)) %>% 
-  ggplot() +
-  geom_point(aes(Sample_date, Abundance))
-
-all_18S_pr2
-all_18S_MZG
-all_18S_MZG
-```
-
-```{r}
-
-
-saveRDS(all_18S_pr2, "Data_export/QPK_18S_pr2.RDS")
-saveRDS(all_18S_MZG, "Data_export/QPK_18S_MZG.RDS")
-```
-
-
-
-
-
-
-
-
-Check what original samples are missing from the ASV table:
-
-```{r}
-SamplesNotInASV <-
-  Samptab_18S_all %>%
-  filter(year(Sample_date) %in% 2019:2019) %>% 
-  filter(Library_ID %!in% colnames(ASV_18S_all)) %>% 
-  pull(Library_ID)
-
-SamplesNotInASV
-
-
-shrink(ASV_18S_QU39_6) %>% 
-  pivot_longer(!1) %>% 
-  pull(name) %>% unique
-```
-
-**Investigate why samples are not present by back-tracing intermediates:**
-
-These samples exist in sequence data but not metadata:
-
-```{r}
-samplesNotInMetadata <- 
-  colnames(ASV_18S_QU39_6) %>% 
-  tibble() %>% 
-  filter(. %!in% pull(Samptab_18S_all, Library_ID)) %>% 
-  pull
-
-samplesNotInMetadata
-
-
-
-
-colnames(ASV_18S_QU39_6)
-
-Samptab_18S_all %>% 
-  filter(Hakai_ID == "QMIC3194")
+p1 <- All_18S_data %>%
+  filter(is.na(Hakai_ID)==FALSE) %>% 
+  seq_depth_plot()
+plotly::ggplotly(p1)
 
 ```
 
 
 
-
-
-# 12S ##################
-
-## Load and merge data tables
-### ASV table:
-
-Read in ASV table, and modify names:
-```{r}
-ASV_12S_tmp <-
-  read.delim("ProcessedData/12S_Andreas/ASV/sequence_table.merged.txt",
-             sep = " ") %>% 
-  rename_with(~gsub(., pattern = "\\.", replacement = "_")) %>%
-  rownames_to_column("ASV") %>% 
-  select(!Sequence) %>% 
-  replace(is.na(.), 0) %>% 
-  mutate(ASV = paste("ASV", ASV, sep = ""))
-
-ASV_12S_tmp
-```
-
-### Sample metadata:
-
-Read in metadata:
-
-```{r}
-Samptab_12S_tmp <- read_excel("ProcessedData/metadata_files/Library_metadata_all.xlsx", 
-    sheet = "12S", col_types = c("text", 
-        "text", "date", "text", "text", "text", 
-        "text", "date", "date", "text", "text", 
-        "text", "text", "text", "text", "text", 
-        "text", "text", "text", "text", "text", 
-        "numeric", "text", "text", "numeric", 
-        "numeric", "text", "text", "text", 
-        "text", "numeric", "numeric", "text"))
-Samptab_12S_tmp
-```
-
-Check what original samples are missing from the ASV table:
-
-```{r}
-SamplesNotInASV <-
-  Samptab_12S_tmp %>%
-  filter(Library_ID %!in% colnames(ASV_12S_tmp)) %>% 
-  pull(Library_ID)
-
-SamplesNotInASV
-
-```
-
-### Taxonomy Table
-
-```{r}
-  Taxtab_12S_tmp <- read.delim( "ProcessedData/12S_Andreas/Taxonomy/taxonomy_table.12S.NCBI_NT.96sim.LCA+besthit.txt") %>% 
-  rename_with(~gsub(., pattern = "X.", replacement = "")) %>% 
-  rename(ASV = Query)
-Taxtab_12S_tmp
-```
-
-### Merge datasets
-
-```{r}
-df_12S <- 
-  Taxtab_12S_tmp %>%
-  full_join(ASV_12S_tmp, by = "ASV") %>%
-  pivot_longer(!1:12, names_to = "Library_ID", values_to = "Abundance") %>%
-  full_join(Samptab_12S_tmp, by = "Library_ID")
-
-df_12S
-
-saveRDS(Taxtab_12S_tmp, "Data_export/Taxtab_12S.rds")
-saveRDS(ASV_12S_tmp, "Data_export/ASV_12S.rds")
-saveRDS(Samptab_12S_tmp, "Data_export/Samptab_12S.rds")
-```
-
-## Plot Sequencing Depth
-
-```{r}
-depth <-
-  df_12S %>% 
-  group_by(Library_ID) %>% 
-  summarize(Abundance=sum(Abundance))
-depth
-
-depth %>%
-  filter(is.na(Abundance) == FALSE) %>% 
-  ggplot() +
-  geom_bar(aes(Library_ID, Abundance), stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-```
 
 # Data Export ###############
 
