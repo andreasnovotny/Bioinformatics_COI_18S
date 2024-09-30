@@ -1,6 +1,6 @@
 # Metabarcoding bioinformatic analysis of 18S and COI amplicon sequences using DADA2 with the MetaZooGene and PR2 databases.
 
-This script contains code and processed data for COI and 18S sequencing projects form the QU39 time series. (see [https://www.ncbi.nlm.nih.gov/bioproject/ PRJNA1141475](https://www.ncbi.nlm.nih.gov/bioproject/ PRJNA1141475) for background and metadata).
+This script contains code and processed data for COI and 18S sequencing projects form the QU39 time series. (see <https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1141475> for background and metadata).
 
 ## Method:
 
