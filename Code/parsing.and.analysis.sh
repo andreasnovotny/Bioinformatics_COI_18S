@@ -8,13 +8,14 @@
 
 
 # Preparationn
-cd AmpliconSeqAnalysis
+cd Bioinformatics_COI_18S
 mkdir Data
 
 # Download Metazoogene database and convert to dada2 trainset
 mkdir Data/Metazoogene
 Rscript Code/MZGdb_to_DADA2.R
 gzip Data/Metazoogene/*
+
 
 # Define function for MiSeq analysis:
 analyse_MiSeq () { # $1 = Project name, $2 = source fastqfiles, $3 = COI or 18S
@@ -25,11 +26,11 @@ analyse_MiSeq () { # $1 = Project name, $2 = source fastqfiles, $3 = COI or 18S
 
     # Run dada2 pipeline
     if [ $3 = 18S ]; then
-        Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/$1"
+        Rscript Code/processing.18S.dada2.R "/home/andreas.novotny/Bioinformatics_COI_18S/Data/$1"
     fi
 
     if [ $3 = COI ]; then
-        Rscript Code/processing.COI.dada2.R "/home/andreas.novotny/AmpliconSeqAnalysis/Data/$1"
+        Rscript Code/processing.COI.dada2.R "/home/andreas.novotny/Bioinformatics_COI_18S/Data/$1"
     fi
 
     # Copy files to provessed data
