@@ -452,6 +452,8 @@ otus_filt <- otus[-rows_to_remove, ]
 # to continue with dada2 pipeline
 seqtab.nosingletons <- t(as.matrix(unclass(otus_filt)))
 
+
+
 appendASV(
   "\n dimensions of ASV table with singletons:", dim(otus),
   #how many of our singleton ASVs fail on this filter
@@ -469,7 +471,7 @@ appendASV(
 # depending on the size of your dataset
 appendASV("\n \n - Remove Bimeras")
 seqtab.nosingletons.nochim <- removeBimeraDenovo(
-  seqtab.nosingletons,
+  seqtab,                          ########### NOTE!! All sequences are used, here, not just singletons! ##################
   method = "pooled",
   multithread = 36,
   verbose = TRUE)
