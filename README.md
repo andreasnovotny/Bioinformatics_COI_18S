@@ -34,7 +34,7 @@ These scripts follow this general pipeline for processing:
 
 ### Content and Order of Operation:
 
-###  1. ./Code
+### 1. ./Code
 
 This directory contains all scripts for the bioinformatic analysis:
 
